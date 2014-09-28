@@ -22,26 +22,27 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl.spring;
-
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
-import org.springframework.beans.BeanUtils;
+package com.github.mjeanroy.spring.bean.mapping.factory;
 
 /**
- * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
+ * Interface that specify how to create bean.
+ * @param <T> Type of bean to create.
  */
-public class SpringMapper extends AbstractMapper implements Mapper {
+public interface BeanFactory<T> {
 
 	/**
-	 * Build new mapper.
+	 * Create bean.
+	 *
+	 * @return Bean.
 	 */
-	public SpringMapper() {
-	}
+	T get();
 
-	@Override
-	public <T, U> void map(T source, U destination) {
-		BeanUtils.copyProperties(source, destination);
-	}
+	/**
+	 * Create bean.
+	 *
+	 * @param params Parameters that can be used to create bean.
+	 * @return Bean.
+	 */
+	T get(Object... params);
+
 }

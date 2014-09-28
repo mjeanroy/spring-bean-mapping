@@ -26,6 +26,8 @@ package com.github.mjeanroy.spring.bean.mapping.commons;
 
 import org.springframework.core.type.AnnotationMetadata;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
@@ -47,7 +49,8 @@ public final class ClassUtils {
 		try {
 			Class.forName(className);
 			return true;
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return false;
 		}
 	}
@@ -70,5 +73,30 @@ public final class ClassUtils {
 			value = defaultValue;
 		}
 		return value;
+	}
+
+	/**
+	 * Get generic type of given class at specified index.
+	 *
+	 * @param clazz Class.
+	 * @param index Index.
+	 * @return Generic type.
+	 */
+	public static Class<?> getGenericType(Class<?> clazz, int index) {
+		Type generic = clazz.getGenericSuperclass();
+		if (generic == null) {
+			return null;
+		}
+
+		Class<?> current = clazz;
+		while (!(generic instanceof ParameterizedType)) {
+			current = current.getSuperclass();
+			generic = current.getGenericSuperclass();
+			if (current.equals(Object.class)) {
+				return null;
+			}
+		}
+
+		return (Class<?>) ((ParameterizedType) generic).getActualTypeArguments()[index];
 	}
 }

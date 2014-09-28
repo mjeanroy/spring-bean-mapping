@@ -22,26 +22,37 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl.spring;
+package com.github.mjeanroy.spring.bean.mapping.factory;
 
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
 import org.springframework.beans.BeanUtils;
 
 /**
- * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
+ * Factory that use reflection to create beans.
+ * Note that beans must have a default constructor to be instantiated.
+ *
+ * @param <T> Type of created beans.
  */
-public class SpringMapper extends AbstractMapper implements Mapper {
+public class ReflectionBeanFactory<T> extends AbstractBeanFactory<T> {
 
 	/**
-	 * Build new mapper.
+	 * Create new factory based on reflection.
+	 * This constructor will try to detect target class at instantiation.
 	 */
-	public SpringMapper() {
+	public ReflectionBeanFactory() {
+		super();
+	}
+
+	/**
+	 * Create new factory based on reflection.
+	 *
+	 * @param klass Target class.
+	 */
+	public ReflectionBeanFactory(Class<T> klass) {
+		super(klass);
 	}
 
 	@Override
-	public <T, U> void map(T source, U destination) {
-		BeanUtils.copyProperties(source, destination);
+	public T get() {
+		return BeanUtils.instantiateClass(klass);
 	}
 }

@@ -22,26 +22,33 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl.spring;
+package com.github.mjeanroy.spring.bean.mapping.factory;
 
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
-import org.springframework.beans.BeanUtils;
+import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 
 /**
- * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
+ * Abstraction of factory that define commons methods to factories.
+ * @param <T> Type of created objects.
  */
-public class SpringMapper extends AbstractMapper implements Mapper {
+public abstract class AbstractBeanFactory<T> implements BeanFactory<T> {
 
 	/**
-	 * Build new mapper.
+	 * Get klass of objects created by this factory.
 	 */
-	public SpringMapper() {
+	protected final Class<T> klass;
+
+	@SuppressWarnings("unchecked")
+	protected AbstractBeanFactory() {
+		this.klass = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected AbstractBeanFactory(Class klass) {
+		this.klass = klass;
 	}
 
 	@Override
-	public <T, U> void map(T source, U destination) {
-		BeanUtils.copyProperties(source, destination);
+	public T get(Object... from) {
+		return get();
 	}
 }

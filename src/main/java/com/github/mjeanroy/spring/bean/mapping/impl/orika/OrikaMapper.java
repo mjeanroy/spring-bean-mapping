@@ -25,12 +25,13 @@
 package com.github.mjeanroy.spring.bean.mapping.impl.orika;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
+import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
 import ma.glasnost.orika.MapperFacade;
 
 /**
  * Bean mapper implementation using Orika framework.
  */
-public class OrikaMapper implements Mapper {
+public class OrikaMapper extends AbstractMapper implements Mapper {
 
 	/**
 	 * Original Orika Mapper.
@@ -45,11 +46,6 @@ public class OrikaMapper implements Mapper {
 	 */
 	public OrikaMapper(MapperFacade mapperFacade) {
 		this.mapperFacade = mapperFacade;
-	}
-
-	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return mapperFacade.map(source, klass);
 	}
 
 	@Override

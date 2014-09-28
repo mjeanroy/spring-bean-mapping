@@ -25,12 +25,13 @@
 package com.github.mjeanroy.spring.bean.mapping.impl.modelmapper;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
+import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
 import org.modelmapper.ModelMapper;
 
 /**
  * Bean mapper implementation using ModelMapper framework.
  */
-public class ModelMapperMapper implements Mapper {
+public class ModelMapperMapper extends AbstractMapper implements Mapper {
 
 	/**
 	 * Original ModelMapper mapper.
@@ -45,11 +46,6 @@ public class ModelMapperMapper implements Mapper {
 	 */
 	public ModelMapperMapper(ModelMapper modelMapper) {
 		this.modelMapper = modelMapper;
-	}
-
-	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return modelMapper.map(source, klass);
 	}
 
 	@Override

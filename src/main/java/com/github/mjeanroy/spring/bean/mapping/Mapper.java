@@ -24,12 +24,26 @@
 
 package com.github.mjeanroy.spring.bean.mapping;
 
+import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+
 /**
  * Mapper interface.
  * This interface define simple contract that needs to be
  * implemented to map bean to another bean.
  */
 public interface Mapper {
+
+	/**
+	 * Map bean to another bean.
+	 * Target bean will be automatically created.
+	 *
+	 * @param source  Source bean.
+	 * @param factory Factory used to build target bean.
+	 * @param <T>     Source type.
+	 * @param <U>     Target type.
+	 * @return Mapped bean (a.k.a destination).
+	 */
+	<T, U> U map(T source, BeanFactory<U> factory);
 
 	/**
 	 * Map bean to another bean.

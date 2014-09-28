@@ -22,26 +22,31 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl.spring;
+package com.github.mjeanroy.spring.bean.mapping.impl;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
-import org.springframework.beans.BeanUtils;
+import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ReflectionBeanFactory;
 
 /**
- * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
+ * Mapper abstraction that defines commons methods
+ * to all mapper.
  */
-public class SpringMapper extends AbstractMapper implements Mapper {
+public abstract class AbstractMapper implements Mapper {
 
-	/**
-	 * Build new mapper.
-	 */
-	public SpringMapper() {
+	@Override
+	public <T, U> U map(T source, BeanFactory<U> factory) {
+		U destination = buildDestination(source, factory);
+		map(source, destination);
+		return destination;
 	}
 
 	@Override
-	public <T, U> void map(T source, U destination) {
-		BeanUtils.copyProperties(source, destination);
+	public <T, U> U map(T source, Class<U> klass) {
+		return map(source, new ReflectionBeanFactory<U>(klass));
+	}
+
+	protected <T, U> U buildDestination(T source, BeanFactory<U> factory) {
+		return factory.get(source);
 	}
 }

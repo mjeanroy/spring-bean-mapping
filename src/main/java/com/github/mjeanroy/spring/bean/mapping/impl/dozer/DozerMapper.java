@@ -25,12 +25,13 @@
 package com.github.mjeanroy.spring.bean.mapping.impl.dozer;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
+import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
 import org.dozer.DozerBeanMapper;
 
 /**
  * Bean mapper implementation using Dozer framework.
  */
-public class DozerMapper implements Mapper {
+public class DozerMapper extends AbstractMapper implements Mapper {
 
 	/**
 	 * Original Dozer Mapper.
@@ -40,15 +41,11 @@ public class DozerMapper implements Mapper {
 
 	/**
 	 * Build new mapper.
+	 *
 	 * @param mapper Dozer mapper instance.
 	 */
 	public DozerMapper(DozerBeanMapper mapper) {
 		this.mapper = mapper;
-	}
-
-	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return mapper.map(source, klass);
 	}
 
 	@Override
