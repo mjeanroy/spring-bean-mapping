@@ -22,11 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.impl.dozer;
+package com.github.mjeanroy.spring.bean.mapping.impl.dozer;
 
-import com.github.mjeanroy.bean.mapping.impl.AbstractMapperTest;
+import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapperTest;
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.dozer.DozerMapper;
+
 import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 

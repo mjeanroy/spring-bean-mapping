@@ -22,30 +22,30 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.impl.orika;
+package com.github.mjeanroy.spring.bean.mapping.utils;
 
-import com.github.mjeanroy.bean.mapping.impl.AbstractMapperTest;
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.orika.OrikaMapper;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.junit.Before;
+public class FooDto {
 
-public class OrikaMapperTest extends AbstractMapperTest {
+	private Long id;
 
-	private OrikaMapper orikaMapper;
+	private String name;
 
-	@Before
-	public void setUp() {
-		MapperFacade mapperFacade = new DefaultMapperFactory.Builder()
-				.build()
-				.getMapperFacade();
-
-		orikaMapper = new OrikaMapper(mapperFacade);
+	public FooDto() {
 	}
 
-	@Override
-	protected Mapper mapper() {
-		return orikaMapper;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -22,11 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.impl.spring;
+package com.github.mjeanroy.spring.bean.mapping.impl.spring;
 
-import com.github.mjeanroy.bean.mapping.impl.AbstractMapperTest;
+import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapperTest;
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.spring.SpringMapper;
+
 import org.junit.Before;
 
 public class SpringMapperTest extends AbstractMapperTest {

@@ -22,11 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.impl.modelmapper;
+package com.github.mjeanroy.spring.bean.mapping.impl.modelmapper;
 
-import com.github.mjeanroy.bean.mapping.impl.AbstractMapperTest;
+import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapperTest;
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.modelmapper.ModelMapperMapper;
+
 import org.junit.Before;
 import org.modelmapper.ModelMapper;
 

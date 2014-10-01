@@ -22,27 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.utils;
+package com.github.mjeanroy.spring.bean.mapping.utils;
 
-public class Foo {
+public interface FooMapper {
 
-	private Long id;
+	FooDto from(Foo foo);
 
-	private String name;
-
-	public Foo() {
-	}
-
-	public Foo(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
+	Iterable<FooDto> from(Iterable<Foo> iterables);
 }

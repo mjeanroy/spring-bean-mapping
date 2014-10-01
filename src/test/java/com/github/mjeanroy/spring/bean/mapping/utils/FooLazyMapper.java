@@ -22,30 +22,14 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.utils;
+package com.github.mjeanroy.spring.bean.mapping.utils;
 
-public class FooDto {
+import com.github.mjeanroy.spring.bean.mapping.Mapper;
+import com.github.mjeanroy.spring.bean.mapping.objects.LazyObjectMapper;
 
-	private Long id;
+public class FooLazyMapper extends LazyObjectMapper<Foo, FooDto> implements FooMapper {
 
-	private String name;
-
-	public FooDto() {
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public FooLazyMapper(Mapper mapper) {
+		super(mapper);
 	}
 }

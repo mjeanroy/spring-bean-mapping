@@ -22,43 +22,27 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.bean.mapping.impl;
+package com.github.mjeanroy.spring.bean.mapping.utils;
 
-import com.github.mjeanroy.bean.mapping.utils.Foo;
-import com.github.mjeanroy.bean.mapping.utils.FooDto;
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import org.junit.Test;
+public class Foo {
 
-import static org.assertj.core.api.Assertions.assertThat;
+	private Long id;
 
-public abstract class AbstractMapperTest {
+	private String name;
 
-	protected abstract Mapper mapper();
-
-	@Test
-	public void it_should_map_object_to_object() {
-		Long id = 1L;
-		String name = "foo";
-		Foo foo = new Foo(id, name);
-
-		FooDto fooDto = mapper().map(foo, FooDto.class);
-
-		assertThat(fooDto).isNotNull();
-		assertThat(fooDto.getId()).isNotNull().isEqualTo(id);
-		assertThat(fooDto.getName()).isNotNull().isEqualTo(name);
+	public Foo() {
 	}
 
-	@Test
-	public void it_should_map_object_to_instance_object() {
-		Long id = 1L;
-		String name = "foo";
-		Foo foo = new Foo(id, name);
+	public Foo(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
-		FooDto fooDto = new FooDto();
-		mapper().map(foo, fooDto);
+	public Long getId() {
+		return id;
+	}
 
-		assertThat(fooDto).isNotNull();
-		assertThat(fooDto.getId()).isNotNull().isEqualTo(id);
-		assertThat(fooDto.getName()).isNotNull().isEqualTo(name);
+	public String getName() {
+		return name;
 	}
 }
