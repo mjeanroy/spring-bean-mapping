@@ -22,37 +22,23 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.factory;
+package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 
-import org.springframework.beans.BeanUtils;
+import java.io.Serializable;
 
 /**
- * Factory that use reflection to create beans.
- * Note that beans must have a default constructor to be instantiated.
+ * Interface to use to identify object that can return id usable
+ * with {@link javax.persistence.EntityManager#find(Class, Object)} method.
  *
- * @param <T> Type of created beans.
+ * @param <PK> Type of id (a.k.a primary key).
  */
-public class ReflectionBeanFactory<T> extends AbstractBeanFactory<T> {
+public interface IdentifiableObject<PK extends Serializable> {
 
 	/**
-	 * Create new factory based on reflection.
-	 * This constructor will try to detect target class at instantiation.
-	 */
-	public ReflectionBeanFactory() {
-		super();
-	}
-
-	/**
-	 * Create new factory based on reflection.
+	 * Get id (a.k.a primary key) used to retrieve entity from
+	 * database.
 	 *
-	 * @param klass Target class.
+	 * @return Id value.
 	 */
-	public ReflectionBeanFactory(Class<T> klass) {
-		super(klass);
-	}
-
-	@Override
-	public T get() {
-		return BeanUtils.instantiateClass(klass);
-	}
+	PK getId();
 }

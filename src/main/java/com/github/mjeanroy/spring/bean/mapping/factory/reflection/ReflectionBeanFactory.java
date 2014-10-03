@@ -22,31 +22,37 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl;
+package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
 
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.AbstractBeanFactory;
 
 /**
- * Mapper abstraction that defines commons methods
- * to all mapper.
+ * Factory that use reflection to create beans.
+ * Note that beans must have a default constructor to be instantiated.
+ *
+ * @param <T> Type of created beans.
  */
-public abstract class AbstractMapper implements Mapper {
+public class ReflectionBeanFactory<T> extends AbstractBeanFactory<T> {
 
-	@Override
-	public <T, U> U map(T source, BeanFactory<U> factory) {
-		U destination = buildDestination(source, factory);
-		map(source, destination);
-		return destination;
+	/**
+	 * Create new factory based on reflection.
+	 * This constructor will try to detect target class at instantiation.
+	 */
+	public ReflectionBeanFactory() {
+		super();
+	}
+
+	/**
+	 * Create new factory based on reflection.
+	 *
+	 * @param klass Target class.
+	 */
+	public ReflectionBeanFactory(Class<T> klass) {
+		super(klass);
 	}
 
 	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return map(source, new ReflectionBeanFactory<U>(klass));
-	}
-
-	protected <T, U> U buildDestination(T source, BeanFactory<U> factory) {
-		return factory.get(source);
+	public T get(Object source) {
+		return get();
 	}
 }

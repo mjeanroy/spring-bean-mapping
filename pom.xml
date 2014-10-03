@@ -73,6 +73,8 @@
 		<modelmapper.version>0.7.2</modelmapper.version>
 		<orika.version>1.4.5</orika.version>
 
+		<hibernate-jpa-2.1-api.version>1.0.0.Final</hibernate-jpa-2.1-api.version>
+
 		<junit.version>4.11</junit.version>
 		<assertj.version>1.6.1</assertj.version>
 		<mockito.version>1.9.5</mockito.version>
@@ -112,6 +114,13 @@
 			<groupId>ma.glasnost.orika</groupId>
 			<artifactId>orika-core</artifactId>
 			<version>${orika.version}</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>${hibernate-jpa-2.1-api.version}</version>
 			<optional>true</optional>
 		</dependency>
 

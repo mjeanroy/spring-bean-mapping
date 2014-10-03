@@ -26,6 +26,7 @@ package com.github.mjeanroy.spring.bean.mapping.factory;
 
 /**
  * Interface that specify how to create bean.
+ *
  * @param <T> Type of bean to create.
  */
 public interface BeanFactory<T> {
@@ -39,10 +40,12 @@ public interface BeanFactory<T> {
 
 	/**
 	 * Create bean.
+	 * First parameter is arbitrary parameter that can be used to create
+	 * new instances of target object.
 	 *
-	 * @param params Parameters that can be used to create bean.
+	 * @param source Parameter that can be used to create bean.
 	 * @return Bean.
 	 */
-	T get(Object... params);
+	T get(Object source);
 
 }

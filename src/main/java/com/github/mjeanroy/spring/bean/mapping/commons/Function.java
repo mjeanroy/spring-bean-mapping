@@ -22,31 +22,21 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl;
-
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
+package com.github.mjeanroy.spring.bean.mapping.commons;
 
 /**
- * Mapper abstraction that defines commons methods
- * to all mapper.
+ * Function abstraction.
+ *
+ * @param <T> Type of function parameter.
+ * @param <U> Type of function result.
  */
-public abstract class AbstractMapper implements Mapper {
+public interface Function<T, U> {
 
-	@Override
-	public <T, U> U map(T source, BeanFactory<U> factory) {
-		U destination = buildDestination(source, factory);
-		map(source, destination);
-		return destination;
-	}
-
-	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return map(source, new ReflectionBeanFactory<U>(klass));
-	}
-
-	protected <T, U> U buildDestination(T source, BeanFactory<U> factory) {
-		return factory.get(source);
-	}
+	/**
+	 * Function implementation.
+	 *
+	 * @param source Source object.
+	 * @return Result of given function.
+	 */
+	U apply(T source);
 }

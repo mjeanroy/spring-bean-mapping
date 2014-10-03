@@ -37,7 +37,7 @@ import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooMapper;
 import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.ReflectionBeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
 
 public abstract class AbstractObjectMapperTest {
 

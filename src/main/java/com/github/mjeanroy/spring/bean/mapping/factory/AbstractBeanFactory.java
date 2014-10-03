@@ -24,10 +24,13 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory;
 
+import org.springframework.beans.BeanUtils;
+
 import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 
 /**
  * Abstraction of factory that define commons methods to factories.
+ *
  * @param <T> Type of created objects.
  */
 public abstract class AbstractBeanFactory<T> implements BeanFactory<T> {
@@ -48,7 +51,7 @@ public abstract class AbstractBeanFactory<T> implements BeanFactory<T> {
 	}
 
 	@Override
-	public T get(Object... from) {
-		return get();
+	public T get() {
+		return BeanUtils.instantiateClass(klass);
 	}
 }

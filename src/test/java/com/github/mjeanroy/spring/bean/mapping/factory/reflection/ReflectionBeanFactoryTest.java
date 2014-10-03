@@ -22,31 +22,28 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl;
+package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
 
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
+import static org.assertj.core.api.Assertions.*;
+
+import org.junit.Test;
+
 import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 
-/**
- * Mapper abstraction that defines commons methods
- * to all mapper.
- */
-public abstract class AbstractMapper implements Mapper {
+public class ReflectionBeanFactoryTest {
 
-	@Override
-	public <T, U> U map(T source, BeanFactory<U> factory) {
-		U destination = buildDestination(source, factory);
-		map(source, destination);
-		return destination;
+	@Test
+	public void it_should_create_target_object() {
+		BeanFactory<FooDto> beanFactory = new ReflectionBeanFactory<FooDto>(FooDto.class);
+		FooDto dto = beanFactory.get();
+		assertThat(dto).isNotNull();
 	}
 
-	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return map(source, new ReflectionBeanFactory<U>(klass));
-	}
-
-	protected <T, U> U buildDestination(T source, BeanFactory<U> factory) {
-		return factory.get(source);
+	@Test
+	public void it_should_create_target_object_with_an_arbitrary_parameter() {
+		BeanFactory<FooDto> beanFactory = new ReflectionBeanFactory<FooDto>(FooDto.class);
+		FooDto dto = beanFactory.get(null);
+		assertThat(dto).isNotNull();
 	}
 }
