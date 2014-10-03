@@ -33,11 +33,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooMapper;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
 
 public abstract class AbstractObjectMapperTest {
 
@@ -51,7 +50,7 @@ public abstract class AbstractObjectMapperTest {
 		Class klassT = (Class) readField(fooMapper, "klassT", true);
 		Class klassU = (Class) readField(fooMapper, "klassU", true);
 
-		assertThat(factory).isNotNull().isInstanceOf(ReflectionBeanFactory.class);
+		assertThat(factory).isNull();
 		assertThat(klassT).isNotNull().isSameAs(Foo.class);
 		assertThat(klassU).isNotNull().isSameAs(FooDto.class);
 	}

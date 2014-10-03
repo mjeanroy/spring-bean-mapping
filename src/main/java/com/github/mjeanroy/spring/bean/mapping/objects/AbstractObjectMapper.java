@@ -27,7 +27,6 @@ package com.github.mjeanroy.spring.bean.mapping.objects;
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
 import com.github.mjeanroy.spring.bean.mapping.iterables.LazyIterableMapper;
 
 /**
@@ -72,7 +71,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		this.mapper = mapper;
 		this.klassT = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
 		this.klassU = (Class<U>) ClassUtils.getGenericType(getClass(), 1);
-		this.factory = new ReflectionBeanFactory<U>(this.klassU);
+		this.factory = null;
 	}
 
 	/**
@@ -86,7 +85,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		this.mapper = mapper;
 		this.klassT = klassT;
 		this.klassU = klassU;
-		this.factory = new ReflectionBeanFactory<U>(this.klassU);
+		this.factory = null;
 	}
 
 	/**
@@ -123,6 +122,10 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @return Destination object.
 	 */
 	protected U doFrom(T source) {
-		return mapper.map(source, factory);
+		if (factory != null) {
+			return mapper.map(source, factory);
+		} else {
+			return mapper.map(source, klassU);
+		}
 	}
 }
