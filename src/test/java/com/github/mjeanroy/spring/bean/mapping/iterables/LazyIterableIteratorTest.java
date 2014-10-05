@@ -24,18 +24,20 @@
 
 package com.github.mjeanroy.spring.bean.mapping.iterables;
 
-import static org.apache.commons.lang3.reflect.FieldUtils.readField;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Iterator;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import com.github.mjeanroy.spring.bean.mapping.objects.ObjectMapper;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Iterator;
+
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
 public class LazyIterableIteratorTest {
@@ -81,13 +83,13 @@ public class LazyIterableIteratorTest {
 		FooDto dto = mock(FooDto.class);
 		Foo foo = mock(Foo.class);
 		when(iterator.next()).thenReturn(foo);
-		when(mapper.from(foo)).thenReturn(dto);
+		when(mapper.convert(foo)).thenReturn(dto);
 
 		FooDto result = lazyIterator.next();
 
 		assertThat(result).isNotNull().isSameAs(dto);
 		verify(iterator).next();
-		verify(mapper).from(foo);
+		verify(mapper).convert(foo);
 	}
 
 	@Test

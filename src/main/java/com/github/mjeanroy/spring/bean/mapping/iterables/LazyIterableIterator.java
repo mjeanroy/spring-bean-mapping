@@ -24,9 +24,9 @@
 
 package com.github.mjeanroy.spring.bean.mapping.iterables;
 
-import java.util.Iterator;
-
 import com.github.mjeanroy.spring.bean.mapping.objects.ObjectMapper;
+
+import java.util.Iterator;
 
 /**
  * Iterator that should be used with {@link LazyIterableIterator}.
@@ -68,7 +68,7 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 	@Override
 	public U next() {
 		T next = iterator.next();
-		return mapper.from(next);
+		return mapper.convert(next);
 	}
 
 	@Override

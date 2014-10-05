@@ -1,11 +1,11 @@
 package com.github.mjeanroy.spring.bean.mapping.utils;
 
-import static org.mockito.Mockito.mock;
+import com.github.mjeanroy.spring.bean.mapping.commons.Function;
+import com.github.mjeanroy.spring.bean.mapping.factory.jpa.JpaObjectFactory;
 
 import javax.persistence.EntityManager;
 
-import com.github.mjeanroy.spring.bean.mapping.commons.Function;
-import com.github.mjeanroy.spring.bean.mapping.factory.jpa.JpaObjectFactory;
+import static org.mockito.Mockito.mock;
 
 public class FooJpaObjectFactory extends JpaObjectFactory<Foo, Long> {
 

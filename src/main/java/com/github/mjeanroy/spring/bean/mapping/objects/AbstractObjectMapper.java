@@ -104,12 +104,12 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	}
 
 	@Override
-	public U from(T source) {
+	public U convert(T source) {
 		return source == null ? null : doFrom(source);
 	}
 
 	@Override
-	public Iterable<U> from(Iterable<T> sources) {
+	public Iterable<U> convert(Iterable<T> sources) {
 		return new LazyIterableMapper<U, T>(sources, this);
 	}
 

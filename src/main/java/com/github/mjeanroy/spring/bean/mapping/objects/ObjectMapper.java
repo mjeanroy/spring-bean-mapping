@@ -24,6 +24,8 @@
 
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
+import org.springframework.core.convert.converter.Converter;
+
 /**
  * Mapper that can transform object of type T to objects of
  * type U.
@@ -34,7 +36,7 @@ package com.github.mjeanroy.spring.bean.mapping.objects;
  * @param <T> Original type.
  * @param <U> New type.
  */
-public interface ObjectMapper<T, U> {
+public interface ObjectMapper<T, U> extends Converter<T, U> {
 
 	/**
 	 * Transform source object to destination object.
@@ -43,7 +45,7 @@ public interface ObjectMapper<T, U> {
 	 * @param source Source object.
 	 * @return Destination object.
 	 */
-	U from(T source);
+	U convert(T source);
 
 	/**
 	 * Transform iterable structure of type U to new iterable structure
@@ -52,5 +54,5 @@ public interface ObjectMapper<T, U> {
 	 * @param sources Source objects.
 	 * @return Destination objects.
 	 */
-	Iterable<U> from(Iterable<T> sources);
+	Iterable<U> convert(Iterable<T> sources);
 }

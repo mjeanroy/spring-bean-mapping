@@ -24,19 +24,18 @@
 
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
-import static java.util.Arrays.asList;
-import static org.apache.commons.lang3.reflect.FieldUtils.readField;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooMapper;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractObjectMapperTest {
 
@@ -58,7 +57,7 @@ public abstract class AbstractObjectMapperTest {
 	@Test
 	public void it_should_map_null_to_null() throws Exception {
 		FooMapper fooMapper = fooMapper();
-		FooDto fooDto = fooMapper.from((Foo) null);
+		FooDto fooDto = fooMapper.convert((Foo) null);
 		assertThat(fooDto).isNull();
 	}
 
@@ -69,7 +68,7 @@ public abstract class AbstractObjectMapperTest {
 		Foo foo = new Foo(id, name);
 		FooMapper fooMapper = fooMapper();
 
-		FooDto fooDto = fooMapper.from(foo);
+		FooDto fooDto = fooMapper.convert(foo);
 
 		assertThat(fooDto).isNotNull();
 		assertThat(fooDto.getId()).isEqualTo(1L);
@@ -90,7 +89,7 @@ public abstract class AbstractObjectMapperTest {
 
 		FooMapper fooMapper = fooMapper();
 
-		Iterable<FooDto> foosDto = fooMapper.from(foos);
+		Iterable<FooDto> foosDto = fooMapper.convert(foos);
 
 		assertThat(foosDto).isNotNull();
 

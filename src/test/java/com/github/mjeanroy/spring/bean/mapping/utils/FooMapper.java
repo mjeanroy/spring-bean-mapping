@@ -26,7 +26,7 @@ package com.github.mjeanroy.spring.bean.mapping.utils;
 
 public interface FooMapper {
 
-	FooDto from(Foo foo);
+	FooDto convert(Foo foo);
 
-	Iterable<FooDto> from(Iterable<Foo> iterables);
+	Iterable<FooDto> convert(Iterable<Foo> iterables);
 }

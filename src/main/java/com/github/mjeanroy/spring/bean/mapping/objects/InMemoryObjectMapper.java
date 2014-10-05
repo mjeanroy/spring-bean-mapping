@@ -24,11 +24,11 @@
 
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * In memory mapper implementation.
@@ -78,10 +78,10 @@ public class InMemoryObjectMapper<T, U> extends AbstractObjectMapper<T, U> imple
 	}
 
 	@Override
-	public Collection<U> from(Iterable<T> sources) {
+	public Collection<U> convert(Iterable<T> sources) {
 		final Collection<U> results = initIterable(sources);
 		for (T source : sources) {
-			final U destination = from(source);
+			final U destination = convert(source);
 			results.add(destination);
 		}
 		return results;

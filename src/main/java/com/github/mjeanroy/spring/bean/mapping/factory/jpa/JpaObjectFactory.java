@@ -24,11 +24,11 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 
-import javax.persistence.EntityManager;
-import java.io.Serializable;
-
 import com.github.mjeanroy.spring.bean.mapping.commons.Function;
 import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
+
+import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 /**
  * Factory that can be used to create jpa entity.
