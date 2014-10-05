@@ -25,8 +25,8 @@
 package com.github.mjeanroy.spring.bean.mapping.impl;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
-import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionObjectFactory;
 
 /**
  * Mapper abstraction that defines commons methods
@@ -35,7 +35,7 @@ import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionBean
 public abstract class AbstractMapper implements Mapper {
 
 	@Override
-	public <T, U> U map(T source, BeanFactory<U> factory) {
+	public <T, U> U map(T source, ObjectFactory<U> factory) {
 		U destination = buildDestination(source, factory);
 		map(source, destination);
 		return destination;
@@ -43,10 +43,10 @@ public abstract class AbstractMapper implements Mapper {
 
 	@Override
 	public <T, U> U map(T source, Class<U> klass) {
-		return map(source, new ReflectionBeanFactory<U>(klass));
+		return map(source, new ReflectionObjectFactory<U>(klass));
 	}
 
-	protected <T, U> U buildDestination(T source, BeanFactory<U> factory) {
+	protected <T, U> U buildDestination(T source, ObjectFactory<U> factory) {
 		return factory.get(source);
 	}
 }

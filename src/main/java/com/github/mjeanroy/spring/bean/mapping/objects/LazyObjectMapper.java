@@ -25,7 +25,7 @@
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 
 /**
  * Lazy mapper implementation.
@@ -68,7 +68,7 @@ public class LazyObjectMapper<T, U> extends AbstractObjectMapper<T, U> implement
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	public LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, BeanFactory<U> factory) {
+	public LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 }

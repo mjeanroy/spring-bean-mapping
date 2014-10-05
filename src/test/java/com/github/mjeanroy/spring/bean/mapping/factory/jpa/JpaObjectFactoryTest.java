@@ -27,6 +27,7 @@ package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.github.mjeanroy.spring.bean.mapping.utils.FooJpaObjectFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -34,17 +35,16 @@ import org.junit.rules.ExpectedException;
 import com.github.mjeanroy.spring.bean.mapping.commons.Function;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
-import com.github.mjeanroy.spring.bean.mapping.utils.FooJpaBeanFactory;
 
 @SuppressWarnings("unchecked")
-public class JpaBeanFactoryTest {
+public class JpaObjectFactoryTest {
 
 	@Rule
 	public final ExpectedException thrown = ExpectedException.none();
 
 	@Test
 	public void it_should_create_new_object_instance() {
-		FooJpaBeanFactory factory = new FooJpaBeanFactory();
+		FooJpaObjectFactory factory = new FooJpaObjectFactory();
 		Foo foo = factory.get();
 		assertThat(foo).isNotNull();
 	}
@@ -59,7 +59,7 @@ public class JpaBeanFactoryTest {
 		Function<FooDto, Long> idFunction = mock(Function.class);
 		when(idFunction.apply(dto)).thenReturn(id);
 
-		FooJpaBeanFactory factory = new FooJpaBeanFactory(idFunction);
+		FooJpaObjectFactory factory = new FooJpaObjectFactory(idFunction);
 		when(factory.entityManager.find(Foo.class, id)).thenReturn(foo);
 
 		Foo result = factory.get(dto);
@@ -78,7 +78,7 @@ public class JpaBeanFactoryTest {
 
 		Foo foo = mock(Foo.class);
 
-		FooJpaBeanFactory factory = new FooJpaBeanFactory();
+		FooJpaObjectFactory factory = new FooJpaObjectFactory();
 		when(factory.entityManager.find(Foo.class, id)).thenReturn(foo);
 
 		Foo result = factory.get(dto);
@@ -99,7 +99,7 @@ public class JpaBeanFactoryTest {
 
 		Foo foo = mock(Foo.class);
 
-		FooJpaBeanFactory factory = new FooJpaBeanFactory();
+		FooJpaObjectFactory factory = new FooJpaObjectFactory();
 		when(factory.entityManager.find(Foo.class, id)).thenReturn(foo);
 
 		factory.get(dto);
@@ -111,7 +111,7 @@ public class JpaBeanFactoryTest {
 		FooDtoIdentifiable dto = mock(FooDtoIdentifiable.class);
 		when(dto.getId()).thenReturn(id);
 
-		FooJpaBeanFactory factory = new FooJpaBeanFactory();
+		FooJpaObjectFactory factory = new FooJpaObjectFactory();
 
 		Foo result = factory.get(dto);
 

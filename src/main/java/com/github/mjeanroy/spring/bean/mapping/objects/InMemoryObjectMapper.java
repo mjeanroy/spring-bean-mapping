@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 
 /**
  * In memory mapper implementation.
@@ -73,7 +73,7 @@ public class InMemoryObjectMapper<T, U> extends AbstractObjectMapper<T, U> imple
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected InMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, BeanFactory<U> factory) {
+	protected InMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 

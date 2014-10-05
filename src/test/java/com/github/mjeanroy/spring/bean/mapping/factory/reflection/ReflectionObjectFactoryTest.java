@@ -22,36 +22,28 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.factory;
+package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
 
-import org.springframework.beans.BeanUtils;
+import static org.assertj.core.api.Assertions.*;
 
-import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
+import org.junit.Test;
 
-/**
- * Abstraction of factory that define commons methods to factories.
- *
- * @param <T> Type of created objects.
- */
-public abstract class AbstractBeanFactory<T> implements BeanFactory<T> {
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 
-	/**
-	 * Get klass of objects created by this factory.
-	 */
-	protected final Class<T> klass;
+public class ReflectionObjectFactoryTest {
 
-	@SuppressWarnings("unchecked")
-	protected AbstractBeanFactory() {
-		this.klass = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
+	@Test
+	public void it_should_create_target_object() {
+		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		FooDto dto = objectFactory.get();
+		assertThat(dto).isNotNull();
 	}
 
-	@SuppressWarnings("unchecked")
-	protected AbstractBeanFactory(Class klass) {
-		this.klass = klass;
-	}
-
-	@Override
-	public T get() {
-		return BeanUtils.instantiateClass(klass);
+	@Test
+	public void it_should_create_target_object_with_an_arbitrary_parameter() {
+		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		FooDto dto = objectFactory.get(null);
+		assertThat(dto).isNotNull();
 	}
 }

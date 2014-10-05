@@ -28,7 +28,7 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 
 import com.github.mjeanroy.spring.bean.mapping.commons.Function;
-import com.github.mjeanroy.spring.bean.mapping.factory.AbstractBeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
 
 /**
  * Factory that can be used to create jpa entity.
@@ -47,7 +47,7 @@ import com.github.mjeanroy.spring.bean.mapping.factory.AbstractBeanFactory;
  * @param <T> Type of entities.
  * @param <PK> Type of entities' primary key.
  */
-public abstract class JpaBeanFactory<T, PK extends Serializable> extends AbstractBeanFactory<T> {
+public abstract class JpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> {
 
 	/**
 	 * Function that can be used to get primary key value
@@ -63,7 +63,7 @@ public abstract class JpaBeanFactory<T, PK extends Serializable> extends Abstrac
 	 *
 	 * Class of objects to create will be auto-detected at factory instantiation.
 	 */
-	public JpaBeanFactory() {
+	public JpaObjectFactory() {
 		super();
 		this.function = null;
 	}
@@ -76,7 +76,7 @@ public abstract class JpaBeanFactory<T, PK extends Serializable> extends Abstrac
 	 *
 	 * @param klass Class of objects to create.
 	 */
-	public JpaBeanFactory(Class<T> klass) {
+	public JpaObjectFactory(Class<T> klass) {
 		super(klass);
 		this.function = null;
 	}
@@ -89,7 +89,7 @@ public abstract class JpaBeanFactory<T, PK extends Serializable> extends Abstrac
 	 * @param function Function.
 	 */
 	@SuppressWarnings("unchecked")
-	public JpaBeanFactory(Function<? extends Object, PK> function) {
+	public JpaObjectFactory(Function<? extends Object, PK> function) {
 		super();
 		this.function = (Function<Object, PK>) function;
 	}
@@ -102,7 +102,7 @@ public abstract class JpaBeanFactory<T, PK extends Serializable> extends Abstrac
 	 * @param function Function.
 	 */
 	@SuppressWarnings("unchecked")
-	public JpaBeanFactory(Class<T> klass, Function<? extends Object, PK> function) {
+	public JpaObjectFactory(Class<T> klass, Function<? extends Object, PK> function) {
 		super(klass);
 		this.function = (Function<Object, PK>) function;
 	}

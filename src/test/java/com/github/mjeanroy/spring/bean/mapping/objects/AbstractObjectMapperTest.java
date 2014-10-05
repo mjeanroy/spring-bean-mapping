@@ -33,7 +33,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooMapper;
@@ -46,7 +46,7 @@ public abstract class AbstractObjectMapperTest {
 	public void it_should_detect_generic_classes_and_instantie_default_factory() throws Exception {
 		FooMapper fooMapper = fooMapper();
 
-		BeanFactory factory = (BeanFactory) readField(fooMapper, "factory", true);
+		ObjectFactory factory = (ObjectFactory) readField(fooMapper, "factory", true);
 		Class klassT = (Class) readField(fooMapper, "klassT", true);
 		Class klassU = (Class) readField(fooMapper, "klassU", true);
 

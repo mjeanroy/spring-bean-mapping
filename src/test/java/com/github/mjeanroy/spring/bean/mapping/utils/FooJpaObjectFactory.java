@@ -5,17 +5,17 @@ import static org.mockito.Mockito.mock;
 import javax.persistence.EntityManager;
 
 import com.github.mjeanroy.spring.bean.mapping.commons.Function;
-import com.github.mjeanroy.spring.bean.mapping.factory.jpa.JpaBeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.jpa.JpaObjectFactory;
 
-public class FooJpaBeanFactory extends JpaBeanFactory<Foo, Long> {
+public class FooJpaObjectFactory extends JpaObjectFactory<Foo, Long> {
 
 	public final EntityManager entityManager;
 
-	public FooJpaBeanFactory() {
+	public FooJpaObjectFactory() {
 		entityManager = mock(EntityManager.class);
 	}
 
-	public FooJpaBeanFactory(Function<FooDto, Long> function) {
+	public FooJpaObjectFactory(Function<FooDto, Long> function) {
 		super(function);
 		entityManager = mock(EntityManager.class);
 	}

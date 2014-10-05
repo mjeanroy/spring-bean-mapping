@@ -22,37 +22,30 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
-
-import com.github.mjeanroy.spring.bean.mapping.factory.AbstractBeanFactory;
+package com.github.mjeanroy.spring.bean.mapping.factory;
 
 /**
- * Factory that use reflection to create beans.
- * Note that beans must have a default constructor to be instantiated.
+ * Interface that specify how to create bean.
  *
- * @param <T> Type of created beans.
+ * @param <T> Type of bean to create.
  */
-public class ReflectionBeanFactory<T> extends AbstractBeanFactory<T> {
+public interface ObjectFactory<T> {
 
 	/**
-	 * Create new factory based on reflection.
-	 * This constructor will try to detect target class at instantiation.
-	 */
-	public ReflectionBeanFactory() {
-		super();
-	}
-
-	/**
-	 * Create new factory based on reflection.
+	 * Create bean.
 	 *
-	 * @param klass Target class.
+	 * @return Bean.
 	 */
-	public ReflectionBeanFactory(Class<T> klass) {
-		super(klass);
-	}
+	T get();
 
-	@Override
-	public T get(Object source) {
-		return get();
-	}
+	/**
+	 * Create bean.
+	 * First parameter is arbitrary parameter that can be used to create
+	 * new instances of target object.
+	 *
+	 * @param source Parameter that can be used to create bean.
+	 * @return Bean.
+	 */
+	T get(Object source);
+
 }

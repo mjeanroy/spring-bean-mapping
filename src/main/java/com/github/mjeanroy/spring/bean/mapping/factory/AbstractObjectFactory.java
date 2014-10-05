@@ -24,28 +24,34 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory;
 
+import org.springframework.beans.BeanUtils;
+
+import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
+
 /**
- * Interface that specify how to create bean.
+ * Abstraction of factory that define commons methods to factories.
  *
- * @param <T> Type of bean to create.
+ * @param <T> Type of created objects.
  */
-public interface BeanFactory<T> {
+public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
 
 	/**
-	 * Create bean.
-	 *
-	 * @return Bean.
+	 * Get klass of objects created by this factory.
 	 */
-	T get();
+	protected final Class<T> klass;
 
-	/**
-	 * Create bean.
-	 * First parameter is arbitrary parameter that can be used to create
-	 * new instances of target object.
-	 *
-	 * @param source Parameter that can be used to create bean.
-	 * @return Bean.
-	 */
-	T get(Object source);
+	@SuppressWarnings("unchecked")
+	protected AbstractObjectFactory() {
+		this.klass = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
+	}
 
+	@SuppressWarnings("unchecked")
+	protected AbstractObjectFactory(Class klass) {
+		this.klass = klass;
+	}
+
+	@Override
+	public T get() {
+		return BeanUtils.instantiateClass(klass);
+	}
 }

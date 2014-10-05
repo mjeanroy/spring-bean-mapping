@@ -26,7 +26,7 @@ package com.github.mjeanroy.spring.bean.mapping.objects;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 import com.github.mjeanroy.spring.bean.mapping.iterables.LazyIterableMapper;
 
 /**
@@ -58,7 +58,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	/**
 	 * Factory used to instantiate destination objects.
 	 */
-	protected final BeanFactory<U> factory;
+	protected final ObjectFactory<U> factory;
 
 	/**
 	 * Create new mapper.
@@ -96,7 +96,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, BeanFactory<U> factory) {
+	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		this.mapper = mapper;
 		this.klassT = klassT;
 		this.klassU = klassU;

@@ -24,7 +24,7 @@
 
 package com.github.mjeanroy.spring.bean.mapping;
 
-import com.github.mjeanroy.spring.bean.mapping.factory.BeanFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 
 /**
  * Mapper interface.
@@ -43,7 +43,7 @@ public interface Mapper {
 	 * @param <U>     Target type.
 	 * @return Mapped bean (a.k.a destination).
 	 */
-	<T, U> U map(T source, BeanFactory<U> factory);
+	<T, U> U map(T source, ObjectFactory<U> factory);
 
 	/**
 	 * Map bean to another bean.
