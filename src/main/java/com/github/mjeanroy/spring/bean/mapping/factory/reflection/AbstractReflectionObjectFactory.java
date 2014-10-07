@@ -24,26 +24,38 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
 
-import static org.assertj.core.api.Assertions.*;
+import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
 
-import org.junit.Test;
+/**
+ * Factory that use reflection to create beans.
+ * Note that beans must have a default constructor to be instantiated.
+ *
+ * This class is an abstract since it must be explicitly sub-classed to use
+ * default constructor.
+ *
+ * @param <T> Type of created beans.
+ */
+public abstract class AbstractReflectionObjectFactory<T> extends AbstractObjectFactory<T> {
 
-import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
-import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
-
-public class ReflectionObjectFactoryTest {
-
-	@Test
-	public void it_should_create_target_object() {
-		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
-		FooDto dto = objectFactory.get();
-		assertThat(dto).isNotNull();
+	/**
+	 * Create new factory based on reflection.
+	 * This constructor will try to detect target class at instantiation.
+	 */
+	public AbstractReflectionObjectFactory() {
+		super();
 	}
 
-	@Test
-	public void it_should_create_target_object_with_an_arbitrary_parameter() {
-		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
-		FooDto dto = objectFactory.get(null);
-		assertThat(dto).isNotNull();
+	/**
+	 * Create new factory based on reflection.
+	 *
+	 * @param klass Target class.
+	 */
+	public AbstractReflectionObjectFactory(Class<T> klass) {
+		super(klass);
+	}
+
+	@Override
+	public T get(Object source) {
+		return get();
 	}
 }

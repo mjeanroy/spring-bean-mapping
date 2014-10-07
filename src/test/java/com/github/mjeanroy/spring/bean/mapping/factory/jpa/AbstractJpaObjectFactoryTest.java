@@ -27,17 +27,16 @@ package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.github.mjeanroy.spring.bean.mapping.utils.FooJpaObjectFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.github.mjeanroy.spring.bean.mapping.commons.Function;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
+import com.github.mjeanroy.spring.bean.mapping.utils.FooJpaObjectFactory;
 
 @SuppressWarnings("unchecked")
-public class JpaObjectFactoryTest {
+public class AbstractJpaObjectFactoryTest {
 
 	@Rule
 	public final ExpectedException thrown = ExpectedException.none();
@@ -50,65 +49,9 @@ public class JpaObjectFactoryTest {
 	}
 
 	@Test
-	public void it_should_create_new_object_instance_using_function_to_parse_id() {
-		long id = 1L;
-		FooDto dto = mock(FooDto.class);
-		when(dto.getId()).thenReturn(id);
-		Foo foo = mock(Foo.class);
-
-		Function<FooDto, Long> idFunction = mock(Function.class);
-		when(idFunction.apply(dto)).thenReturn(id);
-
-		FooJpaObjectFactory factory = new FooJpaObjectFactory(idFunction);
-		when(factory.entityManager.find(Foo.class, id)).thenReturn(foo);
-
-		Foo result = factory.get(dto);
-
-		assertThat(result).isNotNull().isSameAs(foo);
-		verify(idFunction).apply(dto);
-		verify(dto, never()).getId();
-		verify(factory.entityManager).find(Foo.class, id);
-	}
-
-	@Test
-	public void it_should_create_new_object_instance_using_interface_contract() {
-		long id = 1L;
-		FooDtoIdentifiable dto = mock(FooDtoIdentifiable.class);
-		when(dto.getId()).thenReturn(id);
-
-		Foo foo = mock(Foo.class);
-
-		FooJpaObjectFactory factory = new FooJpaObjectFactory();
-		when(factory.entityManager.find(Foo.class, id)).thenReturn(foo);
-
-		Foo result = factory.get(dto);
-
-		verify(dto).getId();
-		verify(factory.entityManager).find(Foo.class, id);
-		assertThat(result).isNotNull().isEqualTo(foo);
-	}
-
-	@Test
-	public void it_should_throw_exception_if_id_cannot_be_get() {
-		thrown.expect(UnsupportedOperationException.class);
-		thrown.expectMessage("Unable to get jpa id from source object");
-
-		long id = 1L;
-		FooDto dto = mock(FooDto.class);
-		when(dto.getId()).thenReturn(id);
-
-		Foo foo = mock(Foo.class);
-
-		FooJpaObjectFactory factory = new FooJpaObjectFactory();
-		when(factory.entityManager.find(Foo.class, id)).thenReturn(foo);
-
-		factory.get(dto);
-	}
-
-	@Test
 	public void it_should_create_new_object_instance_if_id_is_null() {
 		Long id = null;
-		FooDtoIdentifiable dto = mock(FooDtoIdentifiable.class);
+		FooDto dto = mock(FooDto.class);
 		when(dto.getId()).thenReturn(id);
 
 		FooJpaObjectFactory factory = new FooJpaObjectFactory();
@@ -118,13 +61,5 @@ public class JpaObjectFactoryTest {
 		assertThat(result).isNotNull();
 		verify(dto).getId();
 		verify(factory.entityManager, never()).find(any(Class.class), any());
-	}
-
-	public static class FooDtoIdentifiable extends FooDto implements IdentifiableObject<Long> {
-
-		@Override
-		public Long getId() {
-			return super.getId();
-		}
 	}
 }

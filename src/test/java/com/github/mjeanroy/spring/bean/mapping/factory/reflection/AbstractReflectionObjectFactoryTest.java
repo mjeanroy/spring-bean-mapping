@@ -22,23 +22,28 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
+package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
 
-import java.io.Serializable;
+import static org.assertj.core.api.Assertions.*;
 
-/**
- * Interface to use to identify object that can return id usable
- * with {@link javax.persistence.EntityManager#find(Class, Object)} method.
- *
- * @param <PK> Type of id (a.k.a primary key).
- */
-public interface IdentifiableObject<PK extends Serializable> {
+import org.junit.Test;
 
-	/**
-	 * Get id (a.k.a primary key) used to retrieve entity from
-	 * database.
-	 *
-	 * @return Id value.
-	 */
-	PK getId();
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
+
+public class AbstractReflectionObjectFactoryTest {
+
+	@Test
+	public void it_should_create_target_object() {
+		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		FooDto dto = objectFactory.get();
+		assertThat(dto).isNotNull();
+	}
+
+	@Test
+	public void it_should_create_target_object_with_an_arbitrary_parameter() {
+		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		FooDto dto = objectFactory.get(null);
+		assertThat(dto).isNotNull();
+	}
 }

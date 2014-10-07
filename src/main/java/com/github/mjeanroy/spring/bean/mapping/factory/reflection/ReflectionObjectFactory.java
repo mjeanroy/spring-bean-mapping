@@ -24,23 +24,13 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory.reflection;
 
-import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
-
 /**
  * Factory that use reflection to create beans.
  * Note that beans must have a default constructor to be instantiated.
  *
  * @param <T> Type of created beans.
  */
-public class ReflectionObjectFactory<T> extends AbstractObjectFactory<T> {
-
-	/**
-	 * Create new factory based on reflection.
-	 * This constructor will try to detect target class at instantiation.
-	 */
-	public ReflectionObjectFactory() {
-		super();
-	}
+public class ReflectionObjectFactory<T> extends AbstractReflectionObjectFactory<T> {
 
 	/**
 	 * Create new factory based on reflection.
@@ -49,10 +39,5 @@ public class ReflectionObjectFactory<T> extends AbstractObjectFactory<T> {
 	 */
 	public ReflectionObjectFactory(Class<T> klass) {
 		super(klass);
-	}
-
-	@Override
-	public T get(Object source) {
-		return get();
 	}
 }

@@ -24,11 +24,10 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 
-import com.github.mjeanroy.spring.bean.mapping.commons.Function;
-import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
-
 import javax.persistence.EntityManager;
 import java.io.Serializable;
+
+import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
 
 /**
  * Factory that can be used to create jpa entity.
@@ -37,23 +36,12 @@ import java.io.Serializable;
  *
  * - If object given in {@link #get(Object)} method is null, a new instance is
  *   created by reflection.
- *
- * - If object is not null and an instance of {@link com.github.mjeanroy.spring.bean.mapping.commons.Function} has been set in constructor,
- *   it will be called to get primary key value.
- *
- * - If object is not null and implements {@link IdentifiableObject}, primary key
- *   is obtained and result of {@link EntityManager#find(Class, Object)} is returned.
+ * - Otherwise, method {@link #parseId(Object)} is used to get id of target entity.
  *
  * @param <T> Type of entities.
  * @param <PK> Type of entities' primary key.
  */
-public abstract class JpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> {
-
-	/**
-	 * Function that can be used to get primary key value
-	 * used to find target entity.
-	 */
-	private final Function<Object, PK> function;
+public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> {
 
 	/**
 	 * Create new factory.
@@ -63,9 +51,8 @@ public abstract class JpaObjectFactory<T, PK extends Serializable> extends Abstr
 	 *
 	 * Class of objects to create will be auto-detected at factory instantiation.
 	 */
-	public JpaObjectFactory() {
+	public AbstractJpaObjectFactory() {
 		super();
-		this.function = null;
 	}
 
 	/**
@@ -76,35 +63,8 @@ public abstract class JpaObjectFactory<T, PK extends Serializable> extends Abstr
 	 *
 	 * @param klass Class of objects to create.
 	 */
-	public JpaObjectFactory(Class<T> klass) {
+	public AbstractJpaObjectFactory(Class<T> klass) {
 		super(klass);
-		this.function = null;
-	}
-
-	/**
-	 * Create new factory.
-	 * Given function will be used to get id of target entities.
-	 * Class of objects to create will be auto-detected at factory instantiation.
-	 *
-	 * @param function Function.
-	 */
-	@SuppressWarnings("unchecked")
-	public JpaObjectFactory(Function<? extends Object, PK> function) {
-		super();
-		this.function = (Function<Object, PK>) function;
-	}
-
-	/**
-	 * Create new factory.
-	 * Given function will be used to get id of target entities.
-	 *
-	 * @param klass Class of objects to create.
-	 * @param function Function.
-	 */
-	@SuppressWarnings("unchecked")
-	public JpaObjectFactory(Class<T> klass, Function<? extends Object, PK> function) {
-		super(klass);
-		this.function = (Function<Object, PK>) function;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -114,21 +74,11 @@ public abstract class JpaObjectFactory<T, PK extends Serializable> extends Abstr
 			return get();
 		}
 
-		final T destination;
-		final PK id;
-
 		// Try to get id field
-		if (function != null) {
-			id = function.apply(source);
-		}
-		else if (source instanceof IdentifiableObject) {
-			id = ((IdentifiableObject<PK>) source).getId();
-		}
-		else {
-			throw new UnsupportedOperationException("Unable to get jpa id from source object");
-		}
+		final PK id = parseId(source);
 
 		// Try to retrieve entity, or instantiate if id is null
+		final T destination;
 		if (id != null) {
 			destination = findById(id);
 		} else {
@@ -170,4 +120,14 @@ public abstract class JpaObjectFactory<T, PK extends Serializable> extends Abstr
 	 * @return Entity manager.
 	 */
 	protected abstract EntityManager getEntityManager();
+
+	/**
+	 * Parse id of target entity from source object.
+	 * If returned id is null, target entity will be created using default
+	 * constructor, otherwise id will be used with {@link javax.persistence.EntityManager#find(Class, Object)} method.
+	 *
+	 * @param source Source object.
+	 * @return Id.
+	 */
+	protected abstract PK parseId(Object source);
 }

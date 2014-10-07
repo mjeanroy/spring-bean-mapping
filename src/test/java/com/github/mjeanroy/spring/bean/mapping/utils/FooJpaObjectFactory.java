@@ -1,13 +1,12 @@
 package com.github.mjeanroy.spring.bean.mapping.utils;
 
-import com.github.mjeanroy.spring.bean.mapping.commons.Function;
-import com.github.mjeanroy.spring.bean.mapping.factory.jpa.JpaObjectFactory;
+import static org.mockito.Mockito.*;
 
 import javax.persistence.EntityManager;
 
-import static org.mockito.Mockito.mock;
+import com.github.mjeanroy.spring.bean.mapping.factory.jpa.AbstractJpaObjectFactory;
 
-public class FooJpaObjectFactory extends JpaObjectFactory<Foo, Long> {
+public class FooJpaObjectFactory extends AbstractJpaObjectFactory<Foo, Long> {
 
 	public final EntityManager entityManager;
 
@@ -15,13 +14,13 @@ public class FooJpaObjectFactory extends JpaObjectFactory<Foo, Long> {
 		entityManager = mock(EntityManager.class);
 	}
 
-	public FooJpaObjectFactory(Function<FooDto, Long> function) {
-		super(function);
-		entityManager = mock(EntityManager.class);
-	}
-
 	@Override
 	protected EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	@Override
+	protected Long parseId(Object source) {
+		return ((FooDto) source).getId();
 	}
 }
