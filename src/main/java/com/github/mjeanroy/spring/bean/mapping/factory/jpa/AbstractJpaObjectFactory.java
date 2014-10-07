@@ -27,6 +27,7 @@ package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 
+import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
 
 /**
@@ -44,20 +45,29 @@ import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
 public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> {
 
 	/**
+	 * Class of entities' primary key.
+	 */
+	protected final Class<PK> pkClass;
+
+	/**
 	 * Create new factory.
 	 * Class of objects to create will be auto-detected at factory instantiation.
 	 */
+	@SuppressWarnings("unchecked")
 	public AbstractJpaObjectFactory() {
 		super();
+		pkClass = (Class<PK>) ClassUtils.getGenericType(getClass(), 1);
 	}
 
 	/**
 	 * Create new factory.
 	 *
 	 * @param klass Class of objects to create.
+	 * @param pkClass Class of primary key of target entities.
 	 */
-	public AbstractJpaObjectFactory(Class<T> klass) {
+	public AbstractJpaObjectFactory(Class<T> klass, Class<PK> pkClass) {
 		super(klass);
+		this.pkClass = pkClass;
 	}
 
 	@SuppressWarnings("unchecked")

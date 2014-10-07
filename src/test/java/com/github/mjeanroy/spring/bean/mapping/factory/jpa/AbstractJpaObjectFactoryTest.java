@@ -42,6 +42,12 @@ public class AbstractJpaObjectFactoryTest {
 	public final ExpectedException thrown = ExpectedException.none();
 
 	@Test
+	public void it_should_get_generic_types() {
+		FooJpaObjectFactory factory = new FooJpaObjectFactory();
+		assertThat(factory.pkClass).isEqualTo(Long.class);
+	}
+
+	@Test
 	public void it_should_create_new_object_instance() {
 		FooJpaObjectFactory factory = new FooJpaObjectFactory();
 		Foo foo = factory.get();
