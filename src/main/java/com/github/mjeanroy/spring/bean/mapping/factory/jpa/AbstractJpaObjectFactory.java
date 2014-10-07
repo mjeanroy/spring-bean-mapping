@@ -24,11 +24,12 @@
 
 package com.github.mjeanroy.spring.bean.mapping.factory.jpa;
 
-import javax.persistence.EntityManager;
-import java.io.Serializable;
-
 import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+
+import javax.persistence.EntityManager;
+import java.io.Serializable;
 
 /**
  * Factory that can be used to create jpa entity.
@@ -42,7 +43,7 @@ import com.github.mjeanroy.spring.bean.mapping.factory.AbstractObjectFactory;
  * @param <T> Type of entities.
  * @param <PK> Type of entities' primary key.
  */
-public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> {
+public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> implements ObjectFactory<T> {
 
 	/**
 	 * Class of entities' primary key.
@@ -74,7 +75,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	@Override
 	public T get(Object source) {
 		if (source == null) {
-			return get();
+			return null;
 		}
 
 		// Try to get id field
