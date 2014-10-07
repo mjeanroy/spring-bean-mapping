@@ -104,28 +104,21 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	}
 
 	@Override
-	public U convert(T source) {
-		return source == null ? null : doFrom(source);
+	public U from(T source) {
+		return source == null ? null : convert(source);
 	}
 
 	@Override
-	public Iterable<U> convert(Iterable<T> sources) {
-		return new LazyIterableMapper<U, T>(sources, this);
-	}
-
-	/**
-	 * Map source to object.
-	 * This method can be implemented assuming that source object
-	 * is not null.
-	 *
-	 * @param source Source object.
-	 * @return Destination object.
-	 */
-	protected U doFrom(T source) {
+	public U convert(T source) {
 		if (factory != null) {
 			return mapper.map(source, factory);
 		} else {
 			return mapper.map(source, klassU);
 		}
+	}
+
+	@Override
+	public Iterable<U> from(Iterable<T> sources) {
+		return new LazyIterableMapper<U, T>(sources, this);
 	}
 }

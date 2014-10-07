@@ -81,7 +81,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	}
 
 	@Override
-	public Collection<U> convert(Iterable<T> sources) {
+	public Collection<U> from(Iterable<T> sources) {
 		final Collection<U> results = initIterable(sources);
 		for (T source : sources) {
 			final U destination = convert(source);

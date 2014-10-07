@@ -45,6 +45,15 @@ public interface ObjectMapper<T, U> extends Converter<T, U> {
 	 * @param source Source object.
 	 * @return Destination object.
 	 */
+	U from(T source);
+
+	/**
+	 * Transform source object to destination object.
+	 * This method assumes that source object is NOT NULL.
+	 *
+	 * @param source Source object.
+	 * @return Destination object.
+	 */
 	U convert(T source);
 
 	/**
@@ -54,5 +63,5 @@ public interface ObjectMapper<T, U> extends Converter<T, U> {
 	 * @param sources Source objects.
 	 * @return Destination objects.
 	 */
-	Iterable<U> convert(Iterable<T> sources);
+	Iterable<U> from(Iterable<T> sources);
 }
