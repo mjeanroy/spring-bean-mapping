@@ -32,12 +32,25 @@ import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
  *
  * This implementation returns iterable of destination objects that will be
  * mapped during explicit iteration.
- * Default implementation is equivalent to a {@link com.github.mjeanroy.spring.bean.mapping.objects.LazyObjectMapper}.
+ * Default implementation is equivalent to a {@link AbstractLazyObjectMapper}.
+ *
+ * This class is an abstract class because it needs to be sub-classed to be able to use
+ * constructor without generic types.
  *
  * @param <T> Type of source objects.
  * @param <U> Type of destination objects.
  */
-public class LazyObjectMapper<T, U> extends AbstractLazyObjectMapper<T, U> implements ObjectMapper<T, U> {
+public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
+
+	/**
+	 * Create new lazy mapper.
+	 * Generic types will be detected at object creation.
+	 *
+	 * @param mapper Mapper used to map source to destination.
+	 */
+	public AbstractLazyObjectMapper(Mapper mapper) {
+		super(mapper);
+	}
 
 	/**
 	 * Create new lazy mapper.
@@ -46,7 +59,7 @@ public class LazyObjectMapper<T, U> extends AbstractLazyObjectMapper<T, U> imple
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	public LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+	public AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
 		super(mapper, klassT, klassU);
 	}
 
@@ -58,7 +71,7 @@ public class LazyObjectMapper<T, U> extends AbstractLazyObjectMapper<T, U> imple
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	public LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
+	public AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 }

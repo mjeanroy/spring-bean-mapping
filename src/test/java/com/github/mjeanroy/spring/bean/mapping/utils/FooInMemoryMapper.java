@@ -25,9 +25,9 @@
 package com.github.mjeanroy.spring.bean.mapping.utils;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.objects.InMemoryObjectMapper;
+import com.github.mjeanroy.spring.bean.mapping.objects.AbstractInMemoryObjectMapper;
 
-public class FooInMemoryMapper extends InMemoryObjectMapper<Foo, FooDto> implements FooMapper {
+public class FooInMemoryMapper extends AbstractInMemoryObjectMapper<Foo, FooDto> implements FooMapper {
 
 	public FooInMemoryMapper(Mapper mapper) {
 		super(mapper);

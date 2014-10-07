@@ -25,9 +25,9 @@
 package com.github.mjeanroy.spring.bean.mapping.utils;
 
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.objects.LazyObjectMapper;
+import com.github.mjeanroy.spring.bean.mapping.objects.AbstractLazyObjectMapper;
 
-public class FooLazyMapper extends LazyObjectMapper<Foo, FooDto> implements FooMapper {
+public class FooLazyMapper extends AbstractLazyObjectMapper<Foo, FooDto> implements FooMapper {
 
 	public FooLazyMapper(Mapper mapper) {
 		super(mapper);

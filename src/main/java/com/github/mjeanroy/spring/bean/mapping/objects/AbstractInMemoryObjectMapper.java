@@ -24,6 +24,9 @@
 
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 
@@ -36,10 +39,23 @@ import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
  *
  * Iterable can be explicitly cast to a collection.
  *
+ * This class is an abstract class because it needs to be sub-classed to be able to use
+ * constructor without generic types.
+ *
  * @param <T> Type of source objects.
  * @param <U> Type of destination objects.
  */
-public class InMemoryObjectMapper<T, U> extends AbstractInMemoryObjectMapper<T, U> implements ObjectMapper<T, U> {
+public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
+
+	/**
+	 * Create new in memory mapper.
+	 * Generic types will be detected at object creation.
+	 *
+	 * @param mapper Mapper used to map source to destination.
+	 */
+	protected AbstractInMemoryObjectMapper(Mapper mapper) {
+		super(mapper);
+	}
 
 	/**
 	 * Create new in memory mapper.
@@ -48,7 +64,7 @@ public class InMemoryObjectMapper<T, U> extends AbstractInMemoryObjectMapper<T, 
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	protected InMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+	protected AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
 		super(mapper, klassT, klassU);
 	}
 
@@ -60,7 +76,57 @@ public class InMemoryObjectMapper<T, U> extends AbstractInMemoryObjectMapper<T, 
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected InMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
+	protected AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		super(mapper, klassT, klassU, factory);
+	}
+
+	@Override
+	public Collection<U> convert(Iterable<T> sources) {
+		final Collection<U> results = initIterable(sources);
+		for (T source : sources) {
+			final U destination = convert(source);
+			results.add(destination);
+		}
+		return results;
+	}
+
+	/**
+	 * Init iterable collection object.
+	 * By default, this method create a new array list.
+	 * Initial capacity of array list is defined by {@link #initialCapacity(Iterable)} method.
+	 *
+	 * Collection returned must be empty (since it will be filled later).
+	 * Source object can be used to compute target collection size.
+	 *
+	 * @param sources Source objects.
+	 * @return Empty destination collection.
+	 */
+	protected Collection<U> initIterable(Iterable<T> sources) {
+		final int size = initialCapacity(sources);
+		return new ArrayList<U>(size);
+	}
+
+	/**
+	 * Try to compute initial capacity of destination collections from
+	 * source collection.
+	 *
+	 * Default is:
+	 * - If iterable parameter is an instance of collection, {@link java.util.Collection#size()} is used.
+	 * - Otherwise 10 is returned.
+	 *
+	 * @param iterables Source objects.
+	 * @return Initial capacity of destination.
+	 */
+	protected int initialCapacity(Iterable<T> iterables) {
+		final int size;
+
+		if (iterables instanceof Collection) {
+			return ((Collection) iterables).size();
+		}
+		else {
+			size = 10;
+		}
+
+		return size;
 	}
 }

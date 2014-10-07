@@ -24,19 +24,24 @@
 
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Test;
 
+import com.github.mjeanroy.spring.bean.mapping.Mapper;
+import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+import com.github.mjeanroy.spring.bean.mapping.factory.reflection.ReflectionObjectFactory;
+import com.github.mjeanroy.spring.bean.mapping.impl.spring.SpringMapper;
 import com.github.mjeanroy.spring.bean.mapping.utils.Foo;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooDto;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooInMemoryMapper;
 import com.github.mjeanroy.spring.bean.mapping.utils.FooMapper;
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.spring.SpringMapper;
 
 public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
@@ -67,5 +72,32 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 		verify(mapper, times(2)).map(any(), any());
 		verify(mapper).map(same(foos.get(0)), any());
 		verify(mapper).map(same(foos.get(1)), any());
+	}
+
+	@Test
+	public void it_should_build_in_memory_mapper_with_explicit_generic_types() throws Exception {
+		InMemoryObjectMapper<Foo, FooDto> objectMapper = new InMemoryObjectMapper<Foo, FooDto>(mapper, Foo.class, FooDto.class);
+
+		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
+		Class klassT = (Class) readField(objectMapper, "klassT", true);
+		Class klassU = (Class) readField(objectMapper, "klassU", true);
+
+		assertThat(factory).isNull();
+		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
+		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
+	}
+
+	@Test
+	public void it_should_build_in_memory_mapper_with_explicit_generic_types_and_factory() throws Exception {
+		ObjectFactory<FooDto> fact = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		InMemoryObjectMapper<Foo, FooDto> objectMapper = new InMemoryObjectMapper<Foo, FooDto>(mapper, Foo.class, FooDto.class, fact);
+
+		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
+		Class klassT = (Class) readField(objectMapper, "klassT", true);
+		Class klassU = (Class) readField(objectMapper, "klassU", true);
+
+		assertThat(factory).isNotNull().isSameAs(fact);
+		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
+		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
 	}
 }
