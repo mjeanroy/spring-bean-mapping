@@ -45,10 +45,6 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 
 	/**
 	 * Create new factory.
-	 *
-	 * Source objects must implements {@link IdentifiableObject} to get
-	 * id of target object.
-	 *
 	 * Class of objects to create will be auto-detected at factory instantiation.
 	 */
 	public AbstractJpaObjectFactory() {
@@ -57,9 +53,6 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 
 	/**
 	 * Create new factory.
-	 *
-	 * Source objects must implements {@link IdentifiableObject} to get
-	 * id of target object.
 	 *
 	 * @param klass Class of objects to create.
 	 */
