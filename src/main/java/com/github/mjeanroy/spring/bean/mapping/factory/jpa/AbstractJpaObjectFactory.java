@@ -31,6 +31,8 @@ import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Factory that can be used to create jpa entity.
  *
@@ -68,7 +70,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	 */
 	public AbstractJpaObjectFactory(Class<T> klass, Class<PK> pkClass) {
 		super(klass);
-		this.pkClass = pkClass;
+		this.pkClass = notNull(pkClass, "PK class must not be null");
 	}
 
 	@SuppressWarnings("unchecked")

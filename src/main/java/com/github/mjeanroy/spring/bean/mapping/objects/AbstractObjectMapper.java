@@ -29,6 +29,8 @@ import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 import com.github.mjeanroy.spring.bean.mapping.iterables.LazyIterableMapper;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Simple abstraction that defines commons methods to object mapper implementations.
  * These mappers offers class level type checking with generic and can be used to
@@ -68,7 +70,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectMapper(Mapper mapper) {
-		this.mapper = mapper;
+		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassT = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
 		this.klassU = (Class<U>) ClassUtils.getGenericType(getClass(), 1);
 		this.factory = null;
@@ -82,9 +84,9 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @param klassU Destination type.
 	 */
 	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		this.mapper = mapper;
-		this.klassT = klassT;
-		this.klassU = klassU;
+		this.mapper = notNull(mapper, "Mapper must not be null");
+		this.klassT = notNull(klassT, "Class T must bot be null");
+		this.klassU = notNull(klassU, "Class U must bot be null");
 		this.factory = null;
 	}
 
@@ -97,10 +99,10 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @param factory Factory used to instantiate destination object.
 	 */
 	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
-		this.mapper = mapper;
-		this.klassT = klassT;
-		this.klassU = klassU;
-		this.factory = factory;
+		this.mapper = notNull(mapper, "Mapper must not be null");
+		this.klassT = notNull(klassT, "Class T must bot be null");
+		this.klassU = notNull(klassU, "Class U must bot be null");
+		this.factory = notNull(factory, "Factory must bot be null");
 	}
 
 	@Override

@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.io.Serializable;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Default implementation for jpa factory.
  *
@@ -63,7 +65,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 */
 	public AbstractDefaultJpaFactory(Converter<Object, PK> converter) {
 		super();
-		this.pkConverter = converter;
+		this.pkConverter = notNull(converter, "Converter must not be null");
 	}
 
 	/**
@@ -86,7 +88,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 */
 	public AbstractDefaultJpaFactory(Class<T> klass, Class<PK> pkClass, Converter<Object, PK> converter) {
 		super(klass, pkClass);
-		this.pkConverter = converter;
+		this.pkConverter = notNull(converter, "Converter must not be null");
 	}
 
 	@Override
@@ -124,7 +126,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.appContext = applicationContext;
+		this.appContext = notNull(applicationContext, "Application context must not be null");
 	}
 
 	/**

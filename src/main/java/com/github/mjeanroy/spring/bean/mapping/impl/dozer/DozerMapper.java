@@ -28,6 +28,8 @@ import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
 import org.dozer.DozerBeanMapper;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Bean mapper implementation using Dozer framework.
  */
@@ -45,7 +47,7 @@ public class DozerMapper extends AbstractMapper implements Mapper {
 	 * @param mapper Dozer mapper instance.
 	 */
 	public DozerMapper(DozerBeanMapper mapper) {
-		this.mapper = mapper;
+		this.mapper = notNull(mapper, "Dozer bean mapper must not be null");
 	}
 
 	@Override

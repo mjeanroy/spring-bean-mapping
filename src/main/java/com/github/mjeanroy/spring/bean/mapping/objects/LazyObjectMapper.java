@@ -27,6 +27,8 @@ package com.github.mjeanroy.spring.bean.mapping.objects;
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Lazy mapper implementation.
  *
@@ -47,7 +49,11 @@ public class LazyObjectMapper<T, U> extends AbstractLazyObjectMapper<T, U> imple
 	 * @param klassU Destination type.
 	 */
 	public LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		super(mapper, klassT, klassU);
+		super(
+				notNull(mapper, "Mapper must not be null"),
+				notNull(klassT, "Class T must bot be null"),
+				notNull(klassU, "Class U must not be null")
+		);
 	}
 
 	/**
@@ -59,6 +65,11 @@ public class LazyObjectMapper<T, U> extends AbstractLazyObjectMapper<T, U> imple
 	 * @param factory Factory used to instantiate destination object.
 	 */
 	public LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
-		super(mapper, klassT, klassU, factory);
+		super(
+				notNull(mapper, "Mapper must not be null"),
+				notNull(klassT, "Class T must bot be null"),
+				notNull(klassU, "Class U must not be null"),
+				notNull(factory, "Factory must not be null")
+		);
 	}
 }

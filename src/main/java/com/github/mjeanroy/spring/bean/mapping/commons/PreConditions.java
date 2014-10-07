@@ -22,36 +22,32 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.bean.mapping.impl.modelmapper;
-
-import com.github.mjeanroy.spring.bean.mapping.Mapper;
-import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
-import org.modelmapper.ModelMapper;
-
-import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+package com.github.mjeanroy.spring.bean.mapping.commons;
 
 /**
- * Bean mapper implementation using ModelMapper framework.
+ * Static pre-conditions utilities.
  */
-public class ModelMapperMapper extends AbstractMapper implements Mapper {
+public final class PreConditions {
 
-	/**
-	 * Original ModelMapper mapper.
-	 * This mapper will be used internally to map bean fields.
-	 */
-	private final ModelMapper modelMapper;
-
-	/**
-	 * Build new mapper.
-	 *
-	 * @param modelMapper ModelMapper mapper instance.
-	 */
-	public ModelMapperMapper(ModelMapper modelMapper) {
-		this.modelMapper = notNull(modelMapper, "Model mapper must not be null");
+	private PreConditions() {
 	}
 
-	@Override
-	public <T, U> void map(T source, U destination) {
-		modelMapper.map(source, destination);
+	/**
+	 * Check that a given object is not null.
+	 * If object is null, a {@link java.lang.NullPointerException} is thrown
+	 * with given message.
+	 * If object is not null, it is automatically returns.
+	 *
+	 * @param object  Object to check.
+	 * @param message Exception message.
+	 * @param <T>     Object Generic Type.
+	 * @return Non null object.
+	 * @throws java.lang.NullPointerException if object is null.
+	 */
+	public static <T> T notNull(T object, String message) {
+		if (object == null) {
+			throw new NullPointerException(message);
+		}
+		return object;
 	}
 }

@@ -28,6 +28,8 @@ import com.github.mjeanroy.spring.bean.mapping.objects.ObjectMapper;
 
 import java.util.Iterator;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Iterator that should be used with {@link LazyIterableIterator}.
  *
@@ -56,8 +58,8 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 	 * @param mapper Mapper.
 	 */
 	LazyIterableIterator(Iterator<T> iterator, ObjectMapper<T, U> mapper) {
-		this.iterator = iterator;
-		this.mapper = mapper;
+		this.iterator = notNull(iterator, "Original iterator must not be null");
+		this.mapper = notNull(mapper, "Mapper must not be null");
 	}
 
 	@Override

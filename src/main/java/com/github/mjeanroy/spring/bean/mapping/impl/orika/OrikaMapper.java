@@ -28,6 +28,8 @@ import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.impl.AbstractMapper;
 import ma.glasnost.orika.MapperFacade;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Bean mapper implementation using Orika framework.
  */
@@ -45,7 +47,7 @@ public class OrikaMapper extends AbstractMapper implements Mapper {
 	 * @param mapperFacade Orika mapper instance.
 	 */
 	public OrikaMapper(MapperFacade mapperFacade) {
-		this.mapperFacade = mapperFacade;
+		this.mapperFacade = notNull(mapperFacade, "Orika facade must not be null");
 	}
 
 	@Override

@@ -24,11 +24,11 @@
 
 package com.github.mjeanroy.spring.bean.mapping.objects;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.github.mjeanroy.spring.bean.mapping.Mapper;
 import com.github.mjeanroy.spring.bean.mapping.factory.ObjectFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * In memory mapper implementation.

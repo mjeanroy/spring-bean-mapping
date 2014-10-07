@@ -28,6 +28,8 @@ import org.springframework.beans.BeanUtils;
 
 import com.github.mjeanroy.spring.bean.mapping.commons.ClassUtils;
 
+import static com.github.mjeanroy.spring.bean.mapping.commons.PreConditions.notNull;
+
 /**
  * Abstraction of factory that define commons methods to factories.
  *
@@ -47,7 +49,7 @@ public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
 
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectFactory(Class klass) {
-		this.klass = klass;
+		this.klass = notNull(klass, "Target class must not be null");
 	}
 
 	@Override
