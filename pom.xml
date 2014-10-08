@@ -36,10 +36,10 @@
 	</parent>
 
 	<groupId>com.github.mjeanroy</groupId>
-	<artifactId>spring-bean-mapping</artifactId>
+	<artifactId>spring-mappers</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<url>https://github.com/mjeanroy/spring-bean-mapping</url>
+	<url>https://github.com/mjeanroy/spring-mappers</url>
 
 	<licenses>
 		<license>
@@ -58,9 +58,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git@github.com:mjeanroy/spring-bean-mapping.git</connection>
-		<developerConnection>scm:git:git@github.com:mjeanroy/spring-bean-mapping.git</developerConnection>
-		<url>https://github.com/mjeanroy/spring-bean-mapping</url>
+		<connection>scm:git:git@github.com:mjeanroy/spring-mappers.git</connection>
+		<developerConnection>scm:git:git@github.com:mjeanroy/spring-mappers.git</developerConnection>
+		<url>https://github.com/mjeanroy/spring-mappers</url>
 	</scm>
 
 	<properties>
