@@ -24,6 +24,8 @@
 
 package com.github.mjeanroy.spring.mappers.configuration;
 
+import com.github.mjeanroy.spring.mappers.Mapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -32,4 +34,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public abstract class AbstractMapperConfiguration {
+
+	/**
+	 * Build mapper implementation.
+	 *
+	 * @return Mapper.
+	 */
+	@Bean
+	public abstract Mapper mapper();
 }

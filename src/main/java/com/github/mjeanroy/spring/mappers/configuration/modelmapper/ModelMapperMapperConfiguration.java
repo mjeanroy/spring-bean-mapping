@@ -35,6 +35,7 @@ import org.springframework.context.annotation.Configuration;
 public class ModelMapperMapperConfiguration extends AbstractMapperConfiguration {
 
 	@Bean
+	@Override
 	public Mapper mapper() {
 		return new ModelMapperMapper(modelMapper());
 	}
