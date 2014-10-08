@@ -24,9 +24,13 @@
 
 package com.github.mjeanroy.spring.mappers.utils;
 
+import java.util.Map;
+
 public interface FooMapper {
 
 	FooDto from(Foo foo);
 
 	Iterable<FooDto> from(Iterable<Foo> iterables);
+
+	<K> Map<K, FooDto> from(Map<K, Foo> sources);
 }

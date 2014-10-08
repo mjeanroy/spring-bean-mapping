@@ -29,7 +29,9 @@ import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -77,15 +79,9 @@ public abstract class AbstractObjectMapperTest {
 	}
 
 	@Test
-	public void it_should_iterable_to_iterable() throws Exception {
-		Long id1 = 1L;
-		String name1 = "foo1";
-
-		Long id2 = 2L;
-		String name2 = "foo2";
-
-		Foo foo1 = new Foo(id1, name1);
-		Foo foo2 = new Foo(id2, name2);
+	public void it_should_transform_source_iterable_to_destination_iterable() throws Exception {
+		Foo foo1 = new Foo(1L, "foo1");
+		Foo foo2 = new Foo(2L, "foo2");
 		List<Foo> foos = asList(foo1, foo2);
 
 		FooMapper fooMapper = fooMapper();
@@ -106,12 +102,36 @@ public abstract class AbstractObjectMapperTest {
 		checkAfterIteration(results, foos);
 
 		FooDto fooDto1 = results.get(0);
-		assertThat(fooDto1.getId()).isEqualTo(id1);
-		assertThat(fooDto1.getName()).isEqualTo(name1);
+		assertThat(fooDto1.getId()).isEqualTo(foo1.getId());
+		assertThat(fooDto1.getName()).isEqualTo(foo1.getName());
 
 		FooDto fooDto2 = results.get(1);
-		assertThat(fooDto2.getId()).isEqualTo(id2);
-		assertThat(fooDto2.getName()).isEqualTo(name2);
+		assertThat(fooDto2.getId()).isEqualTo(foo2.getId());
+		assertThat(fooDto2.getName()).isEqualTo(foo2.getName());
+	}
+
+	@Test
+	public void it_should_transform_source_map_to_destination_map() throws Exception {
+		Foo foo1 = new Foo(1L, "foo1");
+		Foo foo2 = new Foo(2L, "foo2");
+
+		Map<Long, Foo> foos = new HashMap<Long, Foo>();
+		foos.put(foo1.getId(), foo1);
+		foos.put(foo2.getId(), foo2);
+
+		FooMapper fooMapper = fooMapper();
+		Map<Long, FooDto> foosDto = fooMapper.from(foos);
+
+		assertThat(foosDto).isNotNull().isNotEmpty();
+		assertThat(foosDto.size()).isEqualTo(foos.size());
+
+		FooDto dto1 = foosDto.get(foo1.getId());
+		assertThat(dto1.getId()).isEqualTo(foo1.getId());
+		assertThat(dto1.getName()).isEqualTo(foo1.getName());
+
+		FooDto dto2 = foosDto.get(foo2.getId());
+		assertThat(dto2.getId()).isEqualTo(foo2.getId());
+		assertThat(dto2.getName()).isEqualTo(foo2.getName());
 	}
 
 	protected abstract void checkBeforeIteration(Iterable<FooDto> fooDtos, List<Foo> foos);

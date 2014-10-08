@@ -24,12 +24,15 @@
 
 package com.github.mjeanroy.spring.mappers.objects;
 
+import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
-
-import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 
 /**
  * Simple abstraction that defines commons methods to object mapper implementations.
@@ -122,5 +125,30 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	@Override
 	public Iterable<U> from(Iterable<T> sources) {
 		return new LazyIterableMapper<U, T>(sources, this);
+	}
+
+	@Override
+	public <K> Map<K, U> from(Map<K, T> sources) {
+		Map<K, U> map = buildDestinationMap(sources);
+		for (Map.Entry<K, T> entry : sources.entrySet()) {
+			U destination = from(entry.getValue());
+			map.put(entry.getKey(), destination);
+		}
+		return map;
+	}
+
+	/**
+	 * Build destination map.
+	 * Source map is used to build destination map (to get target
+	 * size).
+	 *
+	 * This method can be overriden to build map in another way.
+	 *
+	 * @param sources Source map.
+	 * @param <K> Type of key in map.
+	 * @return Destination map (empty).
+	 */
+	protected <K> Map<K, U> buildDestinationMap(Map<K, T> sources) {
+		return new HashMap<K, U>(sources.size());
 	}
 }

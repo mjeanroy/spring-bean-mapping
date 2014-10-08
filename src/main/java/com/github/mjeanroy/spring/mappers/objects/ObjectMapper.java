@@ -24,6 +24,8 @@
 
 package com.github.mjeanroy.spring.mappers.objects;
 
+import java.util.Map;
+
 import org.springframework.core.convert.converter.Converter;
 
 /**
@@ -64,4 +66,13 @@ public interface ObjectMapper<T, U> extends Converter<T, U> {
 	 * @return Destination objects.
 	 */
 	Iterable<U> from(Iterable<T> sources);
+
+	/**
+	 * Transform map structure of type U to new map structure
+	 * of type T.
+	 *
+	 * @param sources Source objects.
+	 * @return Destination objects.
+	 */
+	<K> Map<K, U> from(Map<K, T> sources);
 }
