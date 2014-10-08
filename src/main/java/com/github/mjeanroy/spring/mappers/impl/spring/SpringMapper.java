@@ -24,9 +24,10 @@
 
 package com.github.mjeanroy.spring.mappers.impl.spring;
 
+import org.springframework.beans.BeanUtils;
+
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
-import org.springframework.beans.BeanUtils;
 
 /**
  * Bean mapper implementation using only spring static
@@ -43,5 +44,12 @@ public class SpringMapper extends AbstractMapper implements Mapper {
 	@Override
 	public <T, U> void map(T source, U destination) {
 		BeanUtils.copyProperties(source, destination);
+	}
+
+	@Override
+	public <T, U> U map(T source, Class<U> klass) {
+		U destination = BeanUtils.instantiateClass(klass);
+		map(source, destination);
+		return destination;
 	}
 }
