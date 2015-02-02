@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractMapperTest {
 
-	protected abstract Mapper mapper();
+	protected abstract Mapper<?> mapper();
 
 	@Test
 	public void it_should_map_object_to_object() {

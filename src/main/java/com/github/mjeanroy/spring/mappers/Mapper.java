@@ -31,7 +31,7 @@ import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
  * This interface define simple contract that needs to be
  * implemented to map bean to another bean.
  */
-public interface Mapper {
+public interface Mapper<X> {
 
 	/**
 	 * Map bean to another bean.
@@ -68,4 +68,15 @@ public interface Mapper {
 	 * @param <U>         Target type.
 	 */
 	<T, U> void map(T source, U destination);
+
+	/**
+	 * Get object that is internally used to execute
+	 * bean transformation.
+	 *
+	 * Implementation should return any object, including null if no internal
+	 * object are used. A valid implementation is to return null or {@link this}.
+	 *
+	 * @return Delegate implementation.
+	 */
+	X getDelegate();
 }

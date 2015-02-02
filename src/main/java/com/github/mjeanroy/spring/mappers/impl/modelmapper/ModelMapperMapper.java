@@ -24,17 +24,16 @@
 
 package com.github.mjeanroy.spring.mappers.impl.modelmapper;
 
-import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
-
-import org.modelmapper.ModelMapper;
-
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
+import org.modelmapper.ModelMapper;
+
+import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 
 /**
  * Bean mapper implementation using ModelMapper framework.
  */
-public class ModelMapperMapper extends AbstractMapper implements Mapper {
+public class ModelMapperMapper extends AbstractMapper<ModelMapper> implements Mapper<ModelMapper> {
 
 	/**
 	 * Original ModelMapper mapper.
@@ -59,5 +58,10 @@ public class ModelMapperMapper extends AbstractMapper implements Mapper {
 	@Override
 	public <T, U> U map(T source, Class<U> klass) {
 		return modelMapper.map(source, klass);
+	}
+
+	@Override
+	public ModelMapper getDelegate() {
+		return modelMapper;
 	}
 }

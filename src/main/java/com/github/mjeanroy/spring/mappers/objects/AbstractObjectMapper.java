@@ -50,7 +50,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * Mapper that will be used internally to map source object
 	 * to destination object.
 	 */
-	protected final Mapper mapper;
+	protected final Mapper<?> mapper;
 
 	/**
 	 * Class of source objects.

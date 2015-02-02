@@ -31,7 +31,7 @@ import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
  * Bean mapper implementation using only spring static
  * methods (from {@link org.springframework.beans.BeanUtils} class).
  */
-public class SpringMapper extends AbstractMapper implements Mapper {
+public class SpringMapper extends AbstractMapper<SpringFacadeMapper> implements Mapper<SpringFacadeMapper> {
 
 	/**
 	 * Internal mapper object.
@@ -53,5 +53,10 @@ public class SpringMapper extends AbstractMapper implements Mapper {
 	@Override
 	public <T, U> U map(T source, Class<U> klass) {
 		return mapper.map(source, klass);
+	}
+
+	@Override
+	public SpringFacadeMapper getDelegate() {
+		return mapper;
 	}
 }

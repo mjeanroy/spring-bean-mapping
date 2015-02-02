@@ -24,17 +24,16 @@
 
 package com.github.mjeanroy.spring.mappers.impl.dozer;
 
-import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
-
-import org.dozer.DozerBeanMapper;
-
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
+import org.dozer.DozerBeanMapper;
+
+import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 
 /**
  * Bean mapper implementation using Dozer framework.
  */
-public class DozerMapper extends AbstractMapper implements Mapper {
+public class DozerMapper extends AbstractMapper<DozerBeanMapper> implements Mapper<DozerBeanMapper> {
 
 	/**
 	 * Original Dozer Mapper.
@@ -59,5 +58,10 @@ public class DozerMapper extends AbstractMapper implements Mapper {
 	@Override
 	public <T, U> U map(T source, Class<U> klass) {
 		return mapper.map(source, klass);
+	}
+
+	@Override
+	public DozerBeanMapper getDelegate() {
+		return mapper;
 	}
 }
