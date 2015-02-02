@@ -24,15 +24,17 @@
 
 package com.github.mjeanroy.spring.mappers.objects;
 
-import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import com.github.mjeanroy.spring.mappers.iterables.Iterables;
 import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 
 /**
  * Simple abstraction that defines commons methods to object mapper implementations.
@@ -124,7 +126,8 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public Iterable<U> from(Iterable<T> sources) {
-		return new LazyIterableMapper<U, T>(sources, this);
+		List<T> list = Iterables.toList(sources);
+		return new LazyIterableMapper<U, T>(list, this);
 	}
 
 	@Override

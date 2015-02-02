@@ -26,6 +26,7 @@ package com.github.mjeanroy.spring.mappers.iterables;
 
 import com.github.mjeanroy.spring.mappers.objects.ObjectMapper;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
@@ -46,7 +47,7 @@ public class LazyIterableMapper<U, T> implements Iterable<U> {
 	 * Original iterable structure.
 	 * Each elements will be automatically mapped during iteration.
 	 */
-	private final Iterable<T> from;
+	private final Collection<T> from;
 
 	/**
 	 * Mapper used to map original iterable structure to new elements.
@@ -59,7 +60,7 @@ public class LazyIterableMapper<U, T> implements Iterable<U> {
 	 * @param from Original iterable structure containing elements to map.
 	 * @param mapper Mapper that will be used to map original objects to new objects.
 	 */
-	public LazyIterableMapper(Iterable<T> from, ObjectMapper<T, U> mapper) {
+	public LazyIterableMapper(Collection<T> from, ObjectMapper<T, U> mapper) {
 		this.from = notNull(from, "Original iterable must not be null");
 		this.mapper = notNull(mapper, "Mapper must not be null");
 	}
