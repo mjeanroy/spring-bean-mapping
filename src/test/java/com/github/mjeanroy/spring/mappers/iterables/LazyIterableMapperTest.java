@@ -24,24 +24,27 @@
 
 package com.github.mjeanroy.spring.mappers.iterables;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
-import static org.apache.commons.lang3.reflect.FieldUtils.readField;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.util.Iterator;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
 import com.github.mjeanroy.spring.mappers.objects.ObjectMapper;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
 import com.github.mjeanroy.spring.mappers.utils.FooLazyMapper;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Iterator;
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
 public class LazyIterableMapperTest {
@@ -79,7 +82,8 @@ public class LazyIterableMapperTest {
 		Foo foo2 = new Foo(2L, "foo2");
 		List<Foo> list = asList(foo1, foo2);
 
-		Mapper mapper = spy(new SpringMapper());
+		SpringMapper springMapper = new SpringMapper();
+		Mapper mapper = spy(springMapper);
 		ObjectMapper<Foo, FooDto> fooMapper = new FooLazyMapper(mapper);
 
 		LazyIterableMapper<FooDto, Foo> lazyIterableMapper = new LazyIterableMapper<FooDto, Foo>(list, fooMapper);
@@ -91,7 +95,7 @@ public class LazyIterableMapperTest {
 			Foo foo = list.get(i);
 			assertThat(dto.getId()).isEqualTo(foo.getId());
 			assertThat(dto.getName()).isEqualTo(foo.getName());
-			verify(mapper).map(same(foo), any());
+			verify(mapper).map(foo, FooDto.class);
 			i++;
 		}
 	}

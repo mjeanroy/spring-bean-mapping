@@ -65,16 +65,16 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
 	@Override
 	protected void checkBeforeIteration(Iterable<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(), any());
-		verify(mapper).map(same(foos.get(0)), any());
-		verify(mapper).map(same(foos.get(1)), any());
+		verify(mapper, times(2)).map(any(Foo.class), same(FooDto.class));
+		verify(mapper).map(foos.get(0), FooDto.class);
+		verify(mapper).map(foos.get(1), FooDto.class);
 	}
 
 	@Override
 	protected void checkAfterIteration(List<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(), any());
-		verify(mapper).map(same(foos.get(0)), any());
-		verify(mapper).map(same(foos.get(1)), any());
+		verify(mapper, times(2)).map(any(Foo.class), same(FooDto.class));
+		verify(mapper).map(foos.get(0), FooDto.class);
+		verify(mapper).map(foos.get(1), FooDto.class);
 	}
 
 	@Test

@@ -24,34 +24,46 @@
 
 package com.github.mjeanroy.spring.mappers.impl.spring;
 
-import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
+import com.github.mjeanroy.spring.mappers.utils.Foo;
+import com.github.mjeanroy.spring.mappers.utils.FooDto;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
- */
-public class SpringMapper extends AbstractMapper implements Mapper {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	/**
-	 * Internal mapper object.
-	 */
-	private final SpringFacadeMapper mapper;
+public class SpringFacadeMapperTest {
 
-	/**
-	 * Build new mapper.
-	 */
-	public SpringMapper() {
-		this.mapper = new SpringFacadeMapper();
+	private SpringFacadeMapper springFacadeMapper;
+
+	@Before
+	public void setUp() {
+		springFacadeMapper = new SpringFacadeMapper();
 	}
 
-	@Override
-	public <T, U> void map(T source, U destination) {
-		mapper.map(source, destination);
+	@Test
+	public void it_should_map_object_to_object() {
+		Long id = 1L;
+		String name = "foo";
+		Foo foo = new Foo(id, name);
+
+		FooDto fooDto = springFacadeMapper.map(foo, FooDto.class);
+
+		assertThat(fooDto).isNotNull();
+		assertThat(fooDto.getId()).isNotNull().isEqualTo(id);
+		assertThat(fooDto.getName()).isNotNull().isEqualTo(name);
 	}
 
-	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return mapper.map(source, klass);
+	@Test
+	public void it_should_map_object_to_instance_object() {
+		Long id = 1L;
+		String name = "foo";
+		Foo foo = new Foo(id, name);
+
+		FooDto fooDto = new FooDto();
+		springFacadeMapper.map(foo, fooDto);
+
+		assertThat(fooDto).isNotNull();
+		assertThat(fooDto.getId()).isNotNull().isEqualTo(id);
+		assertThat(fooDto.getName()).isNotNull().isEqualTo(name);
 	}
 }

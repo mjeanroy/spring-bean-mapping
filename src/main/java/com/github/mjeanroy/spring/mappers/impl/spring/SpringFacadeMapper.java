@@ -24,34 +24,40 @@
 
 package com.github.mjeanroy.spring.mappers.impl.spring;
 
-import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
+import org.springframework.beans.BeanUtils;
 
 /**
- * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
+ * Spring mapper implementation.
  */
-public class SpringMapper extends AbstractMapper implements Mapper {
+public class SpringFacadeMapper {
 
 	/**
-	 * Internal mapper object.
+	 * Copy source properties (a.k.a getter values) to
+	 * destination object.
+	 *
+	 * @param source Source object.
+	 * @param destination Destination object.
+	 * @param <T> Type of source objects.
+	 * @param <U> Type of destination objects.
 	 */
-	private final SpringFacadeMapper mapper;
-
-	/**
-	 * Build new mapper.
-	 */
-	public SpringMapper() {
-		this.mapper = new SpringFacadeMapper();
-	}
-
-	@Override
 	public <T, U> void map(T source, U destination) {
-		mapper.map(source, destination);
+		BeanUtils.copyProperties(source, destination);
 	}
 
-	@Override
+	/**
+	 * Create instance of destination object and copy
+	 * source properties (a.k.a getter values of source
+	 * object to destination object).
+	 *
+	 * @param source Source object.
+	 * @param klass Class of destination object to instantiate.
+	 * @param <T> Type of source object.
+	 * @param <U> Type of destination object.
+	 * @return New instance of destination object.
+	 */
 	public <T, U> U map(T source, Class<U> klass) {
-		return mapper.map(source, klass);
+		U destination = BeanUtils.instantiateClass(klass);
+		map(source, destination);
+		return destination;
 	}
 }
