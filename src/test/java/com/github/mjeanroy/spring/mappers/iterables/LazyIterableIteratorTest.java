@@ -35,7 +35,6 @@ import java.util.Iterator;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -92,17 +91,9 @@ public class LazyIterableIteratorTest {
 		verify(mapper).convert(foo);
 	}
 
-	@Test
-	public void it_should_remove_and_go_to_next_element_if_there_is_a_next() {
+	@Test(expected = UnsupportedOperationException.class)
+	public void it_should_not_remove() {
 		when(iterator.hasNext()).thenReturn(true);
 		lazyIterator.remove();
-		verify(iterator).next();
-	}
-
-	@Test
-	public void it_should_remove_and_do_not_go_to_next_element_if_there_is_not_a_next() {
-		when(iterator.hasNext()).thenReturn(false);
-		lazyIterator.remove();
-		verify(iterator, never()).next();
 	}
 }

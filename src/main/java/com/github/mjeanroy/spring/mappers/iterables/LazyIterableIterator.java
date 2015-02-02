@@ -75,9 +75,6 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 
 	@Override
 	public void remove() {
-		// Just skip element
-		if (iterator.hasNext()) {
-			iterator.next();
-		}
+		throw new UnsupportedOperationException();
 	}
 }
