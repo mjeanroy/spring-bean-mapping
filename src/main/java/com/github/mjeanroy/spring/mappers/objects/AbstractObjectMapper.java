@@ -28,7 +28,7 @@ import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.Iterables;
-import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
+import com.github.mjeanroy.spring.mappers.iterables.LazyUnmodifiableCollectionMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -126,8 +126,12 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public Iterable<U> from(Iterable<T> sources) {
+		// Copy to list implementation, this is not a real lazy implementation since
+		// original list must be copied in memory even if it is not already a collection
+		// If original sources elements is already a collection, this is not really
+		// important, since it is already in memory !
 		List<T> list = Iterables.toList(sources);
-		return new LazyIterableMapper<U, T>(list, this);
+		return new LazyUnmodifiableCollectionMapper<U, T>(list, this);
 	}
 
 	@Override

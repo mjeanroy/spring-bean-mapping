@@ -26,6 +26,7 @@ package com.github.mjeanroy.spring.mappers.objects;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
 
 /**
  * Lazy mapper implementation.
@@ -73,5 +74,11 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 */
 	public AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		super(mapper, klassT, klassU, factory);
+	}
+
+	@Override
+	public Iterable<U> from(Iterable<T> sources) {
+		// Do not copy to a collection, keep it really lazy !
+		return new LazyIterableMapper<U, T>(sources, this);
 	}
 }

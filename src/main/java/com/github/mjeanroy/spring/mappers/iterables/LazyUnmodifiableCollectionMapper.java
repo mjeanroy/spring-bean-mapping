@@ -26,6 +26,8 @@ package com.github.mjeanroy.spring.mappers.iterables;
 
 import com.github.mjeanroy.spring.mappers.objects.ObjectMapper;
 
+import java.util.AbstractCollection;
+import java.util.Collection;
 import java.util.Iterator;
 
 import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
@@ -37,16 +39,24 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * This iterable can be considered as a lazy iterable implement since it
  * does not map all elements at instantiation but on only during iteration.
  *
+ * Note that this iterable implementation is also a collection implementation, but be
+ * careful that this implementation is an unmodifiable collection (it will throw
+ * an {@link java.lang.UnsupportedOperationException} for method that will try to
+ * modify internal structure).
+ *
+ * This is a good implementation when {@link #size()} or {@link #isEmpty()}
+ * method must be call often.
+ *
  * @param <U> Type of iterable elements.
  * @param <T> Type of original iterable elements.
  */
-public class LazyIterableMapper<U, T> implements Iterable<U> {
+public class LazyUnmodifiableCollectionMapper<U, T> extends AbstractCollection<U> implements Collection<U>, Iterable<U> {
 
 	/**
 	 * Original iterable structure.
 	 * Each elements will be automatically mapped during iteration.
 	 */
-	private final Iterable<T> from;
+	private final Collection<T> from;
 
 	/**
 	 * Mapper used to map original iterable structure to new elements.
@@ -56,16 +66,56 @@ public class LazyIterableMapper<U, T> implements Iterable<U> {
 	/**
 	 * Create new lazy iterable.
 	 *
-	 * @param iterator Original iterable structure containing elements to map.
+	 * @param from Original iterable structure containing elements to map.
 	 * @param mapper Mapper that will be used to map original objects to new objects.
 	 */
-	public LazyIterableMapper(Iterable<T> iterator, ObjectMapper<T, U> mapper) {
-		this.from = notNull(iterator, "Original iterator must not be null");
+	public LazyUnmodifiableCollectionMapper(Collection<T> from, ObjectMapper<T, U> mapper) {
+		this.from = notNull(from, "Original iterable must not be null");
 		this.mapper = notNull(mapper, "Mapper must not be null");
 	}
 
 	@Override
 	public Iterator<U> iterator() {
 		return new LazyIterableIterator<U, T>(from.iterator(), mapper);
+	}
+
+	@Override
+	public int size() {
+		return from.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return from.isEmpty();
+	}
+
+	@Override
+	public boolean add(U u) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends U> collection) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> collection) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> collection) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void clear() {
+		throw new UnsupportedOperationException();
 	}
 }
