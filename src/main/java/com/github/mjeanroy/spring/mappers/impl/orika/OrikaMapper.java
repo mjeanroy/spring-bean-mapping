@@ -33,7 +33,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 /**
  * Bean mapper implementation using Orika framework.
  */
-public class OrikaMapper extends AbstractMapper<MapperFacade> implements Mapper<MapperFacade> {
+public class OrikaMapper extends AbstractMapper<MapperFacade> implements Mapper {
 
 	/**
 	 * Original Orika Mapper.

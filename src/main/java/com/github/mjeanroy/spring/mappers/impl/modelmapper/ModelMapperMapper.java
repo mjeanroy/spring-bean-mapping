@@ -33,7 +33,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 /**
  * Bean mapper implementation using ModelMapper framework.
  */
-public class ModelMapperMapper extends AbstractMapper<ModelMapper> implements Mapper<ModelMapper> {
+public class ModelMapperMapper extends AbstractMapper<ModelMapper> implements Mapper {
 
 	/**
 	 * Original ModelMapper mapper.

@@ -31,7 +31,7 @@ import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
  * This interface define simple contract that needs to be
  * implemented to map bean to another bean.
  */
-public interface Mapper<X> {
+public interface Mapper {
 
 	/**
 	 * Map bean to another bean.
@@ -78,5 +78,5 @@ public interface Mapper<X> {
 	 *
 	 * @return Delegate implementation.
 	 */
-	X getDelegate();
+	Object getDelegate();
 }

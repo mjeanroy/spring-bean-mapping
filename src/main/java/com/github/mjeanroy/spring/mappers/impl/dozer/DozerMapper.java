@@ -33,7 +33,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 /**
  * Bean mapper implementation using Dozer framework.
  */
-public class DozerMapper extends AbstractMapper<DozerBeanMapper> implements Mapper<DozerBeanMapper> {
+public class DozerMapper extends AbstractMapper<DozerBeanMapper> implements Mapper {
 
 	/**
 	 * Original Dozer Mapper.

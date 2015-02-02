@@ -31,7 +31,7 @@ import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
  * Mapper abstraction that defines commons methods
  * to all mapper.
  */
-public abstract class AbstractMapper<X> implements Mapper<X> {
+public abstract class AbstractMapper<X> implements Mapper {
 
 	@Override
 	public <T, U> U map(T source, ObjectFactory<U> factory) {
