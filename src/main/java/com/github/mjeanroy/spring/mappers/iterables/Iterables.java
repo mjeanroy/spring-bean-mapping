@@ -24,10 +24,11 @@
 
 package com.github.mjeanroy.spring.mappers.iterables;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Iterables static utilities.
@@ -47,7 +48,7 @@ public final class Iterables {
 	public static <T> List<T> toList(Iterable<T> iterables) {
 		if (iterables instanceof Collection) {
 			Collection<T> c = (Collection<T>) iterables;
-			return new ArrayList<T>(c);
+			return new LinkedList<T>(c);
 		}
 
 		List<T> list = new LinkedList<T>();
@@ -56,6 +57,28 @@ public final class Iterables {
 		}
 
 		return list;
+	}
+
+	/**
+	 * Create new set from iterables elements.
+	 * Set will be a {@link java.util.LinkedHashSet} implementation.
+	 *
+	 * @param iterables Iterables.
+	 * @param <T> Type if iterable elements.
+	 * @return Set.
+	 */
+	public static <T> Set<T> toSet(Iterable<T> iterables) {
+		if (iterables instanceof Collection) {
+			Collection<T> collection = (Collection<T>) iterables;
+			return new LinkedHashSet<T>(collection);
+		}
+
+		LinkedHashSet<T> linkedList = new LinkedHashSet<T>();
+		for (T current : iterables) {
+			linkedList.add(current);
+		}
+
+		return linkedList;
 	}
 
 	/**
