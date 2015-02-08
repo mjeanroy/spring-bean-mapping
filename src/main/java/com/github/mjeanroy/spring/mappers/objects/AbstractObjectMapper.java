@@ -149,7 +149,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * Source map is used to build destination map (to get target
 	 * size).
 	 *
-	 * This method can be overriden to build map in another way.
+	 * This method can be overridden to build map in another way.
 	 *
 	 * @param sources Source map.
 	 * @param <K> Type of key in map.
