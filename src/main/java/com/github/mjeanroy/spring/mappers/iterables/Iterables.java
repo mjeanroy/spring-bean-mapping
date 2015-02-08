@@ -57,4 +57,26 @@ public final class Iterables {
 
 		return list;
 	}
+
+	/**
+	 * Compute size of iterable structure.
+	 * If structure is an instance of Collection, operation is
+	 * just the result of {@link java.util.Collection#size()}.
+	 * Otherwise, operation need to loop over all iterable elements.
+	 *
+	 * @param iterables Iterable structure.
+	 * @return Size of iterable structure.
+	 */
+	public static int size(Iterable iterables) {
+		if (iterables instanceof Collection) {
+			return ((Collection) iterables).size();
+		}
+
+		int size = 0;
+		for (Object current : iterables) {
+			size++;
+		}
+
+		return size;
+	}
 }

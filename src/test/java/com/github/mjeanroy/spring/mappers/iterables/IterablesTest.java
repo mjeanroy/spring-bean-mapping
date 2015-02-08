@@ -38,6 +38,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class IterablesTest {
 
 	@Test
+	public void it_should_get_size_of_collection() {
+		Collection<String> collection = asList("foo", "bar");
+		int size = Iterables.size(collection);
+		assertThat(size).isEqualTo(collection.size());
+	}
+
+	@Test
+	public void it_should_get_size_of_iterables() {
+		final List<String> originalList = asList("foo", "bar");
+		Iterable<String> iterables = new Iterable<String>() {
+			@Override
+			public Iterator<String> iterator() {
+				return originalList.iterator();
+			}
+		};
+
+		int size = Iterables.size(iterables);
+		assertThat(size).isEqualTo(originalList.size());
+	}
+
+	@Test
 	public void it_should_get_array_list_from_collection() {
 		Collection<String> collection = asList("foo", "bar");
 		List<String> copy = Iterables.toList(collection);
