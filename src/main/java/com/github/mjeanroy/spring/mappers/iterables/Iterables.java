@@ -48,10 +48,10 @@ public final class Iterables {
 	public static <T> List<T> toList(Iterable<T> iterables) {
 		if (iterables instanceof Collection) {
 			Collection<T> c = (Collection<T>) iterables;
-			return new LinkedList<T>(c);
+			return new LinkedList<>(c);
 		}
 
-		List<T> list = new LinkedList<T>();
+		List<T> list = new LinkedList<>();
 		for (T current : iterables) {
 			list.add(current);
 		}
@@ -70,10 +70,10 @@ public final class Iterables {
 	public static <T> Set<T> toSet(Iterable<T> iterables) {
 		if (iterables instanceof Collection) {
 			Collection<T> collection = (Collection<T>) iterables;
-			return new LinkedHashSet<T>(collection);
+			return new LinkedHashSet<>(collection);
 		}
 
-		LinkedHashSet<T> linkedList = new LinkedHashSet<T>();
+		LinkedHashSet<T> linkedList = new LinkedHashSet<>();
 		for (T current : iterables) {
 			linkedList.add(current);
 		}

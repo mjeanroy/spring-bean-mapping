@@ -103,7 +103,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 */
 	protected Collection<U> initIterable(Iterable<T> sources) {
 		final int size = initialCapacity(sources);
-		return new ArrayList<U>(size);
+		return new ArrayList<>(size);
 	}
 
 	/**

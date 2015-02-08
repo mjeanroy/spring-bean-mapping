@@ -66,6 +66,6 @@ public class LazyIterableMapper<U, T> implements Iterable<U> {
 
 	@Override
 	public Iterator<U> iterator() {
-		return new LazyIterableIterator<U, T>(from.iterator(), mapper);
+		return new LazyIterableIterator<>(from.iterator(), mapper);
 	}
 }

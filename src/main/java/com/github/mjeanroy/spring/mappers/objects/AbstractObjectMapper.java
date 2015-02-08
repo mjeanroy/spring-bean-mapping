@@ -131,7 +131,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		// If original sources elements is already a collection, this is not really
 		// important, since it is already in memory !
 		List<T> list = Iterables.toList(sources);
-		return new LazyUnmodifiableCollectionMapper<U, T>(list, this);
+		return new LazyUnmodifiableCollectionMapper<>(list, this);
 	}
 
 	@Override
@@ -156,6 +156,6 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @return Destination map (empty).
 	 */
 	protected <K> Map<K, U> buildDestinationMap(Map<K, T> sources) {
-		return new HashMap<K, U>(sources.size());
+		return new HashMap<>(sources.size());
 	}
 }
