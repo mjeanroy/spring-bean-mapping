@@ -35,7 +35,7 @@
 
 	<groupId>com.github.mjeanroy</groupId>
 	<artifactId>spring-mappers</artifactId>
-	<version>0.1.2-SNAPSHOT</version>
+	<version>0.1.2</version>
 	<packaging>jar</packaging>
 	<url>https://github.com/mjeanroy/spring-mappers</url>
 
