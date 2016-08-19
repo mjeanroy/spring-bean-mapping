@@ -22,40 +22,40 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.objects;
+package com.github.mjeanroy.spring.mappers;
 
-import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
-import com.github.mjeanroy.spring.mappers.utils.FooInMemoryMapper;
+import com.github.mjeanroy.spring.mappers.utils.FooLazyMapper;
 import com.github.mjeanroy.spring.mappers.utils.FooMapper;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static com.github.mjeanroy.spring.mappers.objects.ObjectMappers.inMemoryObjectMapper;
+import static com.github.mjeanroy.spring.mappers.ObjectMappers.lazyObjectMapper;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.same;
+import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
+public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 
-	protected FooMapper fooMapper;
+	private FooMapper fooMapper;
 
-	protected Mapper mapper;
+	private Mapper mapper;
 
 	@Before
 	public void setUp() {
 		mapper = spy(new SpringMapper());
-		fooMapper = new FooInMemoryMapper(mapper);
+		fooMapper = new FooLazyMapper(mapper);
 	}
 
 	@Override
@@ -65,9 +65,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
 	@Override
 	protected void checkBeforeIteration(Iterable<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(Foo.class), same(FooDto.class));
-		verify(mapper).map(foos.get(0), FooDto.class);
-		verify(mapper).map(foos.get(1), FooDto.class);
+		verify(mapper, never()).map(any(), any());
 	}
 
 	@Override
@@ -79,7 +77,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
 	@Test
 	public void it_should_build_in_memory_mapper_with_explicit_generic_types() throws Exception {
-		ObjectMapper<Foo, FooDto> objectMapper = inMemoryObjectMapper(mapper, Foo.class, FooDto.class);
+		ObjectMapper<Foo, FooDto> objectMapper = lazyObjectMapper(mapper, Foo.class, FooDto.class);
 
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
 		Class klassT = (Class) readField(objectMapper, "klassT", true);
@@ -93,7 +91,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 	@Test
 	public void it_should_build_in_memory_mapper_with_explicit_generic_types_and_factory() throws Exception {
 		ObjectFactory<FooDto> fact = new ReflectionObjectFactory<FooDto>(FooDto.class);
-		ObjectMapper<Foo, FooDto> objectMapper = inMemoryObjectMapper(mapper, Foo.class, FooDto.class, fact);
+		ObjectMapper<Foo, FooDto> objectMapper = lazyObjectMapper(mapper, Foo.class, FooDto.class, fact);
 
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
 		Class klassT = (Class) readField(objectMapper, "klassT", true);

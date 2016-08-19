@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.objects;
+package com.github.mjeanroy.spring.mappers;
 
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;

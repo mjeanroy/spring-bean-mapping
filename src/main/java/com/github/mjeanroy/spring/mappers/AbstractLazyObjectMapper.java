@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.objects;
+package com.github.mjeanroy.spring.mappers;
 
-import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
 
@@ -49,7 +48,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 *
 	 * @param mapper Mapper used to map source to destination.
 	 */
-	public AbstractLazyObjectMapper(Mapper mapper) {
+	protected AbstractLazyObjectMapper(Mapper mapper) {
 		super(mapper);
 	}
 
@@ -60,7 +59,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	public AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+	protected AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
 		super(mapper, klassT, klassU);
 	}
 
@@ -72,7 +71,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	public AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
+	protected AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 

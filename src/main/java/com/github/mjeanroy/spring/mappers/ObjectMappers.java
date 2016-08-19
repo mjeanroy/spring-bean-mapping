@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.objects;
+package com.github.mjeanroy.spring.mappers;
 
-import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 
 /**

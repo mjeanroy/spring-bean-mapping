@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.objects;
+package com.github.mjeanroy.spring.mappers;
 
 import java.util.Map;
 

@@ -24,7 +24,7 @@
 
 package com.github.mjeanroy.spring.mappers.iterables;
 
-import com.github.mjeanroy.spring.mappers.objects.ObjectMapper;
+import com.github.mjeanroy.spring.mappers.ObjectMapper;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
 import org.junit.Before;
