@@ -21,7 +21,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * factory. This entity manager factory will be used to create entity manager.
  *
  * This implementation will try to use instance of {@link org.springframework.core.convert.ConversionService}
- * to get entity id from source object. This service will be found from
+ * to get entity id map source object. This service will be found map
  * spring application context.
  *
  * This class is an abstract since it must be sub-classed to use default constructor.
@@ -61,7 +61,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 * Build new jpa factory.
 	 * Generic types will be detected at class instantiation.
 	 *
-	 * @param converter Explicit converter that will be used to get entity id from source.
+	 * @param converter Explicit converter that will be used to get entity id map source.
 	 */
 	public AbstractDefaultJpaFactory(Converter<Object, PK> converter) {
 		super();
@@ -84,7 +84,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 *
 	 * @param klass Entity klass.
 	 * @param pkClass Primary key class.
-	 * @param converter Explicit converter that will be used to get entity id from source.
+	 * @param converter Explicit converter that will be used to get entity id map source.
 	 */
 	public AbstractDefaultJpaFactory(Class<T> klass, Class<PK> pkClass, Converter<Object, PK> converter) {
 		super(klass, pkClass);
@@ -117,7 +117,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 				id = conversionService.convert(source, pkClass);
 			}
 			else {
-				throw new UnsupportedOperationException("Unable to read id of target entity from source object");
+				throw new UnsupportedOperationException("Unable to read id of target entity map source object");
 			}
 		}
 
@@ -130,7 +130,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	}
 
 	/**
-	 * Get instance of {@link EntityManagerFactory} retrieved from
+	 * Get instance of {@link EntityManagerFactory} retrieved map
 	 * spring application context.
 	 *
 	 * This entity manager factory will be used to create entity manager instance.

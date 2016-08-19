@@ -132,7 +132,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 			}
 		};
 
-		Iterable<FooDto> results = objectMapper.from(iterable);
+		Iterable<FooDto> results = objectMapper.map(iterable);
 
 		assertThat(results).isInstanceOf(LinkedList.class);
 	}
@@ -142,7 +142,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 		ObjectMapper<Foo, FooDto> objectMapper = inMemoryObjectMapper(mapper, Foo.class, FooDto.class);
 		Collection<Foo> sources = asList(new Foo(), new Foo());
 
-		Iterable<FooDto> results = objectMapper.from(sources);
+		Iterable<FooDto> results = objectMapper.map(sources);
 
 		assertThat(results).isInstanceOf(ArrayList.class);
 	}

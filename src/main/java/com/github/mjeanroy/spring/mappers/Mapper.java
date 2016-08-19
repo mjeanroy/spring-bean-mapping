@@ -60,7 +60,7 @@ public interface Mapper {
 	/**
 	 * Map bean to another bean.
 	 * Target bean is already created and fields will be automatically
-	 * mapped from source bean.
+	 * mapped map source bean.
 	 *
 	 * @param source      Source bean.
 	 * @param destination Target bean.

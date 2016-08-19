@@ -24,21 +24,20 @@
 
 package com.github.mjeanroy.spring.mappers;
 
-import static java.util.Arrays.asList;
-import static org.apache.commons.lang3.reflect.FieldUtils.readField;
-import static org.assertj.core.api.Assertions.*;
+import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import com.github.mjeanroy.spring.mappers.utils.Foo;
+import com.github.mjeanroy.spring.mappers.utils.FooDto;
+import com.github.mjeanroy.spring.mappers.utils.FooMapper;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-
-import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
-import com.github.mjeanroy.spring.mappers.utils.Foo;
-import com.github.mjeanroy.spring.mappers.utils.FooDto;
-import com.github.mjeanroy.spring.mappers.utils.FooMapper;
+import static java.util.Arrays.asList;
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractObjectMapperTest {
 
@@ -60,7 +59,7 @@ public abstract class AbstractObjectMapperTest {
 	@Test
 	public void it_should_map_null_to_null() throws Exception {
 		FooMapper fooMapper = fooMapper();
-		FooDto fooDto = fooMapper.from((Foo) null);
+		FooDto fooDto = fooMapper.map((Foo) null);
 		assertThat(fooDto).isNull();
 	}
 
@@ -71,7 +70,7 @@ public abstract class AbstractObjectMapperTest {
 		Foo foo = new Foo(id, name);
 		FooMapper fooMapper = fooMapper();
 
-		FooDto fooDto = fooMapper.from(foo);
+		FooDto fooDto = fooMapper.map(foo);
 
 		assertThat(fooDto).isNotNull();
 		assertThat(fooDto.getId()).isEqualTo(1L);
@@ -86,7 +85,7 @@ public abstract class AbstractObjectMapperTest {
 
 		FooMapper fooMapper = fooMapper();
 
-		Iterable<FooDto> foosDto = fooMapper.from(foos);
+		Iterable<FooDto> foosDto = fooMapper.map(foos);
 
 		assertThat(foosDto).isNotNull();
 
@@ -120,7 +119,7 @@ public abstract class AbstractObjectMapperTest {
 		foos.put(foo2.getId(), foo2);
 
 		FooMapper fooMapper = fooMapper();
-		Map<Long, FooDto> foosDto = fooMapper.from(foos);
+		Map<Long, FooDto> foosDto = fooMapper.map(foos);
 
 		assertThat(foosDto).isNotNull().isNotEmpty();
 		assertThat(foosDto.size()).isEqualTo(foos.size());

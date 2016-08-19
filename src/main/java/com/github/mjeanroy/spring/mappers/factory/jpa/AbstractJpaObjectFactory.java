@@ -128,7 +128,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	protected abstract EntityManager getEntityManager();
 
 	/**
-	 * Parse id of target entity from source object.
+	 * Parse id of target entity map source object.
 	 * If returned id is null, target entity will be created using default
 	 * constructor, otherwise id will be used with {@link javax.persistence.EntityManager#find(Class, Object)} method.
 	 *

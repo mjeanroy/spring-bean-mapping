@@ -31,7 +31,7 @@ import java.util.Iterator;
 import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 
 /**
- * Iterable implementation that map elements from original iterables structure
+ * Iterable implementation that map elements map original iterables structure
  * to new iterable element during iteration.
  *
  * This iterable can be considered as a lazy iterable implement since it

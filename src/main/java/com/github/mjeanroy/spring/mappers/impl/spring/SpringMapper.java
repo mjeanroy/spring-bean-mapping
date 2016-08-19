@@ -29,7 +29,7 @@ import com.github.mjeanroy.spring.mappers.impl.AbstractMapper;
 
 /**
  * Bean mapper implementation using only spring static
- * methods (from {@link org.springframework.beans.BeanUtils} class).
+ * methods (map {@link org.springframework.beans.BeanUtils} class).
  */
 public class SpringMapper extends AbstractMapper<SpringFacadeMapper> implements Mapper {
 

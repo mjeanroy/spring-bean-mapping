@@ -28,9 +28,9 @@ import java.util.Map;
 
 public interface FooMapper {
 
-	FooDto from(Foo foo);
+	FooDto map(Foo foo);
 
-	Iterable<FooDto> from(Iterable<Foo> iterables);
+	Iterable<FooDto> map(Iterable<Foo> iterables);
 
-	<K> Map<K, FooDto> from(Map<K, Foo> sources);
+	<K> Map<K, FooDto> map(Map<K, Foo> sources);
 }

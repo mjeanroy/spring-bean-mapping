@@ -81,10 +81,10 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	}
 
 	@Override
-	public Collection<U> from(Iterable<T> sources) {
+	public Collection<U> map(Iterable<T> sources) {
 		final Collection<U> results = initIterable(sources);
 		for (T source : sources) {
-			final U destination = from(source);
+			final U destination = map(source);
 			results.add(destination);
 		}
 		return results;
@@ -107,7 +107,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	}
 
 	/**
-	 * Try to compute initial capacity of destination collections from
+	 * Try to compute initial capacity of destination collections map
 	 * source collection.
 	 *
 	 * Default is:

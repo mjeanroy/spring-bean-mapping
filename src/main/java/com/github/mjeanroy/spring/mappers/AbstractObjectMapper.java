@@ -110,7 +110,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	}
 
 	@Override
-	public U from(T source) {
+	public U map(T source) {
 		return source == null ? null : doMap(source);
 	}
 
@@ -123,7 +123,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	}
 
 	@Override
-	public Iterable<U> from(Iterable<T> sources) {
+	public Iterable<U> map(Iterable<T> sources) {
 		// Copy to list implementation, this is not a real lazy implementation since
 		// original list must be copied in memory even if it is not already a collection
 		// If original sources elements is already a collection, this is not really
@@ -133,10 +133,10 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	}
 
 	@Override
-	public <K> Map<K, U> from(Map<K, T> sources) {
+	public <K> Map<K, U> map(Map<K, T> sources) {
 		Map<K, U> map = initMap(sources);
 		for (Map.Entry<K, T> entry : sources.entrySet()) {
-			U destination = from(entry.getValue());
+			U destination = map(entry.getValue());
 			map.put(entry.getKey(), destination);
 		}
 		return map;

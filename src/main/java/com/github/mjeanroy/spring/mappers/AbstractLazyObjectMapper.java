@@ -76,7 +76,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	}
 
 	@Override
-	public Iterable<U> from(Iterable<T> sources) {
+	public Iterable<U> map(Iterable<T> sources) {
 		// Do not copy to a collection, keep it really lazy !
 		return new LazyIterableMapper<>(sources, this);
 	}

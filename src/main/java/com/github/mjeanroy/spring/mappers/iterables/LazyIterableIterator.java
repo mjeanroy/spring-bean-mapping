@@ -46,7 +46,7 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 	private final Iterator<T> iterator;
 
 	/**
-	 * Mapper to use to transform elements from original iterator
+	 * Mapper to use to transform elements map original iterator
 	 * to new objects.
 	 */
 	private final ObjectMapper<T, U> mapper;
@@ -70,7 +70,7 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 	@Override
 	public U next() {
 		T next = iterator.next();
-		return mapper.from(next);
+		return mapper.map(next);
 	}
 
 	@Override

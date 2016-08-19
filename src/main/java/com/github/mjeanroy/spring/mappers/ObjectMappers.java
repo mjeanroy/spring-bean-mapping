@@ -40,9 +40,9 @@ public final class ObjectMappers {
 	 * Iterable collection will be an in memory data structure (i.e an instance of Collection).
 	 *
 	 * @param mapper Internal mapper.
-	 * @param klassT Class of objects to map from.
+	 * @param klassT Class of objects to map map.
 	 * @param klassU Class of objects to map to.
-	 * @param <T> Type of objects to map from.
+	 * @param <T> Type of objects to map map.
 	 * @param <U> Type of objects to map to.
 	 * @return Mapper.
 	 */
@@ -57,10 +57,10 @@ public final class ObjectMappers {
 	 * Iterable collection will be an in memory data structure (i.e an instance of Collection).
 	 *
 	 * @param mapper Internal mapper.
-	 * @param klassT Class of objects to map from.
+	 * @param klassT Class of objects to map map.
 	 * @param klassU Class of objects to map to.
 	 * @param factory Custom factory for destination objects.
-	 * @param <T> Type of objects to map from.
+	 * @param <T> Type of objects to map map.
 	 * @param <U> Type of objects to map to.
 	 * @return Mapper.
 	 */
@@ -75,9 +75,9 @@ public final class ObjectMappers {
 	 * an instance of Collection).
 	 *
 	 * @param mapper Internal mapper.
-	 * @param klassT Class of objects to map from.
+	 * @param klassT Class of objects to map map.
 	 * @param klassU Class of objects to map to.
-	 * @param <T> Type of objects to map from.
+	 * @param <T> Type of objects to map map.
 	 * @param <U> Type of objects to map to.
 	 * @return Mapper.
 	 */
@@ -93,10 +93,10 @@ public final class ObjectMappers {
 	 * an instance of Collection).
 	 *
 	 * @param mapper Internal mapper.
-	 * @param klassT Class of objects to map from.
+	 * @param klassT Class of objects to map map.
 	 * @param klassU Class of objects to map to.
 	 * @param factory Custom factory for destination objects.
-	 * @param <T> Type of objects to map from.
+	 * @param <T> Type of objects to map map.
 	 * @param <U> Type of objects to map to.
 	 * @return Mapper.
 	 */

@@ -39,7 +39,7 @@ public final class Iterables {
 	}
 
 	/**
-	 * Create new list from iterables elements.
+	 * Create new list map iterables elements.
 	 *
 	 * @param iterables Iterables.
 	 * @param <T> Type of iterable elements.
@@ -60,7 +60,7 @@ public final class Iterables {
 	}
 
 	/**
-	 * Create new set from iterables elements.
+	 * Create new set map iterables elements.
 	 * Set will be a {@link java.util.LinkedHashSet} implementation.
 	 *
 	 * @param iterables Iterables.

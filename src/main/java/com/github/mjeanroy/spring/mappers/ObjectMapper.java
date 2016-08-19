@@ -45,7 +45,7 @@ public interface ObjectMapper<T, U> {
 	 * @param source Source object.
 	 * @return Destination object.
 	 */
-	U from(T source);
+	U map(T source);
 
 	/**
 	 * Transform iterable structure of type U to new iterable structure
@@ -54,7 +54,7 @@ public interface ObjectMapper<T, U> {
 	 * @param sources Source objects.
 	 * @return Destination objects.
 	 */
-	Iterable<U> from(Iterable<T> sources);
+	Iterable<U> map(Iterable<T> sources);
 
 	/**
 	 * Transform map structure of type U to new map structure
@@ -63,5 +63,5 @@ public interface ObjectMapper<T, U> {
 	 * @param sources Source objects.
 	 * @return Destination objects.
 	 */
-	<K> Map<K, U> from(Map<K, T> sources);
+	<K> Map<K, U> map(Map<K, T> sources);
 }
