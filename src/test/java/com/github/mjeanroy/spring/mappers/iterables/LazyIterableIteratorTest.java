@@ -82,13 +82,13 @@ public class LazyIterableIteratorTest {
 		FooDto dto = mock(FooDto.class);
 		Foo foo = mock(Foo.class);
 		when(iterator.next()).thenReturn(foo);
-		when(mapper.convert(foo)).thenReturn(dto);
+		when(mapper.from(foo)).thenReturn(dto);
 
 		FooDto result = lazyIterator.next();
 
 		assertThat(result).isNotNull().isSameAs(dto);
 		verify(iterator).next();
-		verify(mapper).convert(foo);
+		verify(mapper).from(foo);
 	}
 
 	@Test(expected = UnsupportedOperationException.class)

@@ -84,7 +84,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	public Collection<U> from(Iterable<T> sources) {
 		final Collection<U> results = initIterable(sources);
 		for (T source : sources) {
-			final U destination = convert(source);
+			final U destination = from(source);
 			results.add(destination);
 		}
 		return results;

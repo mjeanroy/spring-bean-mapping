@@ -111,11 +111,10 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public U from(T source) {
-		return source == null ? null : convert(source);
+		return source == null ? null : doMap(source);
 	}
 
-	@Override
-	public U convert(T source) {
+	protected U doMap(T source) {
 		if (factory != null) {
 			return mapper.map(source, factory);
 		} else {

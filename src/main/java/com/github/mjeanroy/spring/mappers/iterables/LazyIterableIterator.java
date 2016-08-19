@@ -70,7 +70,7 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 	@Override
 	public U next() {
 		T next = iterator.next();
-		return mapper.convert(next);
+		return mapper.from(next);
 	}
 
 	@Override
