@@ -28,6 +28,7 @@ import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * In memory mapper implementation.
@@ -102,7 +103,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 */
 	protected Collection<U> initIterable(Iterable<T> sources) {
 		final int size = initialCapacity(sources);
-		return new ArrayList<>(size);
+		return size < 0 ? new LinkedList<U>() : new ArrayList<U>(size);
 	}
 
 	/**
@@ -117,15 +118,10 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 * @return Initial capacity of destination.
 	 */
 	protected int initialCapacity(Iterable<T> iterables) {
-		final int size;
-
 		if (iterables instanceof Collection) {
 			return ((Collection) iterables).size();
 		}
-		else {
-			size = 10;
-		}
 
-		return size;
+		return -1;
 	}
 }

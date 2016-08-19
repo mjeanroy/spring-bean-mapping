@@ -29,7 +29,7 @@ import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.Iterables;
 import com.github.mjeanroy.spring.mappers.iterables.LazyUnmodifiableCollectionMapper;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +135,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public <K> Map<K, U> from(Map<K, T> sources) {
-		Map<K, U> map = buildDestinationMap(sources);
+		Map<K, U> map = initMap(sources);
 		for (Map.Entry<K, T> entry : sources.entrySet()) {
 			U destination = from(entry.getValue());
 			map.put(entry.getKey(), destination);
@@ -148,13 +148,16 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * Source map is used to build destination map (to get target
 	 * size).
 	 *
+	 * The default is to create an empty instance of {@link LinkedHashMap} to maintain
+	 * original order of sources iteration.
+	 *
 	 * This method can be overridden to build map in another way.
 	 *
 	 * @param sources Source map.
 	 * @param <K> Type of key in map.
 	 * @return Destination map (empty).
 	 */
-	protected <K> Map<K, U> buildDestinationMap(Map<K, T> sources) {
-		return new HashMap<>(sources.size());
+	protected <K> Map<K, U> initMap(Map<K, T> sources) {
+		return new LinkedHashMap<>(sources.size());
 	}
 }

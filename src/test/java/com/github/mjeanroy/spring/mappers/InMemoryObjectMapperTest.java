@@ -34,9 +34,10 @@ import com.github.mjeanroy.spring.mappers.utils.FooMapper;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.*;
 
 import static com.github.mjeanroy.spring.mappers.ObjectMappers.inMemoryObjectMapper;
+import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -47,9 +48,9 @@ import static org.mockito.Mockito.verify;
 
 public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
-	protected FooMapper fooMapper;
+	private FooMapper fooMapper;
 
-	protected Mapper mapper;
+	private Mapper mapper;
 
 	@Before
 	public void setUp() {
@@ -101,5 +102,48 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 		assertThat(factory).isNotNull().isSameAs(fact);
 		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
 		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
+	}
+
+	@Test
+	public void it_should_create_linked_list_with_iterable_sources() throws Exception {
+		ObjectMapper<Foo, FooDto> objectMapper = inMemoryObjectMapper(mapper, Foo.class, FooDto.class);
+
+		final Iterator<Foo> iterator = new Iterator<Foo>() {
+			@Override
+			public boolean hasNext() {
+				return false;
+			}
+
+			@Override
+			public Foo next() {
+				return null;
+			}
+
+			@Override
+			public void remove() {
+				// Nothing to do.
+			}
+		};
+
+		Iterable<Foo> iterable = new Iterable<Foo>() {
+			@Override
+			public Iterator<Foo> iterator() {
+				return iterator;
+			}
+		};
+
+		Iterable<FooDto> results = objectMapper.from(iterable);
+
+		assertThat(results).isInstanceOf(LinkedList.class);
+	}
+
+	@Test
+	public void it_should_create_array_list_with_collection_sources() throws Exception {
+		ObjectMapper<Foo, FooDto> objectMapper = inMemoryObjectMapper(mapper, Foo.class, FooDto.class);
+		Collection<Foo> sources = asList(new Foo(), new Foo());
+
+		Iterable<FooDto> results = objectMapper.from(sources);
+
+		assertThat(results).isInstanceOf(ArrayList.class);
 	}
 }
