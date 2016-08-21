@@ -26,13 +26,7 @@ package com.github.mjeanroy.spring.mappers.iterables;
 
 import org.junit.Test;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,33 +34,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class IterablesTest {
 
 	@Test
-	public void it_should_get_size_of_collection() {
-		Collection<String> collection = asList("foo", "bar");
-		int size = Iterables.size(collection);
-		assertThat(size).isEqualTo(collection.size());
-	}
-
-	@Test
-	public void it_should_get_size_of_iterables() {
-		final List<String> originalList = asList("foo", "bar");
-		Iterable<String> iterables = new Iterable<String>() {
-			@Override
-			public Iterator<String> iterator() {
-				return originalList.iterator();
-			}
-		};
-
-		int size = Iterables.size(iterables);
-		assertThat(size).isEqualTo(originalList.size());
-	}
-
-	@Test
 	public void it_should_get_linked_list_from_collection() {
 		Collection<String> collection = asList("foo", "bar");
 		List<String> copy = Iterables.toList(collection);
 		assertThat(copy)
 				.isNotNull()
-				.isExactlyInstanceOf(LinkedList.class)
+				.isExactlyInstanceOf(ArrayList.class)
 				.hasSameSizeAs(collection)
 				.isNotSameAs(collection)
 				.isEqualTo(collection);
@@ -91,44 +64,5 @@ public class IterablesTest {
 				.hasSameSizeAs(iterable)
 				.isNotSameAs(iterable)
 				.isEqualTo(originalList);
-	}
-
-	@Test
-	public void it_should_get_linked_hash_set_from_collection() {
-		Set<String> collection = new HashSet<>();
-		collection.add("foo");
-		collection.add("bar");
-
-		Set<String> copy = Iterables.toSet(collection);
-
-		assertThat(copy)
-				.isNotNull()
-				.isExactlyInstanceOf(LinkedHashSet.class)
-				.hasSameSizeAs(collection)
-				.isNotSameAs(collection)
-				.isEqualTo(collection);
-	}
-
-	@Test
-	public void it_should_get_linked_hash_set_from_iterable() {
-		final Set<String> collection = new HashSet<>();
-		collection.add("foo");
-		collection.add("bar");
-
-		Iterable<String> iterable = new Iterable<String>() {
-			@Override
-			public Iterator<String> iterator() {
-				return collection.iterator();
-			}
-		};
-
-		Set<String> copy = Iterables.toSet(iterable);
-
-		assertThat(copy)
-				.isNotNull()
-				.isExactlyInstanceOf(LinkedHashSet.class)
-				.hasSameSizeAs(iterable)
-				.isNotSameAs(iterable)
-				.isEqualTo(collection);
 	}
 }

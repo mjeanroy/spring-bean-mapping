@@ -35,7 +35,7 @@ public final class Iterables {
 	}
 
 	/**
-	 * Create new list map iterables elements.
+	 * Create new list mapping iterables elements.
 	 *
 	 * @param iterables Iterables.
 	 * @param <T> Type of iterable elements.
@@ -44,7 +44,7 @@ public final class Iterables {
 	public static <T> List<T> toList(Iterable<T> iterables) {
 		if (iterables instanceof Collection) {
 			Collection<T> c = (Collection<T>) iterables;
-			return new LinkedList<>(c);
+			return new ArrayList<>(c);
 		}
 
 		List<T> list = new LinkedList<>();
@@ -53,49 +53,5 @@ public final class Iterables {
 		}
 
 		return list;
-	}
-
-	/**
-	 * Create new set map iterables elements.
-	 * Set will be a {@link java.util.LinkedHashSet} implementation.
-	 *
-	 * @param iterables Iterables.
-	 * @param <T> Type if iterable elements.
-	 * @return Set.
-	 */
-	public static <T> Set<T> toSet(Iterable<T> iterables) {
-		if (iterables instanceof Collection) {
-			Collection<T> collection = (Collection<T>) iterables;
-			return new LinkedHashSet<>(collection);
-		}
-
-		LinkedHashSet<T> linkedList = new LinkedHashSet<>();
-		for (T current : iterables) {
-			linkedList.add(current);
-		}
-
-		return linkedList;
-	}
-
-	/**
-	 * Compute size of iterable structure.
-	 * If structure is an instance of Collection, operation is
-	 * just the result of {@link java.util.Collection#size()}.
-	 * Otherwise, operation need to loop over all iterable elements.
-	 *
-	 * @param iterables Iterable structure.
-	 * @return Size of iterable structure.
-	 */
-	public static int size(Iterable iterables) {
-		if (iterables instanceof Collection) {
-			return ((Collection) iterables).size();
-		}
-
-		int size = 0;
-		for (Object current : iterables) {
-			size++;
-		}
-
-		return size;
 	}
 }
