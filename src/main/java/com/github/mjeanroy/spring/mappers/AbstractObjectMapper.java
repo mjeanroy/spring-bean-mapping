@@ -56,22 +56,22 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * Mapper that will be used internally to map source object
 	 * to destination object.
 	 */
-	protected final Mapper mapper;
+	private final Mapper mapper;
 
 	/**
 	 * Class of source objects.
 	 */
-	protected final Class<T> klassT;
+	private final Class<T> klassT;
 
 	/**
 	 * Class of destination objects.
 	 */
-	protected final Class<U> klassU;
+	private final Class<U> klassU;
 
 	/**
 	 * Factory used to instantiate destination objects.
 	 */
-	protected final ObjectFactory<U> factory;
+	private final ObjectFactory<U> factory;
 
 	/**
 	 * Create new mapper.
@@ -114,6 +114,33 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		this.klassT = notNull(klassT, "Class T must bot be null");
 		this.klassU = notNull(klassU, "Class U must bot be null");
 		this.factory = notNull(factory, "Factory must bot be null");
+	}
+
+	/**
+	 * Get mapper implementation.
+	 *
+	 * @return Mapper.
+	 */
+	protected Mapper getMapper() {
+		return mapper;
+	}
+
+	/**
+	 * Get class of source inputs.
+	 *
+	 * @return Source class.
+	 */
+	protected Class<T> getSourceClass() {
+		return klassT;
+	}
+
+	/**
+	 * Get class of target outputs.
+	 *
+	 * @return Target class.
+	 */
+	protected Class<U> getTargetClass() {
+		return klassU;
 	}
 
 	@Override
