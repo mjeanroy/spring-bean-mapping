@@ -25,6 +25,8 @@
 package com.github.mjeanroy.spring.mappers.iterables;
 
 import com.github.mjeanroy.spring.mappers.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -53,6 +55,11 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 public class LazyUnmodifiableCollectionMapper<U, T> extends AbstractCollection<U> implements Collection<U>, Iterable<U> {
 
 	/**
+	 * Class logger.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(LazyUnmodifiableCollectionMapper.class);
+
+	/**
 	 * Original iterable structure.
 	 * Each elements will be automatically mapped during iteration.
 	 */
@@ -76,7 +83,13 @@ public class LazyUnmodifiableCollectionMapper<U, T> extends AbstractCollection<U
 
 	@Override
 	public Iterator<U> iterator() {
-		return new LazyIterableIterator<>(from.iterator(), mapper);
+		log.debug("Create lazy iterator");
+		log.trace("  -  Mapper: {}", mapper);
+
+		Iterator<T> it = from.iterator();
+		log.trace("  - Iterator: {}", it);
+
+		return new LazyIterableIterator<>(it, mapper);
 	}
 
 	@Override
@@ -91,31 +104,37 @@ public class LazyUnmodifiableCollectionMapper<U, T> extends AbstractCollection<U
 
 	@Override
 	public boolean add(U u) {
+		log.warn("#add operation is not supported from class: {}", getClass());
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean remove(Object o) {
+		log.warn("#remove operation is not supported from class: {}", getClass());
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends U> collection) {
+		log.warn("#addAll operation is not supported from class: {}", getClass());
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> collection) {
+		log.warn("#removeAll operation is not supported from class: {}", getClass());
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> collection) {
+		log.warn("#retainAll operation is not supported from class: {}", getClass());
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void clear() {
+		log.warn("#clear operation is not supported from class: {}", getClass());
 		throw new UnsupportedOperationException();
 	}
 }

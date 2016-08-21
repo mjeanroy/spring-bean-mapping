@@ -24,11 +24,7 @@
 
 package com.github.mjeanroy.spring.mappers.iterables;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Iterables static utilities.

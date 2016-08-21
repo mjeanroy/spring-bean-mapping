@@ -25,6 +25,8 @@
 package com.github.mjeanroy.spring.mappers;
 
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,6 +48,11 @@ import java.util.LinkedList;
  * @param <U> Type of destination objects.
  */
 public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
+
+	/**
+	 * Class logger.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(AbstractInMemoryObjectMapper.class);
 
 	/**
 	 * Create new in memory mapper.
@@ -82,11 +89,17 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 
 	@Override
 	public Collection<U> map(Iterable<T> sources) {
+		log.debug("Map source of iterables");
 		final Collection<U> results = initIterable(sources);
+		log.trace(" - Target collection created, start mapping each entries");
+
 		for (T source : sources) {
+			log.trace("  --> Mapping: {}", source);
 			final U destination = map(source);
+			log.trace("  --> Result is: {}", destination);
 			results.add(destination);
 		}
+
 		return results;
 	}
 
@@ -102,8 +115,12 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 * @return Empty destination collection.
 	 */
 	protected Collection<U> initIterable(Iterable<T> sources) {
+		log.debug("Create new empty collection implementation");
 		final int size = initialCapacity(sources);
-		return size < 0 ? new LinkedList<U>() : new ArrayList<U>(size);
+		log.trace("  - Initial size: {}", size);
+		Collection<U> emptyCollection = size < 0 ? new LinkedList<U>() : new ArrayList<U>(size);
+		log.trace("  - Collection implementation: {}", emptyCollection.getClass());
+		return emptyCollection;
 	}
 
 	/**
@@ -118,10 +135,13 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 * @return Initial capacity of destination.
 	 */
 	protected int initialCapacity(Iterable<T> iterables) {
+		log.debug("Trying to detect initial capacity");
 		if (iterables instanceof Collection) {
+			log.trace("  --> Iterable source is a collection, return the source size");
 			return ((Collection) iterables).size();
 		}
 
+		log.trace("  -> Iterable source is not a collection, return -1");
 		return -1;
 	}
 }

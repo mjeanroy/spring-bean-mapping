@@ -26,6 +26,8 @@ package com.github.mjeanroy.spring.mappers;
 
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lazy mapper implementation.
@@ -41,6 +43,11 @@ import com.github.mjeanroy.spring.mappers.iterables.LazyIterableMapper;
  * @param <U> Type of destination objects.
  */
 public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
+
+	/**
+	 * Class object.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(AbstractLazyObjectMapper.class);
 
 	/**
 	 * Create new lazy mapper.
@@ -77,6 +84,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 
 	@Override
 	public Iterable<U> map(Iterable<T> sources) {
+		log.debug("Creating lazy iterable destination");
 		// Do not copy to a collection, keep it really lazy !
 		return new LazyIterableMapper<>(sources, this);
 	}

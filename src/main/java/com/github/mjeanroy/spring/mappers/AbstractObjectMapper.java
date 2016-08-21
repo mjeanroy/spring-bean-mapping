@@ -28,6 +28,8 @@ import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.Iterables;
 import com.github.mjeanroy.spring.mappers.iterables.LazyUnmodifiableCollectionMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,6 +46,11 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * @param <U> Type of destination objects.
  */
 public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
+
+	/**
+	 * Class logger.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(AbstractObjectMapper.class);
 
 	/**
 	 * Mapper that will be used internally to map source object
@@ -111,10 +118,15 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public U map(T source) {
+		log.debug("Map source object: {}", source);
 		return source == null ? null : doMap(source);
 	}
 
 	protected U doMap(T source) {
+		log.debug("Creating destination object using mapper: {}", mapper);
+		log.debug("  - Factory: {}", factory);
+		log.debug("  - Target class: {}", klassU);
+
 		if (factory != null) {
 			return mapper.map(source, factory);
 		} else {
@@ -124,6 +136,8 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public Iterable<U> map(Iterable<T> sources) {
+		log.debug("Mapping source of iterables");
+
 		// Copy to list implementation, this is not a real lazy implementation since
 		// original list must be copied in memory even if it is not already a collection
 		// If original sources elements is already a collection, this is not really
@@ -134,11 +148,19 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	@Override
 	public <K> Map<K, U> map(Map<K, T> sources) {
+		log.debug("Mapping source values of map object");
+
 		Map<K, U> map = initMap(sources);
 		for (Map.Entry<K, T> entry : sources.entrySet()) {
-			U destination = map(entry.getValue());
+			final T source = entry.getValue();
+			log.trace("  --> Mapping destination key from: {}", source);
+
+			final U destination = map(source);
+			log.trace("  --> Result: {}", destination);
+
 			map.put(entry.getKey(), destination);
 		}
+
 		return map;
 	}
 
@@ -157,6 +179,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @return Destination map (empty).
 	 */
 	protected <K> Map<K, U> initMap(Map<K, T> sources) {
+		log.debug("Initialize map of target objects");
 		return new LinkedHashMap<>(sources.size());
 	}
 }

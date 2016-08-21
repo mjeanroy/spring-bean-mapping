@@ -25,6 +25,8 @@
 package com.github.mjeanroy.spring.mappers.iterables;
 
 import com.github.mjeanroy.spring.mappers.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
@@ -37,6 +39,11 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * @param <T> Type of original objects to map.
  */
 class LazyIterableIterator<U, T> implements Iterator<U> {
+
+	/**
+	 * Class logger.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(LazyIterableIterator.class);
 
 	/**
 	 * Original iterator that will be used to iterate.
@@ -69,12 +76,18 @@ class LazyIterableIterator<U, T> implements Iterator<U> {
 
 	@Override
 	public U next() {
-		T next = iterator.next();
-		return mapper.map(next);
+		log.debug("Mapping next value");
+		log.trace("  - Mapper: {}", mapper);
+		final T source = iterator.next();
+		log.trace("  - Source: {}", source);
+		final U destination = mapper.map(source);
+		log.trace("  - Destination: {}", destination);
+		return destination;
 	}
 
 	@Override
 	public void remove() {
+		log.warn("Removal operation is not supported from lazy iterator");
 		throw new UnsupportedOperationException();
 	}
 }

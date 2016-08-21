@@ -25,6 +25,8 @@
 package com.github.mjeanroy.spring.mappers.iterables;
 
 import com.github.mjeanroy.spring.mappers.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
@@ -41,6 +43,11 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * @param <T> Type of original iterable elements.
  */
 public class LazyIterableMapper<U, T> implements Iterable<U> {
+
+	/**
+	 * Class logger.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(LazyIterableMapper.class);
 
 	/**
 	 * Original iterable structure.
@@ -66,6 +73,12 @@ public class LazyIterableMapper<U, T> implements Iterable<U> {
 
 	@Override
 	public Iterator<U> iterator() {
-		return new LazyIterableIterator<>(from.iterator(), mapper);
+		log.debug("Creating iterator from lazy iterable");
+		log.trace("  - Mapper: {}", mapper);
+
+		Iterator<T> it = from.iterator();
+		log.trace("  - Source iterator: {}", it);
+
+		return new LazyIterableIterator<>(it, mapper);
 	}
 }
