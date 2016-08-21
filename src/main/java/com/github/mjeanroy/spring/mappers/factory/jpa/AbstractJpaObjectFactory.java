@@ -50,14 +50,14 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	/**
 	 * Class of entities' primary key.
 	 */
-	protected final Class<PK> pkClass;
+	private final Class<PK> pkClass;
 
 	/**
 	 * Create new factory.
 	 * Class of objects to create will be auto-detected at factory instantiation.
 	 */
 	@SuppressWarnings("unchecked")
-	public AbstractJpaObjectFactory() {
+	protected AbstractJpaObjectFactory() {
 		super();
 		pkClass = (Class<PK>) ClassUtils.getGenericType(getClass(), 1);
 	}
@@ -68,7 +68,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	 * @param klass Class of objects to create.
 	 * @param pkClass Class of primary key of target entities.
 	 */
-	public AbstractJpaObjectFactory(Class<T> klass, Class<PK> pkClass) {
+	protected AbstractJpaObjectFactory(Class<T> klass, Class<PK> pkClass) {
 		super(klass);
 		this.pkClass = notNull(pkClass, "PK class must not be null");
 	}
@@ -97,6 +97,15 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	}
 
 	/**
+	 * Get class of primary key of target class.
+	 *
+	 * @return Primary key class.
+	 */
+	protected Class<PK> getPkClass() {
+		return pkClass;
+	}
+
+	/**
 	 * Instantiate target object when target id is null or,
 	 * it has not been found in persistent database.
 	 *
@@ -117,7 +126,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	 * @return Target entity, null if entity is not found.
 	 */
 	protected T findById(PK id) {
-		return getEntityManager().find(klass, id);
+		return getEntityManager().find(getTargetClass(), id);
 	}
 
 	/**

@@ -52,7 +52,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 * Build new jpa factory.
 	 * Generic types will be detected at class instantiation.
 	 */
-	public AbstractDefaultJpaFactory() {
+	protected AbstractDefaultJpaFactory() {
 		super();
 		this.pkConverter = null;
 	}
@@ -63,7 +63,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 *
 	 * @param converter Explicit converter that will be used to get entity id map source.
 	 */
-	public AbstractDefaultJpaFactory(Converter<Object, PK> converter) {
+	protected AbstractDefaultJpaFactory(Converter<Object, PK> converter) {
 		super();
 		this.pkConverter = notNull(converter, "Converter must not be null");
 	}
@@ -74,7 +74,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 * @param klass Entity klass.
 	 * @param pkClass Primary key class.
 	 */
-	public AbstractDefaultJpaFactory(Class<T> klass, Class<PK> pkClass) {
+	protected AbstractDefaultJpaFactory(Class<T> klass, Class<PK> pkClass) {
 		super(klass, pkClass);
 		this.pkConverter = null;
 	}
@@ -86,7 +86,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 	 * @param pkClass Primary key class.
 	 * @param converter Explicit converter that will be used to get entity id map source.
 	 */
-	public AbstractDefaultJpaFactory(Class<T> klass, Class<PK> pkClass, Converter<Object, PK> converter) {
+	protected AbstractDefaultJpaFactory(Class<T> klass, Class<PK> pkClass, Converter<Object, PK> converter) {
 		super(klass, pkClass);
 		this.pkConverter = notNull(converter, "Converter must not be null");
 	}
@@ -104,7 +104,7 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 		if (source == null) {
 			id = null;
 		}
-		else if (source.getClass().equals(pkClass)) {
+		else if (source.getClass().equals(getPkClass())) {
 			id = (PK) source;
 		}
 		else if (pkConverter != null) {
@@ -112,9 +112,9 @@ public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> exte
 		}
 		else {
 			// Try to get conversion service as last chance
-			ConversionService conversionService = appContext.getBean(ConversionService.class);
-			if (conversionService != null && conversionService.canConvert(source.getClass(), pkClass)) {
-				id = conversionService.convert(source, pkClass);
+			final ConversionService conversionService = appContext.getBean(ConversionService.class);
+			if (conversionService != null && conversionService.canConvert(source.getClass(), getPkClass())) {
+				id = conversionService.convert(source, getPkClass());
 			}
 			else {
 				throw new UnsupportedOperationException("Unable to read id of target entity map source object");

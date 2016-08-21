@@ -67,7 +67,7 @@ public class AbstractDefaultJpaObjectFactoryTest {
 
 	@Test
 	public void it_should_get_generic_types() {
-		assertThat(factory.pkClass).isEqualTo(Long.class);
+		assertThat(factory.getPkClass()).isEqualTo(Long.class);
 	}
 
 	@Test

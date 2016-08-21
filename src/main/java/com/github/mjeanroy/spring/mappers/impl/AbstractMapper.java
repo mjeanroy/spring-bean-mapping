@@ -43,9 +43,4 @@ public abstract class AbstractMapper<X> implements Mapper {
 	protected <T, U> U buildDestination(T source, ObjectFactory<U> factory) {
 		return factory.get(source);
 	}
-
-	@Override
-	public X getDelegate() {
-		return null;
-	}
 }

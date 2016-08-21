@@ -40,7 +40,7 @@ public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
 	/**
 	 * Get klass of objects created by this factory.
 	 */
-	protected final Class<T> klass;
+	private final Class<T> klass;
 
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectFactory() {
@@ -55,5 +55,14 @@ public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
 	@Override
 	public T get() {
 		return BeanUtils.instantiateClass(klass);
+	}
+
+	/**
+	 * Return the class of objects created by this factory.
+	 *
+	 * @return Class of objects to create.
+	 */
+	protected Class<T> getTargetClass() {
+		return klass;
 	}
 }

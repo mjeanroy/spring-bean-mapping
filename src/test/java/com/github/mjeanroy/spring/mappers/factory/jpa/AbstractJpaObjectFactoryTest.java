@@ -24,16 +24,15 @@
 
 package com.github.mjeanroy.spring.mappers.factory.jpa;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
+import com.github.mjeanroy.spring.mappers.utils.Foo;
+import com.github.mjeanroy.spring.mappers.utils.FooDto;
+import com.github.mjeanroy.spring.mappers.utils.FooJpaObjectFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.github.mjeanroy.spring.mappers.utils.Foo;
-import com.github.mjeanroy.spring.mappers.utils.FooDto;
-import com.github.mjeanroy.spring.mappers.utils.FooJpaObjectFactory;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class AbstractJpaObjectFactoryTest {
@@ -44,7 +43,7 @@ public class AbstractJpaObjectFactoryTest {
 	@Test
 	public void it_should_get_generic_types() {
 		FooJpaObjectFactory factory = new FooJpaObjectFactory();
-		assertThat(factory.pkClass).isEqualTo(Long.class);
+		assertThat(factory.getPkClass()).isEqualTo(Long.class);
 	}
 
 	@Test
