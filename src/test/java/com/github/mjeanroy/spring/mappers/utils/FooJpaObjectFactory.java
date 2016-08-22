@@ -1,12 +1,12 @@
 package com.github.mjeanroy.spring.mappers.utils;
 
-import static org.mockito.Mockito.*;
+import com.github.mjeanroy.spring.mappers.factory.jpa.AbstractJpaObjectFactory;
 
 import javax.persistence.EntityManager;
 
-import com.github.mjeanroy.spring.mappers.factory.jpa.AbstractJpaObjectFactory;
+import static org.mockito.Mockito.mock;
 
-public class FooJpaObjectFactory extends AbstractJpaObjectFactory<Foo, Long> {
+public class FooJpaObjectFactory extends AbstractJpaObjectFactory<Foo, FooDto, Long> {
 
 	public final EntityManager entityManager;
 

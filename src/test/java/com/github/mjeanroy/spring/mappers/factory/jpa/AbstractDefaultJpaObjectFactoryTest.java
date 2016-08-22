@@ -68,18 +68,6 @@ public class AbstractDefaultJpaObjectFactoryTest {
 	}
 
 	@Test
-	public void it_should_return_entity_if_it_is_id() {
-		Long source = 1L;
-		Foo foo = mock(Foo.class);
-		when(em.find(Foo.class, source)).thenReturn(foo);
-
-		Foo result = factory.get(source);
-		assertThat(result).isNotNull().isSameAs(foo);
-		verify(emf).createEntityManager();
-		verify(em).find(Foo.class, source);
-	}
-
-	@Test
 	public void it_should_use_converter_to_get_id_of_entity() {
 		Long source = 1L;
 		FooDto dto = mock(FooDto.class);

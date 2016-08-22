@@ -71,7 +71,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	/**
 	 * Factory used to instantiate destination objects.
 	 */
-	private final ObjectFactory<U> factory;
+	private final ObjectFactory<U, T> factory;
 
 	/**
 	 * Create new mapper.
@@ -109,7 +109,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
+	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
 		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassT = notNull(klassT, "Class T must bot be null");
 		this.klassU = notNull(klassU, "Class U must bot be null");

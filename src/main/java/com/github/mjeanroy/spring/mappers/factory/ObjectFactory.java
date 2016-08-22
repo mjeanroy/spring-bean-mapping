@@ -29,7 +29,7 @@ package com.github.mjeanroy.spring.mappers.factory;
  *
  * @param <T> Type of bean to create.
  */
-public interface ObjectFactory<T> {
+public interface ObjectFactory<T, U> {
 
 	/**
 	 * Create bean.
@@ -44,6 +44,6 @@ public interface ObjectFactory<T> {
 	 * @param source Parameter that can be used to create bean.
 	 * @return Bean.
 	 */
-	T get(Object source);
+	T get(U source);
 
 }

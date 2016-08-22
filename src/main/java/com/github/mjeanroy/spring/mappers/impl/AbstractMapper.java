@@ -34,13 +34,13 @@ import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 public abstract class AbstractMapper<X> implements Mapper {
 
 	@Override
-	public <T, U> U map(T source, ObjectFactory<U> factory) {
+	public <T, U> U map(T source, ObjectFactory<U, T> factory) {
 		U destination = buildDestination(source, factory);
 		map(source, destination);
 		return destination;
 	}
 
-	protected <T, U> U buildDestination(T source, ObjectFactory<U> factory) {
+	protected <T, U> U buildDestination(T source, ObjectFactory<U, T> factory) {
 		return factory.get(source);
 	}
 }

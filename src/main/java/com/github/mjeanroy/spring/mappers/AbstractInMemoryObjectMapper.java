@@ -83,7 +83,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
+	protected AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 

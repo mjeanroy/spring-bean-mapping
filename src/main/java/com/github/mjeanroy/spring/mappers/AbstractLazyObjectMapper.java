@@ -78,7 +78,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U> factory) {
+	protected AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 

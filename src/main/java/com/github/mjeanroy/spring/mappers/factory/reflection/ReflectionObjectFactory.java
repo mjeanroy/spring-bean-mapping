@@ -30,7 +30,7 @@ package com.github.mjeanroy.spring.mappers.factory.reflection;
  *
  * @param <T> Type of created beans.
  */
-public class ReflectionObjectFactory<T> extends AbstractReflectionObjectFactory<T> {
+public class ReflectionObjectFactory<T, U> extends AbstractReflectionObjectFactory<T, U> {
 
 	/**
 	 * Create new factory based on reflection.

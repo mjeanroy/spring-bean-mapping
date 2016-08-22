@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 
 import static org.mockito.Mockito.mock;
 
-public class FooDefaultJpaObjectFactory extends AbstractDefaultJpaFactory<Foo, Long> {
+public class FooDefaultJpaObjectFactory extends AbstractDefaultJpaFactory<Foo, FooDto, Long> {
 
 	public final ApplicationContext appContext;
 

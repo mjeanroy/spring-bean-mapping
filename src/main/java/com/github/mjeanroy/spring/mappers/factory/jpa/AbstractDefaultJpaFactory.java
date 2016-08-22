@@ -30,7 +30,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * @param <PK> Type entity primary key.
  */
 @Component
-public abstract class AbstractDefaultJpaFactory<T, PK extends Serializable> extends AbstractJpaObjectFactory<T, PK> implements ObjectFactory<T>, ApplicationContextAware {
+public abstract class AbstractDefaultJpaFactory<T, U, PK extends Serializable> extends AbstractJpaObjectFactory<T, U, PK> implements ObjectFactory<T, U>, ApplicationContextAware {
 
 	/**
 	 * Spring application context that will be used to retrieve

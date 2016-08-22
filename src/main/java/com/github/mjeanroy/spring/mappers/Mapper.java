@@ -43,7 +43,7 @@ public interface Mapper {
 	 * @param <U>     Target type.
 	 * @return Mapped bean (a.k.a destination).
 	 */
-	<T, U> U map(T source, ObjectFactory<U> factory);
+	<T, U> U map(T source, ObjectFactory<U, T> factory);
 
 	/**
 	 * Map bean to another bean.

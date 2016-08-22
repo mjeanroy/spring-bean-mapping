@@ -90,7 +90,7 @@ public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 
 	@Test
 	public void it_should_build_in_memory_mapper_with_explicit_generic_types_and_factory() throws Exception {
-		ObjectFactory<FooDto> fact = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		ObjectFactory<FooDto, Foo> fact = new ReflectionObjectFactory<>(FooDto.class);
 		ObjectMapper<Foo, FooDto> objectMapper = lazyObjectMapper(mapper, Foo.class, FooDto.class, fact);
 
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);

@@ -35,7 +35,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  *
  * @param <T> Type of created objects.
  */
-public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
+public abstract class AbstractObjectFactory<T, U> implements ObjectFactory<T, U> {
 
 	/**
 	 * Get class of objects created by this factory.
@@ -65,7 +65,7 @@ public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
 	}
 
 	@Override
-	public T get(Object source) {
+	public T get(U source) {
 		return BeanUtils.instantiateClass(klass);
 	}
 

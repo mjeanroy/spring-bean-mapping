@@ -25,6 +25,7 @@
 package com.github.mjeanroy.spring.mappers.factory.reflection;
 
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ public class AbstractReflectionObjectFactoryTest {
 
 	@Test
 	public void it_should_create_target_object() {
-		ObjectFactory<FooDto> objectFactory = new ReflectionObjectFactory<FooDto>(FooDto.class);
+		ObjectFactory<FooDto, Foo> objectFactory = new ReflectionObjectFactory<>(FooDto.class);
 		FooDto dto = objectFactory.get(null);
 		assertThat(dto).isNotNull();
 	}

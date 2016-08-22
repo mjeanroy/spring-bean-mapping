@@ -45,7 +45,7 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
  * @param <T> Type of entities.
  * @param <PK> Type of entities' primary key.
  */
-public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> extends AbstractObjectFactory<T> implements ObjectFactory<T> {
+public abstract class AbstractJpaObjectFactory<T, U, PK extends Serializable> extends AbstractObjectFactory<T, U> implements ObjectFactory<T, U> {
 
 	/**
 	 * Class of entities' primary key.
@@ -59,7 +59,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	@SuppressWarnings("unchecked")
 	protected AbstractJpaObjectFactory() {
 		super();
-		pkClass = (Class<PK>) ClassUtils.getGenericType(getClass(), 1);
+		pkClass = (Class<PK>) ClassUtils.getGenericType(getClass(), 2);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public T get(Object source) {
+	public T get(U source) {
 		if (source == null) {
 			return null;
 		}
@@ -114,7 +114,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	 * @param source Source object, can be used to instantiate target entity.
 	 * @return Target entity.
 	 */
-	protected T instantiate(Object source) {
+	protected T instantiate(U source) {
 		return get(source);
 	}
 

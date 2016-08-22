@@ -35,7 +35,7 @@ import com.github.mjeanroy.spring.mappers.factory.AbstractObjectFactory;
  *
  * @param <T> Type of created beans.
  */
-public abstract class AbstractReflectionObjectFactory<T> extends AbstractObjectFactory<T> {
+public abstract class AbstractReflectionObjectFactory<T, U> extends AbstractObjectFactory<T, U> {
 
 	/**
 	 * Create new factory based on reflection.
