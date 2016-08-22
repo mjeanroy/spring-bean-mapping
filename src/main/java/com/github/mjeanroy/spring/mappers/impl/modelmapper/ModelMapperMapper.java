@@ -56,11 +56,6 @@ public class ModelMapperMapper extends AbstractMapper<ModelMapper> implements Ma
 	}
 
 	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return modelMapper.map(source, klass);
-	}
-
-	@Override
 	public ModelMapper getDelegate() {
 		return modelMapper;
 	}

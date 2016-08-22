@@ -56,11 +56,6 @@ public class DozerMapper extends AbstractMapper<DozerBeanMapper> implements Mapp
 	}
 
 	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return mapper.map(source, klass);
-	}
-
-	@Override
 	public DozerBeanMapper getDelegate() {
 		return mapper;
 	}

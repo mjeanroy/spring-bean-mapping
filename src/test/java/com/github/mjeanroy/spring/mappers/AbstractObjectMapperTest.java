@@ -25,6 +25,7 @@
 package com.github.mjeanroy.spring.mappers;
 
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
 import com.github.mjeanroy.spring.mappers.utils.FooMapper;
@@ -51,7 +52,7 @@ public abstract class AbstractObjectMapperTest {
 		Class klassT = (Class) readField(fooMapper, "klassT", true);
 		Class klassU = (Class) readField(fooMapper, "klassU", true);
 
-		assertThat(factory).isNull();
+		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
 		assertThat(klassT).isNotNull().isSameAs(Foo.class);
 		assertThat(klassU).isNotNull().isSameAs(FooDto.class);
 	}

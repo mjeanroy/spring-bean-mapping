@@ -25,6 +25,7 @@
 package com.github.mjeanroy.spring.mappers.iterables;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
+import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
 import com.github.mjeanroy.spring.mappers.ObjectMapper;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
@@ -40,6 +41,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -95,7 +97,7 @@ public class LazyIterableMapperTest {
 			Foo foo = list.get(i);
 			assertThat(dto.getId()).isEqualTo(foo.getId());
 			assertThat(dto.getName()).isEqualTo(foo.getName());
-			verify(mapper).map(foo, FooDto.class);
+			verify(mapper).map(same(foo), any(ReflectionObjectFactory.class));
 			i++;
 		}
 	}

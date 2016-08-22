@@ -56,11 +56,6 @@ public class OrikaMapper extends AbstractMapper<MapperFacade> implements Mapper 
 	}
 
 	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return mapperFacade.map(source, klass);
-	}
-
-	@Override
 	public MapperFacade getDelegate() {
 		return mapperFacade;
 	}

@@ -36,19 +36,6 @@ public abstract class AbstractMapperTest {
 	protected abstract Mapper mapper();
 
 	@Test
-	public void it_should_map_object_to_object() {
-		Long id = 1L;
-		String name = "foo";
-		Foo foo = new Foo(id, name);
-
-		FooDto fooDto = mapper().map(foo, FooDto.class);
-
-		assertThat(fooDto).isNotNull();
-		assertThat(fooDto.getId()).isNotNull().isEqualTo(id);
-		assertThat(fooDto.getName()).isNotNull().isEqualTo(name);
-	}
-
-	@Test
 	public void it_should_map_object_to_instance_object() {
 		Long id = 1L;
 		String name = "foo";

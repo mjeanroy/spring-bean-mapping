@@ -65,16 +65,16 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
 	@Override
 	protected void checkBeforeIteration(Iterable<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(Foo.class), same(FooDto.class));
-		verify(mapper).map(foos.get(0), FooDto.class);
-		verify(mapper).map(foos.get(1), FooDto.class);
+		verify(mapper, times(2)).map(any(Foo.class), any(ReflectionObjectFactory.class));
+		verify(mapper).map(same(foos.get(0)), any(ReflectionObjectFactory.class));
+		verify(mapper).map(same(foos.get(1)), any(ReflectionObjectFactory.class));
 	}
 
 	@Override
 	protected void checkAfterIteration(List<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(Foo.class), same(FooDto.class));
-		verify(mapper).map(foos.get(0), FooDto.class);
-		verify(mapper).map(foos.get(1), FooDto.class);
+		verify(mapper, times(2)).map(any(Foo.class), any(ReflectionObjectFactory.class));
+		verify(mapper).map(same(foos.get(0)), any(ReflectionObjectFactory.class));
+		verify(mapper).map(same(foos.get(1)), any(ReflectionObjectFactory.class));
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 		Class klassT = (Class) readField(objectMapper, "klassT", true);
 		Class klassU = (Class) readField(objectMapper, "klassU", true);
 
-		assertThat(factory).isNull();
+		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
 		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
 		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
 	}

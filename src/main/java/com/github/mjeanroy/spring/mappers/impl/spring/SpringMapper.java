@@ -51,11 +51,6 @@ public class SpringMapper extends AbstractMapper<SpringFacadeMapper> implements 
 	}
 
 	@Override
-	public <T, U> U map(T source, Class<U> klass) {
-		return mapper.map(source, klass);
-	}
-
-	@Override
 	public SpringFacadeMapper getDelegate() {
 		return mapper;
 	}

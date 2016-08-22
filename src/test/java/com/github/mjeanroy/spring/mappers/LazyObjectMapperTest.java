@@ -40,11 +40,7 @@ import static com.github.mjeanroy.spring.mappers.ObjectMappers.lazyObjectMapper;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 
@@ -70,9 +66,9 @@ public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 
 	@Override
 	protected void checkAfterIteration(List<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(Foo.class), same(FooDto.class));
-		verify(mapper).map(foos.get(0), FooDto.class);
-		verify(mapper).map(foos.get(1), FooDto.class);
+		verify(mapper, times(2)).map(any(Foo.class), any(ReflectionObjectFactory.class));
+		verify(mapper).map(same(foos.get(0)), any(ReflectionObjectFactory.class));
+		verify(mapper).map(same(foos.get(1)), any(ReflectionObjectFactory.class));
 	}
 
 	@Test
@@ -83,7 +79,7 @@ public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 		Class klassT = (Class) readField(objectMapper, "klassT", true);
 		Class klassU = (Class) readField(objectMapper, "klassU", true);
 
-		assertThat(factory).isNull();
+		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
 		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
 		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
 	}

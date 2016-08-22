@@ -26,6 +26,7 @@ package com.github.mjeanroy.spring.mappers;
 
 import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.Iterables;
 import com.github.mjeanroy.spring.mappers.iterables.LazyUnmodifiableCollectionMapper;
 import org.slf4j.Logger;
@@ -84,7 +85,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassT = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
 		this.klassU = (Class<U>) ClassUtils.getGenericType(getClass(), 1);
-		this.factory = null;
+		this.factory = new ReflectionObjectFactory<>(klassU);
 	}
 
 	/**
@@ -98,7 +99,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassT = notNull(klassT, "Class T must bot be null");
 		this.klassU = notNull(klassU, "Class U must bot be null");
-		this.factory = null;
+		this.factory = new ReflectionObjectFactory<>(klassU);
 	}
 
 	/**
@@ -153,12 +154,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		log.debug("Creating destination object using mapper: {}", mapper);
 		log.debug("  - Factory: {}", factory);
 		log.debug("  - Target class: {}", klassU);
-
-		if (factory != null) {
-			return mapper.map(source, factory);
-		} else {
-			return mapper.map(source, klassU);
-		}
+		return mapper.map(source, factory);
 	}
 
 	@Override

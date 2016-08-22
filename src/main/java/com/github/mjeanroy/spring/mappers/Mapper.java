@@ -47,18 +47,6 @@ public interface Mapper {
 
 	/**
 	 * Map bean to another bean.
-	 * Target bean will be automatically created.
-	 *
-	 * @param source Source bean.
-	 * @param klass  Target bean class.
-	 * @param <T>    Source type.
-	 * @param <U>    Target type.
-	 * @return Mapped bean (a.k.a destination).
-	 */
-	<T, U> U map(T source, Class<U> klass);
-
-	/**
-	 * Map bean to another bean.
 	 * Target bean is already created and fields will be automatically
 	 * mapped map source bean.
 	 *
