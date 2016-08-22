@@ -24,9 +24,9 @@
 
 package com.github.mjeanroy.spring.mappers.factory.jpa;
 
-import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.AbstractObjectFactory;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
+import org.springframework.core.GenericTypeResolver;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;
@@ -59,7 +59,9 @@ public abstract class AbstractJpaObjectFactory<T, U, PK extends Serializable> ex
 	@SuppressWarnings("unchecked")
 	protected AbstractJpaObjectFactory() {
 		super();
-		pkClass = (Class<PK>) ClassUtils.getGenericType(getClass(), 2);
+
+		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractJpaObjectFactory.class);
+		pkClass = (Class<PK>) klasses[2];
 	}
 
 	/**

@@ -25,8 +25,7 @@
 package com.github.mjeanroy.spring.mappers.factory;
 
 import org.springframework.beans.BeanUtils;
-
-import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
+import org.springframework.core.GenericTypeResolver;
 
 import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 
@@ -50,7 +49,8 @@ public abstract class AbstractObjectFactory<T, U> implements ObjectFactory<T, U>
 	 */
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectFactory() {
-		this.klass = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
+		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectFactory.class);
+		this.klass = (Class<T>) klasses[0];
 	}
 
 	/**

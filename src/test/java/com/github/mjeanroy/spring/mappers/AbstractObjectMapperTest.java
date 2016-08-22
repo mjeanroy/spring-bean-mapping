@@ -39,6 +39,7 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 public abstract class AbstractObjectMapperTest {
 
@@ -47,6 +48,24 @@ public abstract class AbstractObjectMapperTest {
 	@Test
 	public void it_should_detect_generic_classes_and_instantie_default_factory() throws Exception {
 		FooMapper fooMapper = fooMapper();
+
+		ObjectFactory factory = (ObjectFactory) readField(fooMapper, "factory", true);
+		Class klassT = (Class) readField(fooMapper, "klassT", true);
+		Class klassU = (Class) readField(fooMapper, "klassU", true);
+
+		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
+		assertThat(klassT).isNotNull().isSameAs(Foo.class);
+		assertThat(klassU).isNotNull().isSameAs(FooDto.class);
+	}
+
+	@Test
+	public void it_should_detect_generic_classes_with_inline_instantiation() throws Exception {
+		AbstractObjectMapper<Foo, FooDto> fooMapper = new AbstractLazyObjectMapper<Foo, FooDto>(mock(Mapper.class)) {
+			@Override
+			public Iterable<FooDto> map(Iterable<Foo> sources) {
+				return super.map(sources);
+			}
+		};
 
 		ObjectFactory factory = (ObjectFactory) readField(fooMapper, "factory", true);
 		Class klassT = (Class) readField(fooMapper, "klassT", true);

@@ -24,13 +24,13 @@
 
 package com.github.mjeanroy.spring.mappers;
 
-import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.Iterables;
 import com.github.mjeanroy.spring.mappers.iterables.LazyUnmodifiableCollectionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.GenericTypeResolver;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,8 +83,10 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectMapper(Mapper mapper) {
 		this.mapper = notNull(mapper, "Mapper must not be null");
-		this.klassT = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
-		this.klassU = (Class<U>) ClassUtils.getGenericType(getClass(), 1);
+
+		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectMapper.class);
+		this.klassT = (Class<T>) klasses[0];
+		this.klassU = (Class<U>) klasses[1];
 		this.factory = new ReflectionObjectFactory<>(klassU);
 	}
 
@@ -124,24 +126,6 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 */
 	protected Mapper getMapper() {
 		return mapper;
-	}
-
-	/**
-	 * Get class of source inputs.
-	 *
-	 * @return Source class.
-	 */
-	protected Class<T> getSourceClass() {
-		return klassT;
-	}
-
-	/**
-	 * Get class of target outputs.
-	 *
-	 * @return Target class.
-	 */
-	protected Class<U> getTargetClass() {
-		return klassU;
 	}
 
 	@Override
