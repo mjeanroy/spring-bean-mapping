@@ -48,7 +48,7 @@ public final class ObjectMappers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, U> ObjectMapper<T, U> inMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		return new InMemoryObjectMapper(mapper, klassT, klassU);
+		return new InMemoryObjectMapper(mapper, klassU);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public final class ObjectMappers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, U> ObjectMapper<T, U> inMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
-		return new InMemoryObjectMapper(mapper, klassT, klassU, factory);
+		return new InMemoryObjectMapper(mapper, klassU, factory);
 	}
 
 	/**
@@ -83,7 +83,7 @@ public final class ObjectMappers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, U> ObjectMapper<T, U> lazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		return new LazyObjectMapper(mapper, klassT, klassU);
+		return new LazyObjectMapper(mapper, klassU);
 	}
 
 	/**
@@ -102,26 +102,26 @@ public final class ObjectMappers {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T, U> ObjectMapper<T, U> lazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
-		return new LazyObjectMapper(mapper, klassT, klassU, factory);
+		return new LazyObjectMapper(mapper, klassU, factory);
 	}
 
 	private static class InMemoryObjectMapper<T, U> extends AbstractInMemoryObjectMapper<T, U> implements ObjectMapper<T, U> {
-		private InMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-			super(mapper, klassT, klassU);
+		private InMemoryObjectMapper(Mapper mapper, Class<U> klassU) {
+			super(mapper, klassU);
 		}
 
-		private InMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
-			super(mapper, klassT, klassU, factory);
+		private InMemoryObjectMapper(Mapper mapper, Class<U> klassU, ObjectFactory<U, T> factory) {
+			super(mapper, klassU, factory);
 		}
 	}
 
 	private static class LazyObjectMapper<T, U> extends AbstractLazyObjectMapper<T, U> implements ObjectMapper<T, U> {
-		private LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-			super(mapper, klassT, klassU);
+		private LazyObjectMapper(Mapper mapper, Class<U> klassU) {
+			super(mapper, klassU);
 		}
 
-		private LazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
-			super(mapper, klassT, klassU, factory);
+		private LazyObjectMapper(Mapper mapper, Class<U> klassU, ObjectFactory<U, T> factory) {
+			super(mapper, klassU, factory);
 		}
 	}
 }

@@ -60,11 +60,6 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	private final Mapper mapper;
 
 	/**
-	 * Class of source objects.
-	 */
-	private final Class<T> klassT;
-
-	/**
 	 * Class of destination objects.
 	 */
 	private final Class<U> klassU;
@@ -85,7 +80,6 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectMapper.class);
 
 		this.mapper = notNull(mapper, "Mapper must not be null");
-		this.klassT = (Class<T>) klasses[0];
 		this.klassU = (Class<U>) klasses[1];
 		this.factory = new ReflectionObjectFactory<>(klassU);
 	}
@@ -101,7 +95,6 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectMapper.class);
 
 		this.mapper = notNull(mapper, "Mapper must not be null");
-		this.klassT = (Class<T>) klasses[0];
 		this.klassU = (Class<U>) klasses[1];
 		this.factory = notNull(factory, "Factory must not be null");
 	}
@@ -113,11 +106,10 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * with automatic type detection instead.
 	 *
 	 * @param mapper Mapper used to map source to destination.
-	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		this(mapper, klassT, klassU, new ReflectionObjectFactory<U, T>(klassU));
+	AbstractObjectMapper(Mapper mapper, Class<U> klassU) {
+		this(mapper, klassU, new ReflectionObjectFactory<U, T>(klassU));
 	}
 
 	/**
@@ -127,13 +119,11 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * with automatic type detection instead.
 	 *
 	 * @param mapper Mapper used to map source to destination.
-	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
+	AbstractObjectMapper(Mapper mapper, Class<U> klassU, ObjectFactory<U, T> factory) {
 		this.mapper = notNull(mapper, "Mapper must not be null");
-		this.klassT = notNull(klassT, "Class T must bot be null");
 		this.klassU = notNull(klassU, "Class U must bot be null");
 		this.factory = notNull(factory, "Factory must bot be null");
 	}

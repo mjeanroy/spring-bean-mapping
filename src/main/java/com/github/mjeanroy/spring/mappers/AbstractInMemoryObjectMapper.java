@@ -79,23 +79,21 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 * Create new in memory mapper.
 	 *
 	 * @param mapper Mapper used to map source to destination.
-	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		super(mapper, klassT, klassU);
+	AbstractInMemoryObjectMapper(Mapper mapper, Class<U> klassU) {
+		super(mapper, klassU);
 	}
 
 	/**
 	 * Create new in memory mapper.
 	 *
 	 * @param mapper Mapper used to map source to destination.
-	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
-		super(mapper, klassT, klassU, factory);
+	AbstractInMemoryObjectMapper(Mapper mapper, Class<U> klassU, ObjectFactory<U, T> factory) {
+		super(mapper, klassU, factory);
 	}
 
 	@Override

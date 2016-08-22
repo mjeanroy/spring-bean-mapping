@@ -50,11 +50,9 @@ public abstract class AbstractObjectMapperTest {
 		FooMapper fooMapper = fooMapper();
 
 		ObjectFactory factory = (ObjectFactory) readField(fooMapper, "factory", true);
-		Class klassT = (Class) readField(fooMapper, "klassT", true);
 		Class klassU = (Class) readField(fooMapper, "klassU", true);
 
 		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
-		assertThat(klassT).isNotNull().isSameAs(Foo.class);
 		assertThat(klassU).isNotNull().isSameAs(FooDto.class);
 	}
 
@@ -68,11 +66,9 @@ public abstract class AbstractObjectMapperTest {
 		};
 
 		ObjectFactory factory = (ObjectFactory) readField(fooMapper, "factory", true);
-		Class klassT = (Class) readField(fooMapper, "klassT", true);
 		Class klassU = (Class) readField(fooMapper, "klassU", true);
 
 		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
-		assertThat(klassT).isNotNull().isSameAs(Foo.class);
 		assertThat(klassU).isNotNull().isSameAs(FooDto.class);
 	}
 

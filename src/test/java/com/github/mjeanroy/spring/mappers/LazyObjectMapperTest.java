@@ -103,11 +103,9 @@ public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 		ObjectMapper<Foo, FooDto> objectMapper = lazyObjectMapper(mapper, Foo.class, FooDto.class);
 
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
-		Class klassT = (Class) readField(objectMapper, "klassT", true);
 		Class klassU = (Class) readField(objectMapper, "klassU", true);
 
 		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
-		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
 		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
 	}
 
@@ -117,11 +115,9 @@ public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 		ObjectMapper<Foo, FooDto> objectMapper = lazyObjectMapper(mapper, Foo.class, FooDto.class, fact);
 
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
-		Class klassT = (Class) readField(objectMapper, "klassT", true);
 		Class klassU = (Class) readField(objectMapper, "klassU", true);
 
 		assertThat(factory).isNotNull().isSameAs(fact);
-		assertThat(klassT).isNotNull().isEqualTo(Foo.class);
 		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
 	}
 }
