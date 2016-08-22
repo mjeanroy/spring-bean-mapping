@@ -66,12 +66,23 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 
 	/**
 	 * Create new in memory mapper.
+	 * Generic types will be detected at object creation.
+	 *
+	 * @param mapper Mapper used to map source to destination.
+	 * @param factory Object factory used to create destination empty bean.
+	 */
+	protected AbstractInMemoryObjectMapper(Mapper mapper, ObjectFactory<U, T> factory) {
+		super(mapper, factory);
+	}
+
+	/**
+	 * Create new in memory mapper.
 	 *
 	 * @param mapper Mapper used to map source to destination.
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	protected AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+	AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
 		super(mapper, klassT, klassU);
 	}
 
@@ -83,7 +94,7 @@ public abstract class AbstractInMemoryObjectMapper<T, U> extends AbstractObjectM
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
+	AbstractInMemoryObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 

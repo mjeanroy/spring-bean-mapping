@@ -61,12 +61,22 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 
 	/**
 	 * Create new lazy mapper.
+	 * Generic types will be detected at object creation.
+	 *
+	 * @param mapper Mapper used to map source to destination.
+	 */
+	protected AbstractLazyObjectMapper(Mapper mapper, ObjectFactory<U, T> factory) {
+		super(mapper, factory);
+	}
+
+	/**
+	 * Create new lazy mapper.
 	 *
 	 * @param mapper Mapper used to map source to destination.
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	protected AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+	AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
 		super(mapper, klassT, klassU);
 	}
 
@@ -78,7 +88,7 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
+	AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
 		super(mapper, klassT, klassU, factory);
 	}
 

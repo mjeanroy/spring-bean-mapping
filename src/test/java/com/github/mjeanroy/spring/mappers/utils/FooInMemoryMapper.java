@@ -26,10 +26,15 @@ package com.github.mjeanroy.spring.mappers.utils;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.AbstractInMemoryObjectMapper;
+import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 
 public class FooInMemoryMapper extends AbstractInMemoryObjectMapper<Foo, FooDto> implements FooMapper {
 
 	public FooInMemoryMapper(Mapper mapper) {
 		super(mapper);
+	}
+
+	public FooInMemoryMapper(Mapper mapper, ObjectFactory<FooDto, Foo> factory) {
+		super(mapper, factory);
 	}
 }

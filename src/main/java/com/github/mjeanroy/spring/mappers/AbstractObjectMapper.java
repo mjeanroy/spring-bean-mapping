@@ -82,9 +82,9 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectMapper(Mapper mapper) {
-		this.mapper = notNull(mapper, "Mapper must not be null");
-
 		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectMapper.class);
+
+		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassT = (Class<T>) klasses[0];
 		this.klassU = (Class<U>) klasses[1];
 		this.factory = new ReflectionObjectFactory<>(klassU);
@@ -92,27 +92,46 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 	/**
 	 * Create new mapper.
+	 * Generic types will be detected at object creation.
+	 *
+	 * @param mapper Mapper used to map source to destination.
+	 */
+	@SuppressWarnings("unchecked")
+	protected AbstractObjectMapper(Mapper mapper, ObjectFactory<U, T> factory) {
+		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectMapper.class);
+
+		this.mapper = notNull(mapper, "Mapper must not be null");
+		this.klassT = (Class<T>) klasses[0];
+		this.klassU = (Class<U>) klasses[1];
+		this.factory = notNull(factory, "Factory must not be null");
+	}
+
+	/**
+	 * Create new mapper.
+	 *
+	 * This constructor should only be called with a static factory, use subclassing
+	 * with automatic type detection instead.
 	 *
 	 * @param mapper Mapper used to map source to destination.
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
-		this.mapper = notNull(mapper, "Mapper must not be null");
-		this.klassT = notNull(klassT, "Class T must bot be null");
-		this.klassU = notNull(klassU, "Class U must bot be null");
-		this.factory = new ReflectionObjectFactory<>(klassU);
+	AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+		this(mapper, klassT, klassU, new ReflectionObjectFactory<U, T>(klassU));
 	}
 
 	/**
 	 * Create new mapper.
+	 *
+	 * This constructor should only be called with a static factory, use subclassing
+	 * with automatic type detection instead.
 	 *
 	 * @param mapper Mapper used to map source to destination.
 	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 * @param factory Factory used to instantiate destination object.
 	 */
-	protected AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
+	AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU, ObjectFactory<U, T> factory) {
 		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassT = notNull(klassT, "Class T must bot be null");
 		this.klassU = notNull(klassU, "Class U must bot be null");

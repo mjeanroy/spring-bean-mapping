@@ -41,10 +41,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.same;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
@@ -61,6 +58,36 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 	@Override
 	protected FooMapper fooMapper() {
 		return fooMapper;
+	}
+
+	@Test
+	public void it_should_create_in_memory_mapper_with_default_factory() throws Exception {
+		final Mapper mapper = mock(Mapper.class);
+		final FooInMemoryMapper fooInMemoryMapper = new FooInMemoryMapper(mapper);
+
+		assertThat(readField(fooInMemoryMapper, "mapper", true))
+				.isNotNull()
+				.isSameAs(mapper);
+
+		assertThat(readField(fooInMemoryMapper, "factory", true))
+				.isNotNull()
+				.isExactlyInstanceOf(ReflectionObjectFactory.class);
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void it_should_create_in_memory_mapper_with_custom_factory() throws Exception {
+		final Mapper mapper = mock(Mapper.class);
+		final ObjectFactory<FooDto, Foo> factory = mock(ObjectFactory.class);
+		final FooInMemoryMapper fooInMemoryMapper = new FooInMemoryMapper(mapper, factory);
+
+		assertThat(readField(fooInMemoryMapper, "mapper", true))
+				.isNotNull()
+				.isSameAs(mapper);
+
+		assertThat(readField(fooInMemoryMapper, "factory", true))
+				.isNotNull()
+				.isSameAs(factory);
 	}
 
 	@Override

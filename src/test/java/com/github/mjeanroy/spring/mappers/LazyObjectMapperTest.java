@@ -27,10 +27,7 @@ package com.github.mjeanroy.spring.mappers;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
-import com.github.mjeanroy.spring.mappers.utils.Foo;
-import com.github.mjeanroy.spring.mappers.utils.FooDto;
-import com.github.mjeanroy.spring.mappers.utils.FooLazyMapper;
-import com.github.mjeanroy.spring.mappers.utils.FooMapper;
+import com.github.mjeanroy.spring.mappers.utils.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,6 +54,36 @@ public class LazyObjectMapperTest extends AbstractObjectMapperTest {
 	@Override
 	protected FooMapper fooMapper() {
 		return fooMapper;
+	}
+
+	@Test
+	public void it_should_create_in_memory_mapper_with_default_factory() throws Exception {
+		final Mapper mapper = mock(Mapper.class);
+		final FooLazyMapper fooLazyMapper = new FooLazyMapper(mapper);
+
+		assertThat(readField(fooLazyMapper, "mapper", true))
+				.isNotNull()
+				.isSameAs(mapper);
+
+		assertThat(readField(fooLazyMapper, "factory", true))
+				.isNotNull()
+				.isExactlyInstanceOf(ReflectionObjectFactory.class);
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void it_should_create_in_memory_mapper_with_custom_factory() throws Exception {
+		final Mapper mapper = mock(Mapper.class);
+		final ObjectFactory<FooDto, Foo> factory = mock(ObjectFactory.class);
+		final FooLazyMapper fooLazyMapper = new FooLazyMapper(mapper, factory);
+
+		assertThat(readField(fooLazyMapper, "mapper", true))
+				.isNotNull()
+				.isSameAs(mapper);
+
+		assertThat(readField(fooLazyMapper, "factory", true))
+				.isNotNull()
+				.isSameAs(factory);
 	}
 
 	@Override
