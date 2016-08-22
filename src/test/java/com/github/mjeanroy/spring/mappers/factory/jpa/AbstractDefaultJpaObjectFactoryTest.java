@@ -38,10 +38,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class AbstractDefaultJpaObjectFactoryTest {
@@ -68,19 +65,6 @@ public class AbstractDefaultJpaObjectFactoryTest {
 	@Test
 	public void it_should_get_generic_types() {
 		assertThat(factory.getPkClass()).isEqualTo(Long.class);
-	}
-
-	@Test
-	public void it_should_create_new_object_instance() {
-		Foo foo = factory.get();
-		assertThat(foo).isNotNull();
-	}
-
-	@Test
-	public void it_should_return_null_if_source_is_null() {
-		Foo result = factory.get(null);
-		assertThat(result).isNull();
-		verifyZeroInteractions(factory.appContext);
 	}
 
 	@Test

@@ -38,31 +38,44 @@ import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
 public abstract class AbstractObjectFactory<T> implements ObjectFactory<T> {
 
 	/**
-	 * Get klass of objects created by this factory.
+	 * Get class of objects created by this factory.
 	 */
 	private final Class<T> klass;
 
+	/**
+	 * Instantiate this factory.
+	 *
+	 * Important: the target class (i.e class of object created by this factory)
+	 * will be determined at runtime using reflection.
+	 */
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectFactory() {
 		this.klass = (Class<T>) ClassUtils.getGenericType(getClass(), 0);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected AbstractObjectFactory(Class klass) {
+	/**
+	 * Instantiate this factory with target class (i.e class of object created by
+	 * this factory).
+	 *
+	 * @param klass Target class.
+	 * @throws NullPointerException If {@code klass} is {@code null}.
+	 */
+	protected AbstractObjectFactory(Class<T> klass) {
 		this.klass = notNull(klass, "Target class must not be null");
 	}
 
 	@Override
-	public T get() {
+	public T get(Object source) {
 		return BeanUtils.instantiateClass(klass);
 	}
 
 	/**
-	 * Return the class of objects created by this factory.
+	 * Get the target class: this is the class of object created by this
+	 * factory.
 	 *
-	 * @return Class of objects to create.
+	 * @return Target class.
 	 */
-	protected Class<T> getTargetClass() {
+	public Class<T> getTargetClass() {
 		return klass;
 	}
 }

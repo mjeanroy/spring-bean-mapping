@@ -88,7 +88,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 		if (id != null) {
 			destination = findById(id);
 		} else {
-			destination = instantiate(source);
+			destination = super.get(source);
 		}
 
 		return destination == null ?
@@ -115,7 +115,7 @@ public abstract class AbstractJpaObjectFactory<T, PK extends Serializable> exten
 	 * @return Target entity.
 	 */
 	protected T instantiate(Object source) {
-		return get();
+		return get(source);
 	}
 
 	/**

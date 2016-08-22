@@ -39,7 +39,9 @@ public abstract class AbstractReflectionObjectFactory<T> extends AbstractObjectF
 
 	/**
 	 * Create new factory based on reflection.
-	 * This constructor will try to detect target class at instantiation.
+	 *
+	 * Important: this constructor will try to detect target class at instantiation
+	 * using reflection.
 	 */
 	protected AbstractReflectionObjectFactory() {
 		super();
@@ -48,14 +50,9 @@ public abstract class AbstractReflectionObjectFactory<T> extends AbstractObjectF
 	/**
 	 * Create new factory based on reflection.
 	 *
-	 * @param klass Target class.
+	 * @param klass Target class (i.e class of object created by this factory).
 	 */
 	protected AbstractReflectionObjectFactory(Class<T> klass) {
 		super(klass);
-	}
-
-	@Override
-	public T get(Object source) {
-		return get();
 	}
 }

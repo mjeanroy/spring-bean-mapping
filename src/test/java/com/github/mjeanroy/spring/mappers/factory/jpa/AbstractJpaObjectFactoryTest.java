@@ -47,13 +47,6 @@ public class AbstractJpaObjectFactoryTest {
 	}
 
 	@Test
-	public void it_should_create_new_object_instance() {
-		FooJpaObjectFactory factory = new FooJpaObjectFactory();
-		Foo foo = factory.get();
-		assertThat(foo).isNotNull();
-	}
-
-	@Test
 	public void it_should_create_new_object_instance_if_id_is_null() {
 		Long id = null;
 		FooDto dto = mock(FooDto.class);

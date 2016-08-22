@@ -34,14 +34,12 @@ public interface ObjectFactory<T> {
 	/**
 	 * Create bean.
 	 *
-	 * @return Bean.
-	 */
-	T get();
-
-	/**
-	 * Create bean.
-	 * First parameter is arbitrary parameter that can be used to create
-	 * new instances of target object.
+	 * First parameter is a parameter that can be used to create
+	 * new instances of target object (for example, use an attribute of this
+	 * parameter to create new object).
+	 *
+	 * Important: this method should not be called with {@code null} but it is
+	 * not guaranteed.
 	 *
 	 * @param source Parameter that can be used to create bean.
 	 * @return Bean.
