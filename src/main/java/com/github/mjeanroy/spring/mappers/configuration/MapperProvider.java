@@ -29,6 +29,8 @@ import com.github.mjeanroy.spring.mappers.configuration.dozer.DozerMapperConfigu
 import com.github.mjeanroy.spring.mappers.configuration.modelmapper.ModelMapperMapperConfiguration;
 import com.github.mjeanroy.spring.mappers.configuration.orika.OrikaMapperConfiguration;
 import com.github.mjeanroy.spring.mappers.configuration.spring.SpringMapperConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Set of mapper provider.
@@ -93,15 +95,26 @@ public enum MapperProvider {
 	AUTO {
 		@Override
 		public Class configurationClass() {
+			log.info("Trying dozer as mapper implementation");
 			if (ClassUtils.isPresent("org.dozer.DozerBeanMapper")) {
+				log.info("Dozer detected, use this as implementation");
 				return DOZER.configurationClass();
-			} else if (ClassUtils.isPresent("org.modelmapper.ModelMapper")) {
-				return MODEL_MAPPER.configurationClass();
-			} else if (ClassUtils.isPresent("ma.glasnost.orika.MapperFacade")) {
-				return ORIKA.configurationClass();
-			} else {
-				return SPRING.configurationClass();
 			}
+
+			log.info("Trying ModelMapper as mapper implementation");
+			if (ClassUtils.isPresent("org.modelmapper.ModelMapper")) {
+				log.info("ModelMapper detected, use this as implementation");
+				return MODEL_MAPPER.configurationClass();
+			}
+
+			log.info("Trying Orika as mapper implementation");
+			if (ClassUtils.isPresent("ma.glasnost.orika.MapperFacade")) {
+				log.info("Orika detected, use this as implementation");
+				return ORIKA.configurationClass();
+			}
+
+			log.info("No standard implementation detected, use basic spring implementation as fallback");
+			return SPRING.configurationClass();
 		}
 	};
 
@@ -111,4 +124,9 @@ public enum MapperProvider {
 	 * @return Configuration class.
 	 */
 	public abstract Class configurationClass();
+
+	/**
+	 * Class logger.
+	 */
+	private static final Logger log = LoggerFactory.getLogger(MapperProvider.class);
 }
