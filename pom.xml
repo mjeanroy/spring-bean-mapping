@@ -69,7 +69,7 @@
 
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<dozer.version>5.5.1</dozer.version>
-		<modelmapper.version>0.7.2</modelmapper.version>
+		<modelmapper.version>0.7.6</modelmapper.version>
 		<orika.version>1.4.5</orika.version>
 		<slf4j.version>1.7.1</slf4j.version>
 		<logback.version>1.1.7</logback.version>
