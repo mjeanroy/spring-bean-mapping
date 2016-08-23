@@ -25,7 +25,6 @@
 package com.github.mjeanroy.spring.mappers;
 
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
-import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.iterables.Iterables;
 import com.github.mjeanroy.spring.mappers.iterables.LazyUnmodifiableCollectionMapper;
 import org.slf4j.Logger;
@@ -37,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.github.mjeanroy.spring.mappers.commons.PreConditions.notNull;
+import static com.github.mjeanroy.spring.mappers.factory.ObjectFactories.reflectionObjectFactory;
 
 /**
  * Simple abstraction that defines commons methods to object mapper implementations.
@@ -81,7 +81,7 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 
 		this.mapper = notNull(mapper, "Mapper must not be null");
 		this.klassU = (Class<U>) klasses[1];
-		this.factory = new ReflectionObjectFactory<>(klassU);
+		this.factory = reflectionObjectFactory(klassU, (Class<T>) klasses[0]);
 	}
 
 	/**
@@ -106,10 +106,12 @@ public abstract class AbstractObjectMapper<T, U> implements ObjectMapper<T, U> {
 	 * with automatic type detection instead.
 	 *
 	 * @param mapper Mapper used to map source to destination.
+	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	AbstractObjectMapper(Mapper mapper, Class<U> klassU) {
-		this(mapper, klassU, new ReflectionObjectFactory<U, T>(klassU));
+	@SuppressWarnings("unchecked")
+	AbstractObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+		this(mapper, klassU, reflectionObjectFactory(klassU, klassT));
 	}
 
 	/**

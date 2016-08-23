@@ -24,8 +24,8 @@
 
 package com.github.mjeanroy.spring.mappers;
 
+import com.github.mjeanroy.spring.mappers.factory.AbstractObjectFactory;
 import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
-import com.github.mjeanroy.spring.mappers.factory.reflection.ReflectionObjectFactory;
 import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
@@ -71,7 +71,7 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
 		assertThat(readField(fooInMemoryMapper, "factory", true))
 				.isNotNull()
-				.isExactlyInstanceOf(ReflectionObjectFactory.class);
+				.isInstanceOf(AbstractObjectFactory.class);
 	}
 
 	@Test
@@ -92,16 +92,16 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 
 	@Override
 	protected void checkBeforeIteration(Iterable<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(Foo.class), any(ReflectionObjectFactory.class));
-		verify(mapper).map(same(foos.get(0)), any(ReflectionObjectFactory.class));
-		verify(mapper).map(same(foos.get(1)), any(ReflectionObjectFactory.class));
+		verify(mapper, times(2)).map(any(Foo.class), any(ObjectFactory.class));
+		verify(mapper).map(same(foos.get(0)), any(ObjectFactory.class));
+		verify(mapper).map(same(foos.get(1)), any(ObjectFactory.class));
 	}
 
 	@Override
 	protected void checkAfterIteration(List<FooDto> fooDtos, List<Foo> foos) {
-		verify(mapper, times(2)).map(any(Foo.class), any(ReflectionObjectFactory.class));
-		verify(mapper).map(same(foos.get(0)), any(ReflectionObjectFactory.class));
-		verify(mapper).map(same(foos.get(1)), any(ReflectionObjectFactory.class));
+		verify(mapper, times(2)).map(any(Foo.class), any(ObjectFactory.class));
+		verify(mapper).map(same(foos.get(0)), any(ObjectFactory.class));
+		verify(mapper).map(same(foos.get(1)), any(ObjectFactory.class));
 	}
 
 	@Test
@@ -111,13 +111,14 @@ public class InMemoryObjectMapperTest  extends AbstractObjectMapperTest {
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);
 		Class klassU = (Class) readField(objectMapper, "klassU", true);
 
-		assertThat(factory).isNotNull().isExactlyInstanceOf(ReflectionObjectFactory.class);
+		assertThat(factory).isNotNull().isInstanceOf(ObjectFactory.class);
 		assertThat(klassU).isNotNull().isEqualTo(FooDto.class);
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void it_should_build_in_memory_mapper_with_explicit_generic_types_and_factory() throws Exception {
-		ObjectFactory<FooDto, Foo> fact = new ReflectionObjectFactory<>(FooDto.class);
+		ObjectFactory<FooDto, Foo> fact = mock(ObjectFactory.class);
 		ObjectMapper<Foo, FooDto> objectMapper = inMemoryObjectMapper(mapper, Foo.class, FooDto.class, fact);
 
 		ObjectFactory factory = (ObjectFactory) readField(objectMapper, "factory", true);

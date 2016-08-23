@@ -22,22 +22,10 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.factory.reflection;
+package com.github.mjeanroy.spring.mappers.factory;
 
-/**
- * Factory that use reflection to create beans.
- * Note that beans must have a default constructor to be instantiated.
- *
- * @param <T> Type of created beans.
- */
-public class ReflectionObjectFactory<T, U> extends AbstractReflectionObjectFactory<T, U> {
+import com.github.mjeanroy.spring.mappers.utils.Foo;
+import com.github.mjeanroy.spring.mappers.utils.FooDto;
 
-	/**
-	 * Create new factory based on reflection.
-	 *
-	 * @param klass Target class.
-	 */
-	public ReflectionObjectFactory(Class<T> klass) {
-		super(klass);
-	}
+public class FooFactory extends AbstractObjectFactory<FooDto, Foo> {
 }

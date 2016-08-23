@@ -73,10 +73,11 @@ public abstract class AbstractLazyObjectMapper<T, U> extends AbstractObjectMappe
 	 * Create new lazy mapper.
 	 *
 	 * @param mapper Mapper used to map source to destination.
+	 * @param klassT Source type.
 	 * @param klassU Destination type.
 	 */
-	AbstractLazyObjectMapper(Mapper mapper, Class<U> klassU) {
-		super(mapper, klassU);
+	AbstractLazyObjectMapper(Mapper mapper, Class<T> klassT, Class<U> klassU) {
+		super(mapper, klassT, klassU);
 	}
 
 	/**

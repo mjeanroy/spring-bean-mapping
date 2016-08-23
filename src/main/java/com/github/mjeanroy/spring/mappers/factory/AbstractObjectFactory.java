@@ -39,7 +39,12 @@ public abstract class AbstractObjectFactory<T, U> implements ObjectFactory<T, U>
 	/**
 	 * Get class of objects created by this factory.
 	 */
-	private final Class<T> klass;
+	private final Class<T> klassT;
+
+	/**
+	 * Class of object used as a source object.
+	 */
+	private final Class<U> klassU;
 
 	/**
 	 * Instantiate this factory.
@@ -50,23 +55,25 @@ public abstract class AbstractObjectFactory<T, U> implements ObjectFactory<T, U>
 	@SuppressWarnings("unchecked")
 	protected AbstractObjectFactory() {
 		Class<?>[] klasses = GenericTypeResolver.resolveTypeArguments(getClass(), AbstractObjectFactory.class);
-		this.klass = (Class<T>) klasses[0];
+		this.klassT = (Class<T>) klasses[0];
+		this.klassU = (Class<U>) klasses[1];
 	}
 
 	/**
 	 * Instantiate this factory with target class (i.e class of object created by
 	 * this factory).
 	 *
-	 * @param klass Target class.
+	 * @param klassT Target class.
 	 * @throws NullPointerException If {@code klass} is {@code null}.
 	 */
-	protected AbstractObjectFactory(Class<T> klass) {
-		this.klass = notNull(klass, "Target class must not be null");
+	AbstractObjectFactory(Class<T> klassT, Class<U> klassU) {
+		this.klassT = notNull(klassT, "Target class must not be null");
+		this.klassU = notNull(klassU, "Source class must not be null");
 	}
 
 	@Override
 	public T get(U source) {
-		return BeanUtils.instantiateClass(klass);
+		return BeanUtils.instantiateClass(klassT);
 	}
 
 	/**
@@ -75,7 +82,16 @@ public abstract class AbstractObjectFactory<T, U> implements ObjectFactory<T, U>
 	 *
 	 * @return Target class.
 	 */
-	public Class<T> getTargetClass() {
-		return klass;
+	protected Class<T> getTargetClass() {
+		return klassT;
+	}
+
+	/**
+	 * Get the source class.
+	 *
+	 * @return Source class.
+	 */
+	protected Class<U> getSourceClass() {
+		return klassU;
 	}
 }

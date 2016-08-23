@@ -22,21 +22,31 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.factory.reflection;
+package com.github.mjeanroy.spring.mappers.factory;
 
-import com.github.mjeanroy.spring.mappers.factory.ObjectFactory;
 import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractReflectionObjectFactoryTest {
+public class ObjectFactoriesTest {
 
 	@Test
-	public void it_should_create_target_object() {
-		ObjectFactory<FooDto, Foo> objectFactory = new ReflectionObjectFactory<>(FooDto.class);
-		FooDto dto = objectFactory.get(null);
-		assertThat(dto).isNotNull();
+	public void it_should_create_reflection_factory() {
+		ObjectFactory<FooDto, Foo> factory = ObjectFactories.reflectionObjectFactory(FooDto.class, Foo.class);
+		assertThat(factory)
+				.isNotNull()
+				.isInstanceOf(AbstractObjectFactory.class);
+
+		assertThat(((AbstractObjectFactory) factory).getTargetClass())
+				.isEqualTo(FooDto.class);
+	}
+
+	@Test
+	public void it_should_create_target_object_by_reflection() {
+		ObjectFactory<FooDto, Foo> factory = ObjectFactories.reflectionObjectFactory(FooDto.class, Foo.class);
+		FooDto target = factory.get(null);
+		assertThat(target).isNotNull();
 	}
 }

@@ -22,37 +22,25 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.factory.reflection;
+package com.github.mjeanroy.spring.mappers.factory;
 
-import com.github.mjeanroy.spring.mappers.factory.AbstractObjectFactory;
+import com.github.mjeanroy.spring.mappers.utils.FooDto;
+import org.junit.Test;
 
-/**
- * Factory that use reflection to create beans.
- * Note that beans must have a default constructor to be instantiated.
- *
- * This class is an abstract since it must be explicitly sub-classed to use
- * default constructor.
- *
- * @param <T> Type of created beans.
- */
-public abstract class AbstractReflectionObjectFactory<T, U> extends AbstractObjectFactory<T, U> {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	/**
-	 * Create new factory based on reflection.
-	 *
-	 * Important: this constructor will try to detect target class at instantiation
-	 * using reflection.
-	 */
-	protected AbstractReflectionObjectFactory() {
-		super();
+public class AbstractObjectFactoryTest {
+
+	@Test
+	public void it_should_create_factory() {
+		FooFactory objectFactory = new FooFactory();
+		assertThat(objectFactory.getTargetClass()).isEqualTo(FooDto.class);
 	}
 
-	/**
-	 * Create new factory based on reflection.
-	 *
-	 * @param klass Target class (i.e class of object created by this factory).
-	 */
-	protected AbstractReflectionObjectFactory(Class<T> klass) {
-		super(klass);
+	@Test
+	public void it_should_create_target_object_with_reflection() {
+		FooFactory objectFactory = new FooFactory();
+		FooDto target = objectFactory.get(null);
+		assertThat(target).isNotNull();
 	}
 }
