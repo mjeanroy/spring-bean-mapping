@@ -24,6 +24,7 @@
 
 package com.github.mjeanroy.spring.mappers.factory;
 
+import com.github.mjeanroy.spring.mappers.utils.Foo;
 import com.github.mjeanroy.spring.mappers.utils.FooDto;
 import org.junit.Test;
 
@@ -35,6 +36,7 @@ public class AbstractObjectFactoryTest {
 	public void it_should_create_factory() {
 		FooFactory objectFactory = new FooFactory();
 		assertThat(objectFactory.getTargetClass()).isEqualTo(FooDto.class);
+		assertThat(objectFactory.getSourceClass()).isEqualTo(Foo.class);
 	}
 
 	@Test

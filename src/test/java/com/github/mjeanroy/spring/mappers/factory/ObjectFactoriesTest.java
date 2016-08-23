@@ -39,8 +39,8 @@ public class ObjectFactoriesTest {
 				.isNotNull()
 				.isInstanceOf(AbstractObjectFactory.class);
 
-		assertThat(((AbstractObjectFactory) factory).getTargetClass())
-				.isEqualTo(FooDto.class);
+		assertThat(((AbstractObjectFactory) factory).getTargetClass()).isEqualTo(FooDto.class);
+		assertThat(((AbstractObjectFactory) factory).getSourceClass()).isEqualTo(Foo.class);
 	}
 
 	@Test
