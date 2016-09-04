@@ -22,29 +22,29 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.configuration.orika;
+package com.github.mjeanroy.spring.mappers.configuration.modelmapper;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.configuration.AbstractMapperConfiguration;
-import com.github.mjeanroy.spring.mappers.impl.orika.OrikaMapper;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.github.mjeanroy.spring.mappers.impl.modelmapper.ModelMapperMapper;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@Configuration
-public class OrikaMapperConfiguration extends AbstractMapperConfiguration {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	@Bean
-	@Override
-	public Mapper mapper() {
-		return new OrikaMapper(mapperFacade());
-	}
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = ModelMapperConfiguration.class)
+public class ModelMapperConfigurationTest {
 
-	@Bean
-	public MapperFacade mapperFacade() {
-		return new DefaultMapperFactory.Builder()
-				.build()
-				.getMapperFacade();
+	@Autowired
+	private Mapper mapper;
+
+	@Test
+	public void it_should_load_mapper_with_model_mapper_impl() {
+		assertThat(mapper)
+				.isNotNull()
+				.isExactlyInstanceOf(ModelMapperMapper.class);
 	}
 }

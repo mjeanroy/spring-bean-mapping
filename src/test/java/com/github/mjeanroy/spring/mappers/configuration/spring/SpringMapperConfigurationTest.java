@@ -26,19 +26,25 @@ package com.github.mjeanroy.spring.mappers.configuration.spring;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
 import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@Configuration
-public class SpringMapperConfiguration {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	private static final Logger log = LoggerFactory.getLogger(SpringMapperConfiguration.class);
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringMapperConfiguration.class)
+public class SpringMapperConfigurationTest {
 
-	@Bean
-	public Mapper mapper() {
-		log.info("Create spring mapper implementation bean");
-		return new SpringMapper();
+	@Autowired
+	private Mapper mapper;
+
+	@Test
+	public void it_should_load_mapper_with_spring_impl() {
+		assertThat(mapper)
+				.isNotNull()
+				.isExactlyInstanceOf(SpringMapper.class);
 	}
 }

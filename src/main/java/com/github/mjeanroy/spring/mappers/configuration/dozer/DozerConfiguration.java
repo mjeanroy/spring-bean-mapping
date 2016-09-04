@@ -22,23 +22,28 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.configuration.spring;
+package com.github.mjeanroy.spring.mappers.configuration.dozer;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
+import com.github.mjeanroy.spring.mappers.impl.dozer.DozerMapper;
+import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-public class SpringMapperConfiguration {
+@Import({
+		DozerBeanConfiguration.class
+})
+public class DozerConfiguration {
 
-	private static final Logger log = LoggerFactory.getLogger(SpringMapperConfiguration.class);
+	private static final Logger log = LoggerFactory.getLogger(DozerConfiguration.class);
 
 	@Bean
-	public Mapper mapper() {
-		log.info("Create spring mapper implementation bean");
-		return new SpringMapper();
+	public Mapper mapper(DozerBeanMapper dozerBeanMapper) {
+		log.info("Create dozer mapper implementation bean");
+		return new DozerMapper(dozerBeanMapper);
 	}
 }

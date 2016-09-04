@@ -25,9 +25,9 @@
 package com.github.mjeanroy.spring.mappers.configuration;
 
 import com.github.mjeanroy.spring.mappers.commons.ClassUtils;
-import com.github.mjeanroy.spring.mappers.configuration.dozer.DozerMapperConfiguration;
-import com.github.mjeanroy.spring.mappers.configuration.modelmapper.ModelMapperMapperConfiguration;
-import com.github.mjeanroy.spring.mappers.configuration.orika.OrikaMapperConfiguration;
+import com.github.mjeanroy.spring.mappers.configuration.dozer.DozerConfiguration;
+import com.github.mjeanroy.spring.mappers.configuration.modelmapper.ModelMapperConfiguration;
+import com.github.mjeanroy.spring.mappers.configuration.orika.OrikaConfiguration;
 import com.github.mjeanroy.spring.mappers.configuration.spring.SpringMapperConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public enum MapperProvider {
 	DOZER {
 		@Override
 		public Class configurationClass() {
-			return DozerMapperConfiguration.class;
+			return DozerConfiguration.class;
 		}
 	},
 
@@ -58,7 +58,7 @@ public enum MapperProvider {
 	MODEL_MAPPER {
 		@Override
 		public Class configurationClass() {
-			return ModelMapperMapperConfiguration.class;
+			return ModelMapperConfiguration.class;
 		}
 	},
 
@@ -69,7 +69,7 @@ public enum MapperProvider {
 	ORIKA {
 		@Override
 		public Class configurationClass() {
-			return OrikaMapperConfiguration.class;
+			return OrikaConfiguration.class;
 		}
 	},
 

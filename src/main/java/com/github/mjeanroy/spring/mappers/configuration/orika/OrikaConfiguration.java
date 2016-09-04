@@ -22,26 +22,28 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.configuration.dozer;
+package com.github.mjeanroy.spring.mappers.configuration.orika;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.configuration.AbstractMapperConfiguration;
-import com.github.mjeanroy.spring.mappers.impl.dozer.DozerMapper;
-import org.dozer.DozerBeanMapper;
+import com.github.mjeanroy.spring.mappers.impl.orika.OrikaMapper;
+import ma.glasnost.orika.MapperFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
-public class DozerMapperConfiguration extends AbstractMapperConfiguration {
+@Import({
+		OrikaBeanConfiguration.class
+})
+public class OrikaConfiguration {
+
+	private static final Logger log = LoggerFactory.getLogger(OrikaConfiguration.class);
 
 	@Bean
-	@Override
-	public Mapper mapper() {
-		return new DozerMapper(dozerBeanMapper());
-	}
-
-	@Bean(destroyMethod = "destroy")
-	public DozerBeanMapper dozerBeanMapper() {
-		return new DozerBeanMapper();
+	public Mapper mapper(MapperFacade mapperFacade) {
+		log.info("Create orika mapper implementation bean");
+		return new OrikaMapper(mapperFacade);
 	}
 }

@@ -22,24 +22,29 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.configuration;
+package com.github.mjeanroy.spring.mappers.configuration.orika;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.github.mjeanroy.spring.mappers.impl.orika.OrikaMapper;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-/**
- * Abstraction that create basic beans to use with
- * mapper engines.
- */
-@Configuration
-public abstract class AbstractMapperConfiguration {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	/**
-	 * Build mapper implementation.
-	 *
-	 * @return Mapper.
-	 */
-	@Bean
-	public abstract Mapper mapper();
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = OrikaConfiguration.class)
+public class OrikaConfigurationTest {
+
+	@Autowired
+	private Mapper mapper;
+
+	@Test
+	public void it_should_load_mapper_with_orika_impl() {
+		assertThat(mapper)
+				.isNotNull()
+				.isExactlyInstanceOf(OrikaMapper.class);
+	}
 }

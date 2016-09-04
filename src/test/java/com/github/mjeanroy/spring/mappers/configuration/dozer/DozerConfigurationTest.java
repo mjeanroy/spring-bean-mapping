@@ -22,26 +22,29 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.configuration.modelmapper;
+package com.github.mjeanroy.spring.mappers.configuration.dozer;
 
 import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.configuration.AbstractMapperConfiguration;
-import com.github.mjeanroy.spring.mappers.impl.modelmapper.ModelMapperMapper;
-import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.github.mjeanroy.spring.mappers.impl.dozer.DozerMapper;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@Configuration
-public class ModelMapperMapperConfiguration extends AbstractMapperConfiguration {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	@Bean
-	@Override
-	public Mapper mapper() {
-		return new ModelMapperMapper(modelMapper());
-	}
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = DozerConfiguration.class)
+public class DozerConfigurationTest {
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
+	@Autowired
+	private Mapper mapper;
+
+	@Test
+	public void it_should_load_dozer_configuration() {
+		assertThat(mapper)
+				.isNotNull()
+				.isExactlyInstanceOf(DozerMapper.class);
 	}
 }

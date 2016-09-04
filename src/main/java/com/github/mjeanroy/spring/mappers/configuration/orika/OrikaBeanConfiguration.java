@@ -22,23 +22,25 @@
  * THE SOFTWARE.
  */
 
-package com.github.mjeanroy.spring.mappers.configuration.spring;
+package com.github.mjeanroy.spring.mappers.configuration.orika;
 
-import com.github.mjeanroy.spring.mappers.Mapper;
-import com.github.mjeanroy.spring.mappers.impl.spring.SpringMapper;
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SpringMapperConfiguration {
+class OrikaBeanConfiguration {
 
-	private static final Logger log = LoggerFactory.getLogger(SpringMapperConfiguration.class);
+	private static final Logger log = LoggerFactory.getLogger(OrikaBeanConfiguration.class);
 
 	@Bean
-	public Mapper mapper() {
-		log.info("Create spring mapper implementation bean");
-		return new SpringMapper();
+	public MapperFacade mapperFacade() {
+		log.info("Create orika bean");
+		return new DefaultMapperFactory.Builder()
+				.build()
+				.getMapperFacade();
 	}
 }
